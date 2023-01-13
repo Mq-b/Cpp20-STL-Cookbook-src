@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD 23)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (Test1  "1.6查找特性测试宏.cpp")
+add_executable (Test1 "src/1.7概念(concept)和约束(constraint)-创建更安全的模板.cpp")
