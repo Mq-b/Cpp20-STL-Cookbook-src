@@ -14,3 +14,4 @@ int main() {
 }
 
 //模块: https://zh.cppreference.com/w/cpp/language/modules
+//编译设置:add_executable (Test1 "src/1.8模块.cpp" "src/test.ixx" "src/test2.ixx")
