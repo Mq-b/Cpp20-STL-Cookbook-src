@@ -22,10 +22,17 @@ int main() {
 	std::vector<std::string>strs{ "🐴","🐭","🥵","🤣" };
 	auto ret4 = strs | stdv::reverse;
 	print(ret4);
+
+	auto ret5 = nums | stdv::filter([](int i) {return i % 2 != 0; }) | stdv::transform([](int i) {return i * 2; });
+	print(ret5);
 	
 	auto nums_ = stdv::iota(1, 10);
 	print(nums_);
 
 	auto rnums = stdv::iota(1) | stdv::take(200);
 	print(rnums);
+
+	stdr::copy(strs | stdv::reverse | stdv::drop(2), std::ostream_iterator<std::string>(std::cout," "));
 }
+
+//范围库: https://zh.cppreference.com/w/cpp/ranges
