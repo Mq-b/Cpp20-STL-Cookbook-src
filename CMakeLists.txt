@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD 23)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (Test1  "src/3.10使用set进行输入和筛选.cpp")
+add_executable (Test1  "src/3.11实现简单的RPN计算机与deque.cpp")
