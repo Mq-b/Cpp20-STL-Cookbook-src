@@ -32,9 +32,9 @@ int main() {
 	stdr::sort(wordvec, [](const auto& a, const auto& b) {
 		return (a.second != b.second) ? (a.second > b.second) : (a.first < b.first);
 	});
+
 	print("unique word count: {}\n", total_words);//总共的单词个数
 	print("unqiue word count: {}\n", unique_words);//去除重复之后的
-
 	for (int limit{ 20 }; auto & [w, count]:wordvec) {
 		print("{}: {}\n", count, w);
 		//if (--limit == 0)break;
