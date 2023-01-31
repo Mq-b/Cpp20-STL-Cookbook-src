@@ -5,7 +5,6 @@
 
 namespace stdr = std::ranges;
 namespace regex_constants = std::regex_constants;
-
 namespace bw { constexpr const char* re{ "(\\w+)" }; }
 
 int main() {
@@ -26,18 +25,18 @@ int main() {
 			++total_words;
 			++count;//增加单词计数
 		}
-		auto unique_words = wordmap.size();
-		wordvec.reserve(unique_words);
-		stdr::move(wordmap, std::back_inserter(wordvec));
-		stdr::sort(wordvec, [](const auto& a, const auto& b) {
-			return (a.second != b.second) ? (a.second > b.second) : (a.first < b.first);
-			});
-		print("unique word count: {}\n", total_words);//总共的单词个数
-		print("unqiue word count: {}\n", unique_words);//去除重复之后的
+	}
+	auto unique_words = wordmap.size();
+	wordvec.reserve(unique_words);
+	stdr::move(wordmap, std::back_inserter(wordvec));
+	stdr::sort(wordvec, [](const auto& a, const auto& b) {
+		return (a.second != b.second) ? (a.second > b.second) : (a.first < b.first);
+	});
+	print("unique word count: {}\n", total_words);//总共的单词个数
+	print("unqiue word count: {}\n", unique_words);//去除重复之后的
 
-		for (int limit{ 20 }; auto & [w, count]:wordvec) {
-			print("{}: {}\n", count, w);
-			//if (--limit == 0)break;
-		}
+	for (int limit{ 20 }; auto & [w, count]:wordvec) {
+		print("{}: {}\n", count, w);
+		//if (--limit == 0)break;
 	}
 }
