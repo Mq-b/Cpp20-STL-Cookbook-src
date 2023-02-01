@@ -24,3 +24,11 @@ inline void print(const std::map<T, T2>& map) {
 	for (auto& [k, v] : map)print("{}:{} ", k, v);
 	print("\n");
 }
+
+template<class T, class T2>
+void rprint(std::multimap<T, T2>& todo) {
+	for (const auto& i : todo | std::views::reverse) {
+		print("{}: {}\n", i.first, i.second);
+	}
+	print("\n");
+}
