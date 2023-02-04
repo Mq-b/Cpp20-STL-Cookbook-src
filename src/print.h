@@ -5,7 +5,7 @@
 #include<map>
 
 template < typename... Args>
-inline void print(const std::string_view fmt_str, Args&&... args) {
+inline void print(const std::string_view fmt_str, const Args&... args) {
 	auto fmt_args{ std::make_format_args(args...) };
 	std::string outstr{ std::vformat(fmt_str, fmt_args) };
 	fputs(outstr.c_str(), stdout);
