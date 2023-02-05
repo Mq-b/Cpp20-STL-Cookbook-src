@@ -26,9 +26,16 @@ inline void print(const std::map<T, T2>& map) {
 }
 
 template<class T, class T2>
-void rprint(std::multimap<T, T2>& todo) {
+inline void rprint(std::multimap<T, T2>& todo) {
 	for (const auto& i : todo | std::views::reverse) {
 		print("{}: {}\n", i.first, i.second);
 	}
 	print("\n");
+}
+
+inline void printc(const std::ranges::range auto& v, std::string_view s = "") {
+	if (s.size())print("{}: ", s);
+	print("[ ");
+	for (const auto& i : v)print("{} ", i);
+	print("]\n");
 }
