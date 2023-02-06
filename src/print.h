@@ -39,3 +39,12 @@ inline void printc(const std::ranges::range auto& v, std::string_view s = "") {
 	for (const auto& i : v)print("{} ", i);
 	print("]\n");
 }
+
+void printr(const auto& r, std::string_view s = "") {
+	auto rbegin = std::rbegin(r);
+	auto rend = std::rend(r);
+	for (auto it = rbegin; it != rend; ++it) {
+		print("{} ", *it);
+	}
+	print("\n");
+}
