@@ -57,5 +57,5 @@ int main() {
 	auto [min_it, max_it] = std::ranges::minmax_element(r);
 	print("max:{} min:{}\n", max_it.value, min_it.value);
 	printc(r);
-	static_assert(std::ranges::forward_range<Seq<int>>);//静态断言，forward_range是向前迭代器concept
+	static_assert(std::ranges::forward_range<Seq<int>>);
 }

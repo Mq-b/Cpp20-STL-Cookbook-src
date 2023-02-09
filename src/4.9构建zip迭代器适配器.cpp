@@ -39,6 +39,7 @@ public:
 int main() {
 	std::vector<std::string>vec_a{ "Bob","John","Joni","🤣" };
 	std::vector<std::string>vec_b{ "Dylan","Williams","Mitchell" };
+
 	printc(vec_a, "vec_a: ");
 	printc(vec_b, "vec_b: ");
 
