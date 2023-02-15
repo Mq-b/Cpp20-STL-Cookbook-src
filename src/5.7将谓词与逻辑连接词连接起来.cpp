@@ -18,11 +18,9 @@ auto combine(F binary_func, A a, B b) {
 }
 
 int main() {
-	auto a_xxx_b{ combine(
-		std::logical_and{},
-		begins_with_a, ends_with_b) };
+	auto a_xxx_b{ combine(std::logical_and<int>{},begins_with_a, ends_with_b) };
+
 	std::copy_if(std::istream_iterator<std::string>{std::cin}, {},
-		std::ostream_iterator<std::string>{std::cout, ", "},
-		a_xxx_b);
+		std::ostream_iterator<std::string>{std::cout, ", "}, a_xxx_b);
 	std::cout << '\n';
 }
