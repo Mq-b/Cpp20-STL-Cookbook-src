@@ -313,3 +313,60 @@ int main() {
 
 //范围库: https://zh.cppreference.com/w/cpp/ranges
 ```
+
+### 第一章总结
+第一章的内容需要细看，很多其实书说的并不全面，比如范围，模块，约束与概念，自己注意去看我们提到的之前讲过的视频，以及这些demo
+如果你是初学，最好都自己写一下运行，顺便提一下`print.h`后面我们会经常用到这个头文件，我们其实是一步步补充的，但是我们直接把
+这个头文件的内容先放出来吧，有不少的打印模板函数
+```cpp
+#pragma once
+#include<format>
+#include<iostream>
+#include<ranges>
+#include<map>
+
+template < typename... Args>
+void print(const std::string_view fmt_str, const Args&... args) {
+	auto fmt_args{ std::make_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+void print(std::ranges::range auto v){
+	print("size: {}  ", v.size());
+	print("[ ");
+	for (const auto& i : v)print("{} ", i);
+	print("]\n");
+}
+
+template<class T,class T2>
+void print(const std::map<T, T2>& map) {
+	print("size: {} ", map.size());
+	print("[ ");
+	for (auto& [k, v] : map)print("{}:{} ", k, v);
+	print("]\n");
+}
+
+template<class T, class T2>
+void rprint(std::multimap<T, T2>& todo) {
+	for (const auto& i : todo | std::views::reverse) {
+		print("{}: {}\n", i.first, i.second);
+	}
+	print("\n");
+}
+
+void printc(const std::ranges::range auto& v, std::string_view s = "") {
+	if (s.size())print("{}: ", s);
+	for (const auto& i : v)print("[{}] ", i);
+	print("\n");
+}
+
+void printr(const auto& r, std::string_view s = "") {
+	auto rbegin = std::rbegin(r);
+	auto rend = std::rend(r);
+	for (auto it = rbegin; it != rend; ++it) {
+		print("{} ", *it);
+	}
+	print("\n");
+}
+```
