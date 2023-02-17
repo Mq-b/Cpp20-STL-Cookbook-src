@@ -9,7 +9,42 @@
 
 ## 第一章 C++20的新特性
  [1.2格式化文本](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
-### 1.3
+ ```C++
+#include<iostream>
+#include<string_view>
+#include<format>
+
+template < typename... Args>
+void print(const std::string_view fmt_str, Args&&... args) {
+	auto fmt_args{ std::msake_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+struct Frac {
+	int a, b;
+};
+
+template<>
+struct std::formatter<Frac> {
+	template<typename ParseContext>
+	constexpr auto parse(ParseContext& ctx) {
+		return ctx.begin();
+	}
+	template<typename FormatContext>
+	auto format(const Frac& f, FormatContext& ctx) {
+		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.a, f.b);
+	}
+};
+
+int main() {
+	Frac f{ 1,10 };
+	print("{}", f);
+}
+//格式化规则参见 https://zh.cppreference.com/w/cpp/utility/format/formatter
+//特化规则参见:	https://zh.cppreference.com/w/cpp/named_req/Formatter
+ ```
+### [1.3使用编译时constexpr vector和string](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
 ### 1.4
 ### 1.5
 ### 1.6
