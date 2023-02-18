@@ -375,3 +375,151 @@ void printr(const auto& r, std::string_view s = "") {
 
 ---
 ## 第二章 STL的泛型特性
+### [2.2span类](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
+
+```cpp
+#include<iostream>
+#include<format>
+#include<span>
+
+template < typename... Args>
+void print(const std::string_view fmt_str, Args&&... args) {
+	auto fmt_args{ std::make_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+template<class T>
+void pspan(std::span<T>s) {
+	print("number of elemnts: {}\n", s.size());
+	print("size of span: {}\n", s.size_bytes());
+	for (auto i : s)print("{} ", i);
+	endl(std::cout);
+}
+
+int main() {
+	int array[]{ 1,2,3,4,5,6 };
+	pspan<int>(array);
+}
+
+//span文档: https://zh.cppreference.com/w/cpp/container/span
+//span简单实现: https://github.com/13870517674/c-plus-plus/blob/master/src/lib/span.hpp
+```
+
+### [2.3结构化绑定](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
+```cpp
+#include<iostream>
+#include<format>
+#include<array>
+#include<tuple>
+#include<map>
+
+template < typename... Args>
+void print(const std::string_view fmt_str, Args&&... args) {
+	auto fmt_args{ std::make_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+struct X { int a; double b; std::string str; };
+
+auto f()->std::tuple<int,int> {
+	return { 1,2 };
+}
+
+int main() {
+	int array[]{ 1,2,3,4,5 };
+	auto& [a, b, c, d, e] = array;
+	print("{} {} {} {} {}\n", a, b, c, d, e);
+	a = 10;
+	print("{}\n", array[0]);
+
+	std::array arr{ '*','a','b','&' };
+	auto [a_, b_, c_, d_] = arr;
+	print("{} {} {} {}\n", a_, b_, c_, d_);
+
+	std::tuple<int, double, std::string>tu{ 10,3.14,"🥵" };
+	auto [t1, t2, t3] = tu;
+	print("{} {} {}\n", t1, t2, t3);
+
+	X x{ 1,5.2,"🤣" };
+	auto [x1, x2, x3] = x;
+	print("{} {} {}\n", x1, x2, x3);
+
+	const std::array arr2{ 1,2 };
+	//auto& [c_arr1, c_arr2] = arr2;
+	//c_arr1 = 10;//error
+
+	auto [f1, f2] = f();
+	print("{} {}\n", f1, f2);
+
+	std::map<int, std::string>Map{ {1,"*"},{2,"😘"} };
+	for (const auto& [m_a, m_b] : Map) {
+		print("{} {}\n", m_a, m_b);
+	}
+}
+```
+
+### [2.4if&switch中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+```cpp
+#include"print.h"
+#include<mutex>
+#include<thread>
+
+std::mutex m;
+bool flag = true;
+
+void f(int n) {
+	if (std::lock_guard lg{ m }; flag) {
+		print("乐\t");
+		print("🤣🤣🤣\n");
+	}
+}
+
+void t() {
+	if (auto flag = [](int n) {return n * n; }(10); flag != 0) {
+		print("🐴🐴🐴\n");
+	}
+}
+
+void t2() {
+	switch (char c = getchar();c)
+	{
+	case 'a':
+		print("a\n"); 
+		break;
+	case 'b':
+		print("b\n");
+		break;
+	case 'c':
+		print("c\n");
+		break;
+	case 'd':
+		print("d\n");
+		break;
+	default:
+		print("error\n");
+		break;
+	}
+}
+
+int main() {
+	for (int i = 0; i < 10; i++) {
+		std::jthread t{ f,0 };
+		std::jthread t2{ f,0 };
+	}
+	t();
+	t2();
+}
+```
+
+### [2.5模板参数推导](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+```cpp
+
+```
+
+### [2.6编译期if](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+```cpp
+
+```
+---
