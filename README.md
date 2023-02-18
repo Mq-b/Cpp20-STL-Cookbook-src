@@ -1,11 +1,13 @@
 # 《C++20 STL Cookbook》2023
 
-##  环境
+###  环境
 **Visual Studio Enterprise 2022(64位) 版本 17.4.3**
 
 **CMake 3.8**
 
-##  [B站视频讲解](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
+###  [B站视频讲解](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
+
+<br>
 
 ## 第一章 C++20的新特性
 ### [1.2格式化文本](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
@@ -373,6 +375,8 @@ void printr(const auto& r, std::string_view s = "") {
 }
 ```
 
+<br>
+
 ---
 ## 第二章 STL的泛型特性
 ### [2.2span类](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
@@ -563,4 +567,477 @@ int main() {
 	print("\n");
 }
 ```
+### 第二章总结
+第二章内容总体比较简单，并没有什么困难的，重在运用，最好这些demo都自己抄或者写一遍。
+加深理解
+
+<br>
+
 ---
+## 第三章STL容器
+### [3.3使用擦除函数从容器中擦除项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<list>
+
+template<typename Tc,typename Tv>
+void remove_value(Tc& c, const Tv& v) {//C++20之前的做法
+	//std::remove将和传入元素相同的元素移动放到末尾，并返回迭代器位置，还有一个std::remove_if的版本
+	auto remove_it = std::remove(c.begin(), c.end(), v);//remove_it是首个需要被删除元素的位置
+	c.erase(remove_it, c.end());//删除remove_it到end()这个范围的元素
+}
+
+int main() {
+	std::vector v{ 1,2,3,4,5 };
+	print(v);
+	::remove_value(v, 1);
+	print(v);
+	std::erase(v,5);//C++20起，功能和remove_value()相同
+	print(v);
+	std::erase_if(v, [](int i) {return i % 2 != 0; });//第二个版本
+	print(v);
+
+	std::list list{ 1,2,3,4,5,6,7,8,9,10 };
+	std::erase(list, 5);
+	std::erase_if(list, [](int i) {return i % 2 == 0; });
+	print(list);
+
+	std::map<int, std::string> map{ {1,"🤣"},{2,"🥵"},{3,"🐴"},{4,"🐭"} };
+	print(map);
+	std::erase_if(map, [](auto& i) {
+		const auto& [k, v] = i;
+		return v == "🥵";
+	});
+	print(map);
+}
+```
+
+### [3.4常数时间内从未排序的向量中删除项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<ranges>
+namespace stdr = std::ranges;
+
+//使用下标的版本
+template<typename T>
+void quick_delete(T& v, size_t idx) {
+	if (idx < v.size()) {
+		v[idx] = std::move(v.back());
+		v.pop_back();
+	}
+}
+//使用迭代器的版本
+template<typename T>
+void quick_delete(T& v, typename T::iterator it) {
+	if (it < v.end()) {
+		*it = std::move(v.back());
+		v.pop_back();
+	}
+}
+//若 vector 中项目的顺序不重要，就可以优化这个过程，使其花费 O(1)(常数) 时间
+//做法很简单，将传入的要删除的迭代器或索引赋值为末尾元素的值，然后将末尾元素删除，就完成了，但是没有顺序
+
+int main() {
+	std::vector v{ 1,2,3,4,5 };
+	print(v);
+	auto it = stdr::find(v, 3);
+	quick_delete(v, it);
+	print(v);//顺序不对，正常现象
+
+	quick_delete(v, 2);
+	print(v);
+}
+```
+
+### [3.5安全的访问vector元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+
+void test1() {
+	std::vector v{ 1,2,3,4,5 };
+	v[5] = 2001;//写入非法内存，访问也是越界
+	auto& i = v[5];//引用了错误的内存
+	print("{}\n", i);//可能发生错误，不保证
+}
+
+void test2()try {
+	std::vector v{ 1,2,3,4,5 };
+	auto& i = v.at(5);
+	print("{}\n", i);
+}
+catch (std::exception& e) {
+	print("{}\n", e.what());
+}
+
+void test3()try {
+	std::vector v{ 1,2,3,4,5 };
+	auto& i = v[5];
+	print("{}\n", i);
+}
+catch (std::exception& e) {
+	print("{}\n", e.what());
+}
+int main() {
+	//test1();//error
+	test2();
+	//test3();//error
+}
+```
+
+### [3.6保持vector元素的顺序](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
+```cpp
+#include"print.h"
+#include<string>
+#include<vector>
+#include<list>
+using Vstr = std::vector<std::string>;
+namespace stdr = std::ranges;
+
+void psorted(stdr::range auto&& v) {
+	if  (stdr::is_sorted(v))
+		print("sorted: ");
+	else
+		print("unsorted: ");
+	print(v);
+}
+
+void insert_sorted(Vstr& v, const std::string& s) {
+	//lower_bound() 算法查找不小于实参的第一个元素的迭代器
+	const auto pos{ stdr::lower_bound(v,s) };
+	v.insert(pos, s);//使用 lower_bound() 返回的迭代器在正确的位置插入一个元素
+}
+
+template<stdr::range C,typename E>
+void insert_sorted(C& c, const E& e) {
+	const auto pos{ stdr::lower_bound(c,e) };
+	c.insert(pos, e);
+}
+
+int main() {
+	std::vector<std::string> v{ "2","1","3"};
+	psorted(v);//无序
+
+	stdr::sort(v);
+	psorted(v);//有序
+
+	//v.emplace_back("0");
+	//psorted(v);//无序
+
+	::insert_sorted(v, "0");
+	psorted(v);//有序，相比于普通插入的优势
+	//用list测试改写泛型的版本
+	std::list<int>list{ 1,2,3,4,5 };
+	psorted(list);//有序
+	::insert_sorted(list, 0);
+	psorted(list);//有序
+}
+```
+
+### [3.7高效的将元素插入到map中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
+```cpp
+#include"print.h"
+
+struct X {
+	std::string s;
+	X() { print("default construct\n"); }
+	X(const char* s) :s{ s } { print("construct\n"); }
+	X(const X&) { print("copy construct\n"); }
+};
+void printm(const std::map<int, X>& map) {
+	for (const auto& [k, v] : map) {
+		print("[ {}:{} ]", k, v.s);
+	}
+	print("\n");
+}
+
+int main() {
+	std::map<int, X>map{};
+	map[1] = "🐴";//两个构造的开销，有参和默认
+	print("\n");
+	//直接转发，只有一个有参构造的开销,这里使用try_emplace和emplace效果完全一样
+	map.emplace(2,"🥵");
+	map.emplace(3, "🤣");
+	printm(map);
+	print("\n");
+
+	map.emplace(1, "乐");//添加一个具有重复键的元素
+	map.try_emplace(1, "乐");
+	printm(map);
+}
+//重复键元素的问题参见 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300
+```
+
+### [3.8高效的修改map项的键值](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
+```cpp
+#include"print.h"
+#include<string>
+
+template<typename M,typename K>
+bool node_swap(M& m, K k1, K k2) {
+	//extract 是更换 map 的键而不重分配的唯一方式
+	auto node1{ m.extract(k1) };
+	auto node2{ m.extract(k2) };
+	if (node1.empty() || node2.empty())
+		return false;
+	std::swap(node1.key(), node2.key());
+	m.insert(std::move(node1));
+	m.insert(std::move(node2));
+	return true;
+}
+
+int main() {
+	std::map<uint32_t, std::string>maps{
+		{1,"🐴"},{2,"🥵"},{3,"🤣"},{4,"🐭"},{5,"😘"}
+	};
+	print(maps);
+	::node_swap(maps, 3, 5);
+	print(maps);
+
+	auto node = maps.extract(maps.begin());
+	node.key() = 5;
+	auto t =maps.insert(std::move(node));
+	print(maps);
+	if (!t.inserted) {
+		print("插入失败 {}\n",t.position->second);
+	}
+}
+```
+
+### [3.9自定义键值的unordered_map](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+```cpp
+#include"print.h"
+#include<string>
+#include<unordered_map>
+
+struct Coord {
+	int x{};
+	int y{};
+};
+auto operator==(const Coord& a, const Coord& b) {
+	return a.x == b.x && a.y == b.y;
+}
+namespace std {
+	template<>
+	struct hash<Coord> {
+		size_t operator()(const Coord&a)const {
+			return static_cast<size_t>(a.x) + static_cast<size_t>(a.y);
+		}
+	};
+}
+template<class T, class T2>
+inline void print(const std::unordered_map<T, T2>& map) {
+	print("size: {} ", map.size());
+	for (auto& [k, v] : map)print("{{{} {}}}:{} ", k.x, k.y, v);
+	print("\n");
+}
+int main() {
+	std::unordered_map<Coord, std::string>map{ {{1,1},"😘"},{{0,0},"🤣"} };
+	print(map);
+}
+```
+
+### [3.10使用set进行输入和筛选](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+```cpp
+#include"print.h"
+#include<set>
+#include<string>
+#include<ranges>
+
+int main() {
+	std::set<std::string>sets;
+	std::copy(std::istream_iterator<std::string>{std::cin}, {}, 
+		std::inserter(sets, sets.end()));
+	print(sets);
+}
+```
+
+### [3.11实现简单的RPN计算器与deque](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
+```cpp
+#include"print.h"
+#include<deque>
+#include<string>
+
+class RPN {
+	std::deque<double>deq_{};
+	constexpr static double zero_{ 0.0 };
+	constexpr static double inf_{ std::numeric_limits<double>::infinity() };
+
+	bool is_numeric(const std::string str) {
+		for (const auto& i:str) {
+			if (i != '.' && !std::isdigit(i))
+				return false;
+		}
+		return true;
+	}
+
+	std::pair<double, double>pop_get2() {
+		if (deq_.size() < 2)return { zero_,zero_ };
+		double v1{ deq_.front() };
+		deq_.pop_front();
+		double v2{ deq_.front() };
+		deq_.pop_front();
+		return { v2,v1 };
+	}
+
+	double optor(const std::string op) {
+		std::map<std::string, double(*)(double, double)>opmap{
+			{"+",[](double l,double r) {return l + r; }},
+			{"-",[](double l,double r) {return l - r; }},
+			{"*",[](double l,double r) {return l * r; }},
+			{"/",[](double l,double r) {return l / r; }},
+			{"^",[](double l,double r) {return std::pow(l,r); }},
+			{"%",[](double l,double r) {return std::fmod(l,r); }}
+		};
+		if (opmap.find(op) == opmap.end())return zero_;
+		auto [l, r] = pop_get2();
+		if (op == "/" && r == zero_)deq_.push_front(inf_);
+		else deq_.push_front(opmap.at(op)(l, r));
+		return deq_.front();
+	}
+
+public:
+	double op(const std::string& s) {
+		if (is_numeric(s)) {
+			double v{ std::stod(s) };
+			deq_.push_front(v);
+			return v;
+		}
+		else return optor(s);
+	}
+
+	void clear() {
+		deq_.clear();
+	}
+
+	std::string get_stack_string()const {
+		std::string s{};
+		for (const auto& v : deq_) {
+			s += std::format("{} ", v);
+		}
+		return s;
+	}
+};
+
+int main() {
+	RPN rpn;
+	for (std::string o{}; std::cin >> o;) {
+		rpn.op(o);
+		auto stack_str{ rpn.get_stack_string() };
+		print("{}: {}\n", o, stack_str);
+	}
+}
+```
+
+### [3.12使用map的词频计数器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<ranges>
+#include<regex>
+#include<vector>
+
+namespace stdr = std::ranges;
+namespace regex_constants = std::regex_constants;
+namespace bw { constexpr const char* re{ "(\\w+)" }; }
+
+int main() {
+	std::map<std::string, int>wordmap{};
+	std::vector<std::pair<std::string, int>>wordvec{};
+	std::regex word_re(bw::re);
+	size_t total_words{};
+
+	for (std::string s{}; std::cin >> s;) {
+		auto words_begin{ std::sregex_iterator(s.begin(),s.end(),word_re) };
+		auto words_end{ std::sregex_iterator() };
+		for (auto r_it{ words_begin }; r_it != words_end; ++r_it) {
+			std::smatch match{ *r_it };//字符串匹配类
+			auto word_str{ match.str() };//得到输入的单词
+			stdr::transform(word_str, word_str.begin(), [](uint8_t c) {return tolower(c); });//将字母全部大写
+			auto [map_it, result] = wordmap.try_emplace(word_str, 0);//插入到map中，map的键不会有重复，自动去重
+			auto& [w, count] = *map_it;
+			++total_words;
+			++count;//增加单词计数
+		}
+	}
+	auto unique_words = wordmap.size();
+	wordvec.reserve(unique_words);
+	stdr::move(wordmap, std::back_inserter(wordvec));
+	stdr::sort(wordvec, [](const auto& a, const auto& b) {
+		return (a.second != b.second) ? (a.second > b.second) : (a.first < b.first);
+	});
+
+	print("unique word count: {}\n", total_words);//总共的单词个数
+	print("unqiue word count: {}\n", unique_words);//去除重复之后的
+	for (int limit{ 20 }; auto & [w, count]:wordvec) {
+		print("{}: {}\n", count, w);
+		//if (--limit == 0)break;
+	}
+}
+```
+
+### [3.13找出含有相应长句的vector](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
+```cpp
+#include"print.h"
+#include<string_view>
+#include<vector>
+#include<ranges>
+namespace stdr = std::ranges;
+
+bool is_eos(const std::string_view& str) {
+	constexpr const char* end_punct{ ".!?" };
+	for (auto c : str) {
+		if (strchr(end_punct, c) != nullptr)
+			return true;
+	}
+	return false;
+}
+
+int main() {
+	std::vector<std::vector<std::string>>vv_sentences{ std::vector<std::string>{} };
+	for (std::string s{}; std::cin >> s;) {
+		vv_sentences.back().emplace_back(s);
+		if (is_eos(s)) {
+			vv_sentences.emplace_back(std::vector<std::string>{});
+		}
+	}
+
+	if (vv_sentences.back().empty())vv_sentences.pop_back();
+	stdr::sort(vv_sentences, [](const auto& l, const auto& r) {
+		return l.size() > r.size();
+	});
+
+	for (const auto& v : vv_sentences) {
+		size_t size = v.size();
+		print("{}: ", size);
+		for (const auto& s : v) {
+			print("{} ", s);
+		}
+		print("\n");
+	}
+	print("\n");
+}
+```
+
+### [3.14使用multimap制作待办事项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
+```cpp
+#include"print.h"
+#include<map>
+
+int main() {
+	std::multimap<int, std::string>todo{
+		{1,"🤣"},
+		{2,"🥵"},
+		{3,"🐴"},
+		{4,"😘"}
+	};
+	rprint(todo);
+}
+```
+### 第三章总结
+第三章内容较多，需要对STL容器有一定的了解，建议每一个demo都自己写完理解意义后再往下阅读。
+
+---
+
+<bar>
