@@ -1040,4 +1040,534 @@ int main() {
 
 ---
 
-<bar>
+<br>
+
+## 第四章兼容迭代器
+### [4.3创建可迭代范围](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
+```cpp
+#include"print.h"
+
+template<class T>
+class Seq {
+	T _star{};
+	T _end{};
+public:
+	Seq(T star, T end) :_star(star), _end(end) {}
+	struct iterator {
+		T value{};
+		explicit iterator(T v) :value(v) {}
+		iterator& operator++() {
+			value++;
+			return *this;
+		}
+		T operator*() {
+			return value;
+		}
+		bool operator!=(const iterator& l) {
+			return this->value != l.value;
+		}
+	};
+	iterator begin() {
+		return iterator{ _star };
+	}
+	iterator end() {
+		return iterator{ _end };
+	}
+};
+
+template<class T,size_t size>
+struct X {
+	T array[size]{};
+	T* begin() {
+		return array;
+	}
+	T* end() {
+		return array + size;
+	}
+};
+
+int main() {
+	Seq<int>v{ 1,10 };
+	for (auto i : v) {
+		print("{} ", i);
+	}
+	print("\n");
+
+	X<int, 10>x{ 1,2,3,4,5,6,7,8,9,10 };
+	for (auto i : x) {
+		print("{} ", i);
+	}
+}
+```
+
+### [4.4使迭代器与STL迭代器特性兼容](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
+```cpp
+#include"print.h"
+
+template<class T>
+class Seq {
+	T _star{};
+	T _end{};
+public:
+	Seq(T star, T end) :_star(star), _end(end) {}
+	struct iterator {
+		T value{};
+
+		using value_type        = std::remove_cv_t<T>;
+		using difference_type   = std::ptrdiff_t;
+		using pointer           = const T*;
+		using reference         = const T&;
+
+		explicit iterator(T v=0) :value(v) {}
+		iterator& operator++() {
+			value++;
+			return *this;
+		}
+		iterator operator++(int) {
+			auto t{ *this };
+			++ *this;
+			return t;
+		}
+		T operator*()const {
+			return value;
+		}
+		bool operator!=(const iterator& l)const noexcept{
+			return this->value != l.value;
+		}
+		bool operator==(const iterator& l)const noexcept {
+			return this->value == l.value;
+		}
+	};
+	iterator begin()const {
+		return iterator{ _star };
+	}
+	iterator end()const {
+		return iterator{ _end };
+	}
+};
+
+template<class T>
+requires std::forward_iterator<typename T::iterator>
+void printc(const T& r) {
+	for (const auto& i : r) {
+		print("{} ", i);
+	}
+	print("\n");
+}
+
+int main() {
+	Seq<int>r{ 100,110 };
+	//auto [min_it, max_it] = std::minmax_element(r.begin(), r.end());
+	auto [min_it, max_it] = std::ranges::minmax_element(r);
+	print("max:{} min:{}\n", max_it.value, min_it.value);
+	printc(r);
+	static_assert(std::ranges::forward_range<Seq<int>>);
+}
+```
+
+### [4.5使用迭代器适配器填充STL容器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.5%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E5%A1%AB%E5%85%85STL%E5%AE%B9%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<string>
+#include<deque>
+#include<algorithm>
+#include<vector>
+#include<sstream>
+
+inline void printc(const std::ranges::range auto& v,std::string_view s="") {
+	if (s.size())print("{}: ", s);
+	print("size: {}  ", v.size());
+	print("[ ");
+	for (const auto& i : v)print("{} ", i);
+	print("]\n");
+}
+
+int main() {
+	std::deque<int>d1{ 1,2,3,4,5 };
+	std::deque<int>d2(d1.size());
+	std::copy(d1.begin(), d1.end(), d2.begin());
+	printc(d2, "d2 after copy");
+
+	std::copy(d1.begin(), d1.end(), std::back_inserter(d2));
+	printc(d2, "d2 after back_inserter");
+
+	std::deque<int>d3{ 47,73,114,138,54 };
+	std::copy(d3.begin(), d3.end(), std::front_inserter(d2));
+	printc(d2, "d2 after front_inserter");
+
+	auto it2{ d2.begin() + 2 };
+	std::copy(d1.begin(), d1.end(), std::inserter(d2, it2));
+	printc(d2, "d2 after minddle insert");
+
+	print("ostream_iterator:");
+	std::copy(d1.begin(), d1.end(), std::ostream_iterator<int>{std::cout," "});
+	print("\n");
+	
+	/*std::vector<std::string>vs{};
+	std::copy(std::istream_iterator<std::string>(std::cin), {}, std::back_inserter(vs));
+	printc(vs, "vs2");*/
+
+	/*std::vector<int> V(std::istream_iterator<int>(std::cin), {});
+	printc(V, "V");*/
+
+	for (auto it = std::istream_iterator<std::string>(std::cin);
+		it != std::istream_iterator<std::string>{}; ++it) {
+		print("{} ", *it);
+	}
+}
+```
+
+### [4.6创建一个迭代器生成器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+
+class fib_generator {
+	using fib_t = unsigned long;
+	fib_t stop_{};
+	fib_t count_{ 0 };
+	fib_t a_{ 0 };
+	fib_t b_{ 1 };
+	constexpr void do_fib() {
+		const fib_t old_d = b_;
+		b_ += a_;
+		a_ = old_d;
+	}
+public:
+	using iterator_concept = std::forward_iterator_tag;
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = std::remove_cv_t<fib_t>;
+	using difference_type = std::ptrdiff_t;
+	using pointer = const fib_t*;
+	using reference = const fib_t&;
+
+	explicit fib_generator(fib_t stop = 0) :stop_{ stop } {}
+
+	fib_t operator*()const { return b_; }
+	constexpr fib_generator& operator++() {
+		do_fib();
+		++count_;
+		return *this;
+	}
+	fib_generator operator++(int) {
+		auto tmp{ *this };
+		++* this;
+		return tmp;
+	}
+	bool operator==(const fib_generator& o)const {
+		return count_ == o.count_;
+	}
+	const fib_generator& begin()const { return *this; }
+	const fib_generator end()const {
+		auto sentinel = fib_generator();
+		sentinel.count_ = stop_;
+		return sentinel;
+	}
+	fib_t size() { return stop_; }
+};
+
+int main() {
+	printc(fib_generator(10));
+	fib_generator fib(10);
+	auto x = std::ranges::views::transform(fib, [](auto x) {return x * x; });
+	printc(x, "squared:");
+}
+```
+
+### [4.7反向迭代器的反向适配器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.7%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%8F%8D%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<string>
+#include<vector>
+
+void printr(const auto& r, std::string_view s = "") {
+	auto rbegin = std::rbegin(r);
+	auto rend = std::rend(r);
+	for (auto it = rbegin; it != rend; ++it) {
+		print("{} ", *it);
+	}
+	print("\n");
+}
+
+int main() {
+	int array[]{ 1,2,3,4,5 };
+	printc(array, "c-array");
+	auto it = std::begin(array);
+	auto it_end = std::end(array);
+	while (it != it_end) {
+		print("{} ", *it++);
+	}
+	print("\n");
+
+	auto it2 = std::rbegin(array);
+	auto it_end2 = std::rend(array);
+	while (it2 != it_end2) {
+		print("{} ", *it2++);
+	}
+	print("\n");
+
+	printr(array, "rev c-array");
+
+	std::vector<int>v{ 1,2,3,4,5 };
+	printc(v, "vector");
+	printr(v, "rev vector");
+}
+```
+
+### [4.8用哨兵迭代未知长度的对象](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.8%E7%94%A8%E5%93%A8%E5%85%B5%E8%BF%AD%E4%BB%A3%E6%9C%AA%E7%9F%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AF%B9%E8%B1%A1.cpp)
+```cpp
+#include"print.h"
+#include<string>
+
+class cstr_it {
+	const char* s{};
+	static constexpr const char nullchar = '\0';
+public:
+	explicit cstr_it(const char* str) :s{ str } {}
+	char operator*()const { return *s; }
+	cstr_it& operator++() {
+		++s;
+		return *this;
+	}
+	bool operator!=(const char)const {
+		return s != nullptr && *s != nullchar;
+	}
+	cstr_it begin()const { return *this; }
+	const char end()const { return nullchar; }
+};
+
+void print_cstr(const char* s) {
+	print("{}: ", s);
+	for (char c : cstr_it(s)) {
+		print("{:02x} ", c);
+	}
+	print("\n");
+}
+
+int main() {
+	const char carray[]{ "array" };
+	print_cstr(carray);
+	const char* cstr{ "c-string" };
+	print_cstr(cstr);
+}
+```
+
+### [4.9构建zip迭代器适配器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.9%E6%9E%84%E5%BB%BAzip%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<string>
+
+template<typename T>
+class zip_iterator {
+	using val_t = typename T::value_type;
+	using ret_t = std::pair<val_t, val_t>;
+	using it_t = typename T::iterator;
+
+	it_t ita_{};
+	it_t itb_{};
+	it_t ita_begin_{};
+	it_t itb_begin_{};
+	it_t ita_end_{};
+	it_t itb_end_{};
+	zip_iterator(it_t ita, it_t itb) :ita_{ ita }, itb_{ itb } {}//用作begin和end返回的迭代器构造函数
+
+public:
+	using value_type = std::pair<val_t, val_t>;
+	using difference_type = long int;
+	using pointer = const val_t*;
+	using reference = const val_t&;
+
+	zip_iterator(T& a, T& b) :
+		ita_{ a.begin() }, itb_{ b.begin() }, ita_begin_{ ita_ }, itb_begin_{ itb_ }, ita_end_{ a.end() }, itb_end_{ b.end() } {}
+	zip_iterator& operator++() {
+		++ita_;
+		++itb_;
+		return *this;
+	}
+	bool operator==(const zip_iterator& o)const { return ita_ == o.ita_ || itb_ == o.itb_; }
+	bool operator!=(const zip_iterator& o)const { return !operator==(o); }
+	ret_t operator*()const {return { *ita_,*itb_ };}
+	zip_iterator begin()const { return { ita_begin_,itb_begin_ }; }
+	zip_iterator end()const { return { ita_end_,itb_end_ }; }
+};
+
+int main() {
+	std::vector<std::string>vec_a{ "Bob","John","Joni","🤣" };
+	std::vector<std::string>vec_b{ "Dylan","Williams","Mitchell" };
+
+	printc(vec_a, "vec_a: ");
+	printc(vec_b, "vec_b: ");
+
+	print("zipped: ");
+	for (const auto& [a, b] : zip_iterator{ vec_a, vec_b }) {
+		print("[{}, {}] ", a, b);
+	}
+	print("\n");
+
+	std::map<std::string, std::string>name_map{};
+	for (auto [a, b] : zip_iterator{ vec_a,vec_b }) {//插入到map中
+		name_map.emplace(a, b);
+	}
+	print(name_map);//打印
+
+}
+```
+
+### [4.10创建随机访问迭代器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.10%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E8%BF%AD%E4%BB%A3%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<memory>
+#include<vector>
+
+template<typename T>
+class Container {
+
+	class iterator {
+
+		T* ptr_;
+	public:
+		using iterator_concept = std::contiguous_iterator_tag;
+		using iterator_category = std::contiguous_iterator_tag;
+		using value_type = std::remove_cv_t<T>;
+		using difference_type = std::ptrdiff_t;
+		using pointer = const T*;
+		using reference = const T&;
+
+		iterator(T* ptr_ = nullptr) :ptr_{ ptr_ } {}
+
+		const auto operator<=>(const iterator& o)const {
+			ptr_ <=> o.ptr_;
+		}
+
+		iterator operator+(size_t size)const {
+			return { ptr_ + size };
+		}
+
+		friend const iterator operator+(size_t size, const iterator& o) {
+			return { o.ptr_ + size };
+		}
+
+		const iterator operator-(size_t size)const {
+			return{ ptr_ - size };
+		}
+
+		const size_t operator-(const iterator& o)const {
+			return  ptr_ - o.ptr_ ;
+		}
+
+		iterator& operator++() {
+			++ptr_;
+			return *this;
+		}
+
+		iterator operator++(int) {
+			auto tmp{ *this };
+			++* this;
+			return tmp;
+		}
+
+		iterator& operator--() {
+			--ptr_;
+			return *this;
+		}
+
+		iterator operator--(int) {
+			auto tmp{ *this };
+			--* this;
+			return tmp;
+		}
+
+		iterator& operator+=(size_t size)const {
+			ptr_ += size;
+			return *this;
+		}
+
+		iterator& operator-=(size_t size)const {
+			ptr_ -= size;
+			return *this;
+		}
+
+		const reference operator[](size_t size)const {
+			return ptr_[size];
+		}
+
+		const bool operator==(const iterator& o)const {
+			return ptr_ == o.ptr_;
+		}
+
+		bool operator!=(const iterator& o)const {
+			return ptr_ != o.ptr_;
+		}
+
+		reference operator*()const {
+			return *ptr_;
+		}
+
+		T* operator->()const {
+			return ptr_;
+		}
+
+	};
+
+	size_t n_elements_{};
+	std::unique_ptr<T[]>c_{};
+public:
+	Container(std::initializer_list<T>l) :n_elements_{ l.size() }, c_{ std::make_unique<T[]>(n_elements_) }
+	{
+		for (size_t index{}; auto e : l) {
+			c_[index++] = e;
+		}
+	}
+
+	Container(size_t sz) :n_elements_{ sz }, c_{ std::make_unique<T[]>(n_elements_) } {}
+
+	size_t size()const {
+		return n_elements_;
+	}
+
+	const T& operator[](size_t index)const {
+		return c_[index];
+	}
+
+	const T& at(size_t index)const {
+		return index < n_elements_ ? c_[index] : throw std::out_of_range{ "Container::at(): index out of range" };
+	}
+
+	bool empty() const {
+		return (n_elements_ == 0);
+	}
+
+	iterator begin()const { return { c_.get() }; }
+	iterator end()const { return { c_.get() + n_elements_ }; }
+};
+
+template<typename T>
+Container(std::initializer_list<T>l) -> Container<T>;
+
+struct X {
+	int x;
+};
+
+int main() {
+	Container v{1,2,3,4,5};
+	for (const auto& i : v) {
+		print("{} ", i);
+	}
+	print("\n");
+
+	Container<X>v3{ {1},{2} };
+	auto ret2 = v3.begin();
+	ret2->x;
+	print("{}\n", std::ranges::forward_range<Container<int>>);
+	print("{}\n", std::ranges::range<Container<int>>);
+	print("{}\n", std::ranges::viewable_range<Container<int>>);
+	print("{}\n", std::bidirectional_iterator<Container<int>>);
+
+	for (const auto& i : v | std::views::reverse) {
+		print("{} ", i);
+	}
+	
+}
+```
+### 第四章总结
+关于这个迭代器的内容，书上这些demo总的来说还是可以的，值得慢慢看，最好都是自己照着写一遍就行。
