@@ -515,11 +515,52 @@ int main() {
 
 ### [2.5模板参数推导](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
 ```cpp
+#include"print.h"
 
+using namespace std::string_literals;
+
+template<class T>
+struct X {
+	T v{};
+	template<class...Args>
+	X(Args&&...args) :v{ (args + ...) } {}
+};
+
+template<class...Ts>
+X(Ts...ts) -> X<std::common_type_t<Ts...>>;
+
+int main() {
+	X x("10","🤣"s);
+	print("{}\n", x.v);
+}
 ```
 
 ### [2.6编译期if](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
 ```cpp
+#include"print.h"
 
+template<class T>
+auto f(const T& v) {
+	if constexpr (std::is_pointer_v<T>)
+		print("pointer\n");
+	else
+		print("no pointer\n");
+}
+
+template<class T,class...Args>
+void show(T t, Args&&...args) {
+	print("{}\t",t);
+	if constexpr (sizeof...(args)) {
+		show(args...);
+	}
+}
+
+int main() {
+	int* p{};
+	f(p);
+	f(1);
+	show(5,314, "🤣", '*');
+	print("\n");
+}
 ```
 ---
