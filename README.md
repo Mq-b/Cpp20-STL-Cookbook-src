@@ -1571,3 +1571,345 @@ int main() {
 ```
 ### 第四章总结
 关于这个迭代器的内容，书上这些demo总的来说还是可以的，值得慢慢看，最好都是自己照着写一遍就行。
+
+---
+
+<br>
+
+## 第五章lambda表达式
+### [5.3用于作用域可重用代码]()
+```cpp
+#include"print.h"
+
+int main() {
+	auto one = []() {return "one"; };
+	auto two = [] {return "two"; };
+	print("{} {}\n", one(), two());
+
+	auto p = [](auto f) {//泛型lambda，C++20之前只能使用这种方式
+		print("{}\n", f()); 
+	};
+	p([] {return "乐"; });
+
+	auto p2 = []<typename T>(T&& f) { print("{}\n", f()); };
+	p2(one);
+	p2(std::move(one));
+
+	[] <typename T>(T&& f) { print("{}\n", f()); }(two);
+
+	int num{};
+	auto p3 = [num]()mutable {num++; };
+	for (auto i = 0; i < 5; i++)p3();
+
+	print("{}\n", num);
+
+	auto p4 = [&]()mutable {num++; };
+	print("{}\n", sizeof(p4));
+
+	constexpr int n = []()constexpr {return 10 * 10; }();
+
+	auto p5 = []()->int {return 10; };
+}
+```
+
+### [5.4算法库中作为谓词]()
+```cpp
+#include"print.h"
+#include<vector>
+
+bool is_div4(int i) {
+	return i % 4 == 0;
+}
+
+struct is_div4_ {
+	bool operator()(int i) {
+		return i % 4 == 0;
+	}
+};
+
+auto is_div_by(int divisor) {
+	return [=](int i) {return i % divisor == 0; };
+}
+
+int main() {
+	std::vector v{ 1,2,3,4,44,8,10 };
+	auto count1 =std::count_if(v.begin(), v.end(), is_div4);
+	auto count2 = std::count_if(v.begin(), v.end(), is_div4_{});
+	print("{} {}\n", count1, count2);
+	auto count3 = std::count_if(v.begin(), v.end(), [](int i) {return i % 4 == 0; });
+	print("{}\n", count3);
+
+	for (int i : {3, 4, 5}) {
+		auto count = std::ranges::count_if(v, is_div_by(i));
+		print("{} ", count);
+	}
+
+	//不带捕获的lambda表达式可以有转换函数，隐式转换到对应的函数指针
+	int(*p)(int) = [](int a) {return a; };
+	print("{}\n", p(10));
+}
+```
+
+### [5.5与function一起作为多态包装器]()
+```cpp
+#include"print.h"
+#include<vector>
+#include<functional>
+#include<list>
+#include<deque>
+
+void hello() {
+	print("hello\n");
+}
+
+struct Hello_ {
+	void greeting() {
+		print("hello\n");
+	}
+};
+
+int main() {
+	std::deque<int>d;
+	std::list<int>l;
+	std::vector<int>v;
+
+	auto print_c = [](const auto& c) {
+		for (const auto& i : c)print("{} ", i);
+		print("\n");
+	};
+	auto push_c = [](auto& container) {
+		return [&container](auto value) {
+			container.push_back(value);
+		};
+	};
+	const std::vector<std::function<void(int)>>consumers{ push_c(d),push_c(l),push_c(v) };
+	//consumers[0](10);
+	//print_c(d);
+	for (auto& i : consumers) {
+		for (size_t j = 0; j < 10; j++) {
+			i(j);
+		}
+	}
+	print_c(d);
+	print_c(l);
+	print_c(v);
+
+	std::function f{ hello };
+	f();
+	Hello_ h;
+	std::function<void(void)>ff{ std::bind(&Hello_::greeting,&h) };
+	ff();
+	std::bind(&Hello_::greeting, &h)();
+}
+```
+
+### [5.6用递归连接lambda]()
+```cpp
+#include"print.h"
+template <typename F, typename ...Ts>
+auto concat(F t, Ts ...ts){
+	if constexpr (sizeof...(ts) > 0) {
+		return [=](auto ...parameters) {
+			return t(concat(ts...)(parameters...));
+		};
+	}
+	else {
+		return t;
+	}
+}
+int main() {
+	auto twice = [](auto i) {return i * 2; };
+	auto thrice = [](auto i) {return i * 3; };
+	auto combined = concat(thrice, twice, std::plus<int>{});
+	print("{} \n", combined(2, 3));
+}
+```
+
+### [5.7将谓词与逻辑连接词连接起来]()
+```cpp
+#include"print.h"
+#include <functional>
+
+static bool begins_with_a(const std::string& s)
+{
+	return s.find("a") == 0;
+}
+static bool ends_with_b(const std::string& s)
+{
+	return s.rfind("b") == s.length() - 1;
+}
+
+template <typename A, typename B, typename F>
+auto combine(F binary_func, A a, B b) {
+	return [=](auto param) {
+		return binary_func(a(param), b(param));
+	};
+}
+
+int main() {
+	auto a_xxx_b{ combine(std::logical_and<int>{},begins_with_a, ends_with_b) };
+
+	std::copy_if(std::istream_iterator<std::string>{std::cin}, {},
+		std::ostream_iterator<std::string>{std::cout, ", "}, a_xxx_b);
+	std::cout << '\n';
+}
+```
+
+### [5.8用相同的输入调用多个lambda]()
+```cpp
+#include"print.h"
+
+auto braces(const char a, const char b) {
+	return [a, b](const auto v) {
+		print("{}{}{} ", a, v, b);
+	};
+}
+
+int main() {
+	auto a = braces('(', ')');
+	auto b = braces('[', ']');
+	auto c = braces('{', '}');
+	auto d = braces('|', '|');
+	for (int i : {1, 2, 3, 4, 5}) {
+		for (auto x : { a,b,c,d }) {
+			x(i);
+		}
+		print("\n");
+	}
+}
+```
+
+### [5.9对跳转表使用映射lambda]()
+```cpp
+#include"print.h"
+
+const char prompt(const char* p) {
+    std::string r;
+    print("{} > ", p);
+    std::getline(std::cin, r, '\n');
+
+    if (r.size() < 1) return '\0';//如果走这个分支，就是直接下一个循环
+    if (r.size() > 1) {
+        print("响应时间过长\n");
+        return '\0';
+    }
+    return toupper(r[0]);
+}
+
+int main() {
+    using jumpfunc = void(*)();
+
+    std::map<const char, jumpfunc> jumpmap{
+        { 'A', [] { print("func A\n"); } },
+        { 'B', [] { print("func B\n"); } },
+        { 'C', [] { print("func C\n"); } },
+        { 'D', [] { print("func D\n"); } },
+        { 'X', [] { print("Bye!\n"); } }
+    };
+
+    char select{};
+    while (select != 'X') {
+        if ((select = prompt("select A/B/C/D/X"))) {
+            auto it = jumpmap.find(select);
+            if (it != jumpmap.end()) it->second();
+            else print("没有对应的选项！\n");
+        }
+    }
+}
+```
+
+### 第五章总结
+关于lambda的一些概念，书上描述的是有问题的，不要被误导，视频也提到了。其他的一些demo什么的没问题，都写写。
+
+---
+
+<br>
+
+## 第六章STL算法
+### [6.2基于迭代器的复制](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+namespace stdr = std::ranges;
+
+int main() {
+	std::vector<std::string>v1{ "alpha","beta","gamma","delta","epsilon" };
+	printc(v1,"v1");
+	std::vector<std::string>v2(v1.size());
+	std::copy(v1.begin(), v1.end(), v2.begin());
+	printc(v2, "v2");
+
+	std::copy(v1.begin(), v1.end(), std::back_inserter(v2));
+	printc(v2, "v2");
+
+	std::vector<std::string>v3{};
+	std::copy_n(v1.begin(), 3, std::back_inserter(v3));
+	printc(v3, "v3");
+
+	std::vector<std::string>v4{};
+	/*std::copy_if(v1.begin(), v1.end(), std::back_inserter(v4), [](auto& s) {
+		return s.size() > 4;
+	});*/
+	stdr::copy_if(v1,std::back_inserter(v4), [](auto& s) {
+		return s.size() > 4;
+		});
+	printc(v4, "v4");
+
+	stdr::copy(v1, std::ostream_iterator<std::string>{std::cout, " "});
+	print("\n");
+
+	stdr::move(v1, v2.begin());
+	printc(v1, "after move: v1");
+	printc(v2, "after move: v2");
+}
+```
+
+### [6.3将容器元素连接到以供字符串当中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.3%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A5%E4%BE%9B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%93%E4%B8%AD.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<sstream>
+#include<list>
+#include<numbers>
+
+namespace bw {
+	template<typename T>
+	std::ostream& join(T it, T end_it, std::ostream& o, std::string_view sep = "") {
+		if (it != end_it)o << *it++;
+		while (it != end_it)o << sep << *it++;
+		return o;
+	}
+
+	template<typename I>
+	std::string join(I it, I end_it, std::string_view sep = "") {
+		std::ostringstream ostr;
+		join(it, end_it, ostr, sep);
+		return ostr.str();
+	}
+
+	std::string join(const auto& c, std::string_view sep = "") {
+		return join(std::begin(c), std::end(c), sep);
+	}
+}
+
+int main() {
+	std::vector<std::string>greek{ "alpha","beta","gamma",
+		"delta","epsilon" };
+	for (const auto& c : greek) std::cout << c << ",";
+	print("\n");
+	auto greek_view = greek | std::views::join;
+	for (const auto& c : greek_view) std::cout << c;
+	print("\n");
+
+	bw::join(greek.begin(), greek.end(), std::cout, ", ") << '\n';
+
+	auto s = bw::join(greek.begin(), greek.end(), ", ");
+	print("{}\n", s);
+
+	auto s2 = bw::join(greek, ", ");
+	print("{}\n", s2);
+
+	std::list<double>list{ std::numbers::pi,std::numbers::e,std::numbers::sqrt2 };
+	print("{}\n", bw::join(list, ": "));
+}
+```
