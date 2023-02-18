@@ -370,3 +370,6 @@ void printr(const auto& r, std::string_view s = "") {
 	print("\n");
 }
 ```
+
+---
+## 第二章 STL的泛型特性
