@@ -1914,7 +1914,7 @@ int main() {
 }
 ```
 
-### [6.4sort排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
+### [6.4std::sort排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1977,5 +1977,43 @@ int main() {
 	});
 
 	print_things(vthings);
+}
+```
+
+### [6.5std::transform修改容器内容]()
+```cpp
+#include"print.h"
+#include<vector>
+
+std::string str_lower(const std::string& s) {
+	std::string outstr{};
+	for (const char& c : s) {
+		outstr += tolower(c);
+	}
+	return outstr;
+}
+
+int main() {
+	std::vector<int>v1{ 1,2,3,4,5,6,7,8,9,10 };
+	std::vector<int>v2;
+	printc(v1, "v1");
+	std::transform(v1.begin(), v1.end(), std::back_inserter(v2), [](int x) {return x * x; });
+	printc(v2, "v2");
+
+	std::vector<std::string>vstr1{ "Aaa","Bbb","Ccc","DDD" };
+	std::vector<std::string>vstr2;
+	printc(vstr1, "vstr1");
+	print("str_lower:\n");
+	std::transform(vstr1.begin(), vstr1.end(), std::back_inserter(vstr2),
+		[](std::string& x) {return str_lower(x); });
+	printc(vstr2, "vstr2");
+
+	print("ranges sequares:\n");
+	auto view1 = std::views::transform(v1, [](int x) {return x * x; });
+	printc(view1, "view1");
+
+	v2.clear();
+	std::ranges::transform(v1, std::back_inserter(v2), [](int x) {return x * x; });
+	printc(v2, "v2");
 }
 ```
