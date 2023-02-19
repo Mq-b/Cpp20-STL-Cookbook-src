@@ -34,7 +34,6 @@ void print_things(const auto& c) {
 
 int main() {
 	std::vector<int>v{ 1,2,3,4,5,6,7,8,9,10 };
-	check_sorted(v);
 	printc_(v);
 
 	for (int i{ 3 }; i; i--) {
