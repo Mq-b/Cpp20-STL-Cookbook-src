@@ -54,7 +54,7 @@ int main() {
 
 `fmt_str`就是传递的格式化字符串，`fmt_args`是一个保有格式化参数的对象，使用[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)即可返回格式化完毕的字符串。我们使用 `fputs()` 将值输出到控制台上 (这比 `cout` 高效得多)
 
-2. [**`std::formatter`**](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp) 特化
+2. [**`std::formatter`**](https://zh.cppreference.com/w/cpp/utility/format/formatter) 特化
 
 对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
 
