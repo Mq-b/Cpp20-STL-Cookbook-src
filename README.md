@@ -56,7 +56,7 @@ int main() {
 
 2. [**`std::formatter`**](https://zh.cppreference.com/w/cpp/utility/format/formatter) 特化
 
-对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化。
+对于自定义，或者说标准没有对其有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化。
 
 **`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
 
