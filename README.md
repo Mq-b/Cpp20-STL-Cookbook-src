@@ -48,15 +48,15 @@ int main() {
 你可以把这个内容分为两个部分:
 1. 实现模板函数 **`print`**
 
-使用与`std::format()`函数相同的参数。第一个参数是格式字符串的 `std::string_view` 对象，后面作为参数 的可变参数包
+使用与`std::format()`函数相同的参数。第一个参数是格式字符串的 `std::string_view` 对象，后面作为参数 的可变参数包。
 
 [`std::make_format_args()`](https://zh.cppreference.com/w/cpp/utility/format/make_format_args) 函数的作用: *接受参数包并返回一个对象，该对象包含适合格式化的已擦除 类型的值。*
 
-`fmt_str`就是传递的格式化字符串，`fmt_args`是一个保有格式化参数的对象，使用[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)即可返回格式化完毕的字符串。我们使用 `fputs()` 将值输出到控制台上 (这比 `cout` 高效得多)
+`fmt_str`就是传递的格式化字符串，`fmt_args`是一个保有格式化参数的对象，使用[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)即可返回格式化完毕的字符串。我们使用 `fputs()` 将值输出到控制台上 (这比 `cout` 高效得多)。
 
 2. [**`std::formatter`**](https://zh.cppreference.com/w/cpp/utility/format/formatter) 特化
 
-对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
+对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化。
 
 **`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
 
@@ -86,11 +86,11 @@ int main() {
 
 ```
 
-`C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自c++11诞生，一直在增加和改进，我们不再强调)
+`C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自c++11诞生，一直在增加和改进，我们不再强调)。
 
 <br>
 
-其中包括在 `constexpr` 上下文中使用 [`string`](https://zh.cppreference.com/w/cpp/string/basic_string) 和 [`vector`](https://zh.cppreference.com/w/cpp/container/vector) 对象的能力。所以 **，这些对象本身可能不声 明为 constexpr**，**但可以在编译时上下文中使用**
+其中包括在 `constexpr` 上下文中使用 [`string`](https://zh.cppreference.com/w/cpp/string/basic_string) 和 [`vector`](https://zh.cppreference.com/w/cpp/container/vector) 对象的能力。所以 **，这些对象本身可能不声 明为 constexpr**，**但可以在编译时上下文中使用。**
 
 ```cpp
 constexpr void f() {
@@ -2098,3 +2098,60 @@ int main() {
 	printc(v2, "v2");
 }
 ```
+
+<br>
+
+### [6.6查找特定项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.6%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E9%A1%B9.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<algorithm>
+
+struct City {
+	std::string name{};
+	unsigned pop{};
+	bool operator==(const City& o)const {
+		return name == o.name;
+	}
+	std::string str()const {
+		return std::format("[{}, {}]", name, pop);
+	}
+};
+
+int main() {
+	const std::vector<int>v{ 1,2,3,4,5,6,7,8,9,10 };
+
+	auto it1 = std::find(v.begin(), v.end(), 7);
+	if (it1 != v.end())print("found: {}\n", *it1);
+	else print("not found:\n");
+
+	const std::vector<City>c{
+		{"London",8425622},
+		{"Berlin",3566791},
+		{"Tokyo",37435191},
+		{"Cairo",20485965}
+	};
+	auto it2 = std::find(c.begin(), c.end(), City{ "Berlin" });
+	if (it2 != c.end())print("found: {}\n", it2->str());
+	else print("not found:\n");
+
+	auto it3 = std::find_if(begin(c), end(c), [](const City& item) {
+		return item.pop > 20000000;
+	});
+	if (it3 != c.end())print("found: {}\n", it3->str());
+	else print("not found:\n");
+
+	auto vwl = std::views::filter(c, [](const City& item) {
+		return item.pop > 20000000;
+	});
+	for (const City& e : vwl)print("{}\n", e.str());
+}
+```
+
+这个内容大概四个部分
+1. 使用`std::find`查找标量元素
+2. 使用`std::find`查找自定义类型元素(需要重载`operator==`)
+3. 使用`std::find_if`查找自定义类型符合谓词要求的元素
+4. 使用`std::views::filter`返回符合谓词要求的视图，可以像普通容器一样遍历
+
+`std::find`或`std::find_if`的返回值是迭代器，如果没有查找到，则返回`end()`。
