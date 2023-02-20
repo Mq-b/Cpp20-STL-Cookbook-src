@@ -43,7 +43,6 @@ int main() {
 	Frac f{ 1,10 };
 	print("{}", f);
 }
-//格式化规则参见 https://zh.cppreference.com/w/cpp/utility/format/formatter
 //特化规则参见:	https://zh.cppreference.com/w/cpp/named_req/Formatter
  ```
 你可以把这个内容分为两个部分:
@@ -55,13 +54,13 @@ int main() {
 
 `fmt_str`就是传递的格式化字符串，`fmt_args`是一个保有格式化参数的对象，使用[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)即可返回格式化完毕的字符串。我们使用 `fputs()` 将值输出到控制台上 (这比 `cout` 高效得多)
 
-2. **`std::formatter`** 特化
+2. [**`std::formatter`**](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp) 特化
 
-   对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
+对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
 
-   **`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
+**`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
 
-   **`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串“{0}/{1}”以及分子和分母的值 (0 和 1 表示参数的 位置)。
+**`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串“{0}/{1}”以及分子和分母的值 (0 和 1 表示参数的 位置)。
 
 <br>
 
@@ -85,7 +84,6 @@ int main() {
 	//constexpr auto n3 = f2()//error
 }
 
-//constexpr: https://zh.cppreference.com/w/cpp/language/constexpr
 ```
 
 `C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自c++11诞生，一直在增加和改进，我们不再强调)
