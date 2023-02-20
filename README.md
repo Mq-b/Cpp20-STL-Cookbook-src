@@ -57,11 +57,13 @@ int main() {
 
 2. **`std::formatter`** 特化
 
-对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
+   对于自定义，或者说标准没有对齐有特化的类型，需要我们自行特化`std::formatter`才可以正确的格式化
 
-**`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
+   **`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
 
-**`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串“{0}/{1}”以及分子和分母的值 (0 和 1 表示参数的 位置)。
+   **`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串“{0}/{1}”以及分子和分母的值 (0 和 1 表示参数的 位置)。
+
+<br>
 
 ### [1.3使用编译时constexpr vector和string](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
 ```cpp
@@ -86,7 +88,72 @@ int main() {
 //constexpr: https://zh.cppreference.com/w/cpp/language/constexpr
 ```
 
+`C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自c++11诞生，一直在增加和改进，我们不再强调)
+
+<br>
+
+其中包括在 `constexpr` 上下文中使用 [`string`](https://zh.cppreference.com/w/cpp/string/basic_string) 和 [`vector`](https://zh.cppreference.com/w/cpp/container/vector) 对象的能力。所以 **，这些对象本身可能不声 明为 constexpr**，**但可以在编译时上下文中使用**
+
+```cpp
+constexpr void f() {
+	constexpr std::string s{ "乐" };
+}//错误
+constexpr void f() {
+	std::string s{ "乐" };
+}//正确
+```
+
+<br>
+
+也可以在`constexpr`上下文中使用算法:
+
+```cpp
+constexpr int use_vector() {
+	std::vector<int> vec{ 1, 2, 3, 4, 5 };
+	return accumulate(begin(vec), end(vec), 0);
+}
+
+int main() {
+	constexpr int ret = use_vector();
+}
+```
+
+<br>
+
+`C++20` 开始，标准 string 和 vector 类具有`constexpr`限定的构造函数和析构函数，这是可在编译时使用的
+前提。所以，分配给 string 或 vector 对象的内存，也必须在编译时释放。
+
+例如，constexpr 函数返回一个 vector，编译时不会出错(但是实测 **`gcc msvc clang`** 全部编译错误):
+```cpp
+constexpr auto f() {
+	std::vector<int>v{ 1,2,3 };
+	return v;
+}
+
+int main() {
+	constexpr auto ret = f();//error
+}
+```
+
+<br>
+
+在编译期间分配和释放了 `vector` 对象，该对象在运行时不可用，理论上可以返回通过编译，实际不可，就算可，你返回了也没有
+办法去使用。在运行时使用一些 `vector` 对象的适配 `constexpr` 的方法，比如 `size()`，它是`constexpr`限定的。
+
+```cpp
+constexpr auto f() {
+	std::vector<int>v{ 1,2,3 };
+	return v;
+}
+int main(){
+	constexpr auto n = f();//√
+}
+```
+
+<br>
+
 ### [1.4安全比较不同类型的整数cmp_less](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
+
 ``` cpp
 #include<iostream>
 
