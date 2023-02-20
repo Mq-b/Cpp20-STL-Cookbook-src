@@ -60,7 +60,7 @@ int main() {
 
 **`parse() `** 函数解析格式字符串，从冒号之后 (若没有冒号，则在开大括号之后) 直到但不包括结 束大括号 (就是指定对象类型的部分)。其接受一个 `ParseContext `对象，**并返回一个迭代器**。这里，可以只返回 `begin()` 迭代器。因为我们的类型不需要新语法，所以无需准备任何东西。 
 
-**`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串“{0}/{1}”以及分子和分母的值 (0 和 1 表示参数的 位置)。
+**`format()`** 函数接受一个 `Frac` 对象和一个 `FormatContext` 对象，**返回结束迭代器**。**`format_to()`** 函数可使这变得很容易，**其可以接受一个迭代器、一个格式字符串和一个参数包**。本例中，参数包是 Frac 类的两个属性，分子和分母。 需要做的就是提供一个简单的格式字符串`“{0}/{1}”`以及分子和分母的值 (0 和 1 表示参数的 位置)。
 
 <br>
 
@@ -86,7 +86,7 @@ int main() {
 
 ```
 
-`C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自c++11诞生，一直在增加和改进，我们不再强调)。
+`C++20` 允许在新的上下文中使用 [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)，这些语句可以在编译时计算，从而提高了效率(此关键字自`c++11`诞生，一直在增加和改进，我们不再强调)。
 
 <br>
 
@@ -118,10 +118,10 @@ int main() {
 
 <br>
 
-`C++20` 开始，标准 string 和 vector 类具有`constexpr`限定的构造函数和析构函数，这是可在编译时使用的
-前提。所以，分配给 string 或 vector 对象的内存，也必须在编译时释放。
+`C++20` 开始，标准 `string` 和 `vector` 类具有`constexpr`限定的构造函数和析构函数，这是可在编译时使用的
+前提。所以，分配给 `string` 或 `vector` 对象的内存，也必须在编译时释放。
 
-例如，constexpr 函数返回一个 vector，编译时不会出错(但是实测 **`gcc msvc clang`** 全部编译错误):
+例如，`constexpr` 函数返回一个 `vector`，编译时不会出错(但是实测 **`gcc msvc clang`** 全部编译错误):
 ```cpp
 constexpr auto f() {
 	std::vector<int>v{ 1,2,3 };
@@ -2155,3 +2155,51 @@ int main() {
 4. 使用 [**`std::views::filter`**](https://zh.cppreference.com/w/cpp/ranges/filter_view) 返回符合谓词要求的视图，可以像普通容器一样遍历
 
 `std::find`或`std::find_if`的返回值是**迭代器**，如果没有查找到，则返回`end()`。
+
+<br>
+
+### [6.7将容器元素限制在`std::clamp`范围内](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.7%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E9%99%90%E5%88%B6%E5%9C%A8clamp%E8%8C%83%E5%9B%B4%E5%86%85.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<list>
+
+constexpr int ilow{ 0 };
+constexpr int ihigh{ 500 };
+
+void printc_(const std::ranges::range auto& v, std::string_view s = "") {
+	for (const auto& i : v)print("{:>5} ", i);
+	print("\n");
+}
+
+int main() {
+	auto il = { 0,-12,2001,4,5,-14,100,200 };
+	std::vector<int>voi{ il };
+	print("vector voi before:\n");
+	printc_(voi);
+
+	print("vector voi after:\n");
+	for (auto& e : voi)e = std::clamp(e, ilow, ihigh);
+	printc_(voi);
+
+	print("list loi before:\n");
+	std::list<int>loi{ il };
+	printc_(loi);
+	std::transform(loi.begin(), loi.end(), loi.begin(), [](auto e) {
+		return std::clamp(e, ilow, ihigh);
+	});
+	print("list loi after:\n");
+	printc_(loi);
+}
+```
+运行结果:
+
+	vector voi before:
+    0   -12  2001     4     5   -14   100   200
+	vector voi after:
+    0     0   500     4     5     0   100   200
+	list loi before:
+    0   -12  2001     4     5   -14   100   200
+	list loi after:
+    0     0   500     4     5     0   100   200
+[**`std::clamp`**](https://zh.cppreference.com/w/cpp/algorithm/clamp) 的作用非常单纯，就是限制元素的范围
