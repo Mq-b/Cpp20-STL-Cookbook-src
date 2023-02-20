@@ -2149,9 +2149,9 @@ int main() {
 ```
 
 这个内容大概四个部分
-1. 使用`std::find`查找标量元素
+1. 使用[**`std::find`**](https://zh.cppreference.com/w/cpp/algorithm/find)查找标量元素
 2. 使用`std::find`查找自定义类型元素(需要重载`operator==`)
-3. 使用`std::find_if`查找自定义类型符合谓词要求的元素
-4. 使用`std::views::filter`返回符合谓词要求的视图，可以像普通容器一样遍历
+3. 使用 **`std::find_if`** 查找自定义类型符合谓词要求的元素
+4. 使用 [**`std::views::filter`**](https://zh.cppreference.com/w/cpp/ranges/filter_view) 返回符合谓词要求的视图，可以像普通容器一样遍历
 
-`std::find`或`std::find_if`的返回值是迭代器，如果没有查找到，则返回`end()`。
+`std::find`或`std::find_if`的返回值是**迭代器**，如果没有查找到，则返回`end()`。
