@@ -186,7 +186,7 @@ int main() {
 - `cmp_greater`
 - `cmp_less_equal`
 - `cmp_greater_equal`
-如上述代码中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于
+如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于
 
 <br>
 
