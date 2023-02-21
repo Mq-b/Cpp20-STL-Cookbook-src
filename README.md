@@ -1736,7 +1736,7 @@ int main() {
 }
 ```
 
-### [5.5与`std::function`一起作为多态包装器]()
+### [5.5与`std::function`一起作为多态包装器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.5%E4%B8%8Efunction%E4%B8%80%E8%B5%B7%E4%BD%9C%E4%B8%BA%E5%A4%9A%E6%80%81%E5%8C%85%E8%A3%85%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1789,7 +1789,7 @@ int main() {
 }
 ```
 
-### [5.6用递归连接lambda]()
+### [5.6用递归连接lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.6%E7%94%A8%E9%80%92%E5%BD%92%E8%BF%9E%E6%8E%A5lambda.cpp)
 ```cpp
 #include"print.h"
 template <typename F, typename ...Ts>
@@ -1811,7 +1811,7 @@ int main() {
 }
 ```
 
-### [5.7将谓词与逻辑连接词连接起来]()
+### [5.7将谓词与逻辑连接词连接起来](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
 ```cpp
 #include"print.h"
 #include <functional>
@@ -1841,7 +1841,7 @@ int main() {
 }
 ```
 
-### [5.8用相同的输入调用多个lambda]()
+### [5.8用相同的输入调用多个lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.8%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E5%A4%9A%E4%B8%AAlambda.cpp)
 ```cpp
 #include"print.h"
 
@@ -1865,7 +1865,7 @@ int main() {
 }
 ```
 
-### [5.9对跳转表使用映射lambda]()
+### [5.9对跳转表使用映射lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.9%E5%AF%B9%E8%B7%B3%E8%BD%AC%E8%A1%A8%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84lambda.cpp)
 ```cpp
 #include"print.h"
 
