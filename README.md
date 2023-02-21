@@ -1663,7 +1663,7 @@ int main() {
 <br>
 
 ## 第五章lambda表达式
-### [5.3用于作用域可重用代码]()
+### [5.3用于作用域可重用代码](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
 ```cpp
 #include"print.h"
 
@@ -1698,7 +1698,7 @@ int main() {
 }
 ```
 
-### [5.4算法库中作为谓词]()
+### [5.4算法库中作为谓词](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.4%E7%AE%97%E6%B3%95%E5%BA%93%E4%B8%AD%E4%BD%9C%E4%B8%BA%E8%B0%93%E8%AF%8D.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
