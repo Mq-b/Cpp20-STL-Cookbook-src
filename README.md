@@ -2300,3 +2300,55 @@ int main() {
 
 后面就是简简单单的遍历一下容器映射到`map`中，对其进行打印即可
 
+<br>
+
+### [6.9生成有序数据序列](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<algorithm>
+
+int main() {
+	std::vector<std::string>vs{ "dog","cat","velociraptor" };   
+	std::sort(vs.begin(), vs.end());
+	do {
+		printc(vs);
+	} while (std::next_permutation(vs.begin(), vs.end()));
+
+	std::vector<int>v{ 1,2,3 };
+	do
+	{
+		printc(v);
+	} while (std::next_permutation(v.begin(),v.end()));
+	
+	print("从大到小:\n");
+	std::sort(v.begin(), v.end(), std::greater<int>{});
+	do
+	{
+		printc(v);
+	} while (std::next_permutation(v.begin(), v.end()));
+}
+```
+
+运行结果:
+
+	[cat] [dog] [velociraptor]
+	[cat] [velociraptor] [dog]
+	[dog] [cat] [velociraptor]
+	[dog] [velociraptor] [cat]
+	[velociraptor] [cat] [dog]
+	[velociraptor] [dog] [cat]
+	[1] [2] [3]
+	[1] [3] [2]
+	[2] [1] [3]
+	[2] [3] [1]
+	[3] [1] [2]
+	[3] [2] [1]
+	从大到小:
+	[3] [2] [1]
+
+这个例子应该是非常的简短了，我们看到，先是创建了一个`std::vector<std::string>`的对象并且初始化，然后先对其进行默认的降序排序。
+
+进入`do while`它的条件语句里是执行 [**`std::next_permutation`**](https://zh.cppreference.com/w/cpp/algorithm/next_permutation)，若新排列按字典序大于旧者则为 **true** 。若抵达最后重排并重置范围为首个排列则为 **false**。我们可以看数字的这个，它一开始是`1 2 3 `重新排列后是 `1 3 2 `按照字典序，肯定是大于旧的，所以返回`true`，循环会继续,直到`3 2 1`它是按照首个排列的，也就是从大到小，所以是 **false**，循环结束。
+
+其实我们看最后一段代码可以发现，它直接打印了一次`[3] [2] [1]`就结束了，因为这三个元素的最后一个字符是字典顺序的最后一个
