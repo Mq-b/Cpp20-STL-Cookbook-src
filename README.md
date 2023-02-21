@@ -2208,3 +2208,7 @@ int main() {
 	list loi after:
     0     0   500     4     5     0   100   200
 [**`std::clamp`**](https://zh.cppreference.com/w/cpp/algorithm/clamp) 的作用非常单纯，就是限制元素的范围
+```cpp
+std::cout << std::clamp(-10, 0, 100) << '\n';//0
+std::cout << std::clamp(200, 0, 100) << '\n';//100
+```
