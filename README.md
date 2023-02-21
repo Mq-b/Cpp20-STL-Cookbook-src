@@ -179,6 +179,16 @@ int main() {
 
 //整数比较函数: https://zh.cppreference.com/w/cpp/utility/intcmp
 ```
+`C++20` 在 `utility` 引入了一组比较函数，他们分别是：
+- `cmp_equal`
+- `cmp_not_equal`
+- `cmp_less`
+- `cmp_greater`
+- `cmp_less_equal`
+- `cmp_greater_equal`
+如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于
+
+<br>
 
 ### [1.5三路比较运算符](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.5%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.cpp)
 ``` cpp
