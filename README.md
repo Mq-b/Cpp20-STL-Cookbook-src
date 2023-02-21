@@ -69,7 +69,7 @@ int main() {
 
 <br>
 
-### [1.3使用编译时constexpr vector和string](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
+### [1.3使用编译时constexpr `std::vector`和`std::string`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
 ```cpp
 #include<iostream>
 #include<vector>
@@ -155,7 +155,7 @@ int main(){
 
 <br>
 
-### [1.4安全比较不同类型的整数cmp_less](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
+### [1.4安全比较不同类型的整数`cmp_less`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
 
 ``` cpp
 #include<iostream>
@@ -253,7 +253,7 @@ int main() {
 //诊断指令: https://zh.cppreference.com/w/cpp/preprocessor/error
 ```
 
-### [1.7概念(concept)和约束(constraint)-创建更安全的模板](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
+### [1.7概念(`concept`)和约束(`constraint`)-创建更安全的模板](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
 ``` cpp
 #include<iostream>
 
@@ -550,7 +550,7 @@ int main() {
 }
 ```
 
-### [2.4if&switch中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+### [2.4`if`&`switch`中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
 ```cpp
 #include"print.h"
 #include<mutex>
@@ -625,7 +625,7 @@ int main() {
 }
 ```
 
-### [2.6编译期if](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+### [2.6编译期`if`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
 ```cpp
 #include"print.h"
 
@@ -737,7 +737,7 @@ int main() {
 }
 ```
 
-### [3.5安全的访问vector元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
+### [3.5安全的访问`std::vector`元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -773,7 +773,7 @@ int main() {
 }
 ```
 
-### [3.6保持vector元素的顺序](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
+### [3.6保持`std::vector`元素的顺序](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -822,7 +822,7 @@ int main() {
 }
 ```
 
-### [3.7高效的将元素插入到map中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
+### [3.7高效的将元素插入到`std::map`中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
 ```cpp
 #include"print.h"
 
@@ -856,7 +856,7 @@ int main() {
 //重复键元素的问题参见 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300
 ```
 
-### [3.8高效的修改map项的键值](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
+### [3.8高效的修改`std::map`项的键值](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -892,7 +892,7 @@ int main() {
 }
 ```
 
-### [3.9自定义键值的unordered_map](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+### [3.9自定义键值的`std::unordered_map`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -925,7 +925,7 @@ int main() {
 }
 ```
 
-### [3.10使用set进行输入和筛选](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+### [3.10使用`std::set`进行输入和筛选](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
 #include"print.h"
 #include<set>
@@ -940,7 +940,7 @@ int main() {
 }
 ```
 
-### [3.11实现简单的RPN计算器与deque](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
+### [3.11实现简单的RPN计算器与`deque`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
 ```cpp
 #include"print.h"
 #include<deque>
@@ -1017,7 +1017,7 @@ int main() {
 }
 ```
 
-### [3.12使用map的词频计数器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
+### [3.12使用`std::map`的词频计数器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<ranges>
@@ -1063,7 +1063,7 @@ int main() {
 }
 ```
 
-### [3.13找出含有相应长句的vector](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
+### [3.13找出含有相应长句的`std::vector`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
 ```cpp
 #include"print.h"
 #include<string_view>
@@ -1106,7 +1106,7 @@ int main() {
 }
 ```
 
-### [3.14使用multimap制作待办事项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
+### [3.14使用`std::multimap`制作待办事项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<map>
@@ -1736,7 +1736,7 @@ int main() {
 }
 ```
 
-### [5.5与function一起作为多态包装器]()
+### [5.5与`std::function`一起作为多态包装器]()
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2000,7 +2000,7 @@ int main() {
 }
 ```
 
-### [6.4std::sort排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
+### [6.4`std::sort`排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2066,7 +2066,7 @@ int main() {
 }
 ```
 
-### [6.5std::transform修改容器内容](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
+### [6.5`std::transform`修改容器内容](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2200,15 +2200,93 @@ int main() {
 运行结果:
 
 	vector voi before:
-    0   -12  2001     4     5   -14   100   200
+	0   -12  2001     4     5   -14   100   200
 	vector voi after:
-    0     0   500     4     5     0   100   200
+	0     0   500     4     5     0   100   200
 	list loi before:
-    0   -12  2001     4     5   -14   100   200
+	0   -12  2001     4     5   -14   100   200
 	list loi after:
-    0     0   500     4     5     0   100   200
+	0     0   500     4     5     0   100   200
 [**`std::clamp`**](https://zh.cppreference.com/w/cpp/algorithm/clamp) 的作用非常单纯，就是限制元素的范围
 ```cpp
 std::cout << std::clamp(-10, 0, 100) << '\n';//0
 std::cout << std::clamp(200, 0, 100) << '\n';//100
 ```
+
+<br>
+
+### [6.8`std::sample`采集样本数据集](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.8sample%E9%87%87%E9%9B%86%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%9B%86.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<random>
+#include<array>
+
+int iround(const double& d) {
+	return static_cast<int>(std::round(d));//四舍五入返回double，进行显式类型转换
+}
+
+int main() {
+	constexpr size_t n_data{ 200000 };//数据大小
+	constexpr size_t n_samples{ 500 };//样本容器大小
+	constexpr int mean{ 0 };//均值
+	constexpr size_t dev{ 3 };//方差
+	
+	std::random_device rd;//提供对硬件随机数生成器的访问
+	std::mt19937 rng{ rd() };//随机数生成器
+	std::normal_distribution<>dist{ mean,dev };//正态分布的两个参数 均值与方差
+	std::array<int, n_data>data{};
+	for (auto& e : data)e = iround(dist(rng));
+
+	std::array<int, n_samples>samples{};
+	std::sample(data.begin(), data.end(), samples.begin(), n_samples, rng);
+
+	std::map<int, size_t> hist{};
+	for (const int i : samples) ++hist[i];
+
+	constexpr size_t scale{ 3 };
+	print("{:>3} {:>5} {:<}/{}\n", "n", "count", "graph", "scale");
+	for (const auto& [value, count] : hist) {
+		print("{:>3} ({:>3}) {}\n", value, count, std::string(count , '*'));
+	}
+}
+```
+
+运行结果:
+
+	  n count graph/scale
+	-11 (  1) *
+	-10 (  1) *
+	 -9 (  1) *
+	 -8 (  1) *
+	 -7 (  5) *****
+	 -6 (  9) *********
+	 -5 ( 11) ***********
+	 -4 ( 30) ******************************
+	 -3 ( 35) ***********************************
+	 -2 ( 62) **************************************************************
+	 -1 ( 70) **********************************************************************
+	  0 ( 56) ********************************************************
+	  1 ( 60) ************************************************************
+	  2 ( 59) ***********************************************************
+	  3 ( 34) **********************************
+	  4 ( 29) *****************************
+	  5 ( 19) *******************
+	  6 ( 10) **********
+	  7 (  5) *****
+	  8 (  2) **
+
+这个内容我们慢慢看。首先看函数`iround`，它的作用十分简单，因为标准库没有给我们提供返回`int`的四舍五入的函数，所以自己稍微包装一下，在里面使用`static_cast<int>`转换后再返回，看着会舒服点。
+
+进入`main`函数，我们定义了几个 **`constexpr`** 的常量，作用也都有注释:**数据大小、样本容器大小、均值、方差**。
+
+下面两行代码就是之前在 **[6.4sort排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)** 提起过的内容，随机数。
+
+[`std::normal_distribution<>dist{ mean,dev };`](https://zh.cppreference.com/w/cpp/numeric/random/normal_distribution)需要注意，这个正态分布算本节重点，接受两个参数**均值与方差**，你可以简单理解我我们这节使用的随机数将以正态分布的方式随机，并且我们会将它的值打印出来直方图。
+
+后面自然而然的就是为`std::array`对象遍历元素赋值按照正态分布的随机值了。
+
+然后我们就要开始抽取样本了: 此时就要再创造一个数组对象，然后使用[**`std::sample`**](https://zh.cppreference.com/w/cpp/algorithm/sample)算法，前面两个参数是被抽取样本的范围，第三个参数是写入样本的输出迭代器，第四个参数是要抽取样本数`n_samples`，第五个参数是用作随机源的随机数生成器`rng`
+
+后面就是简简单单的遍历一下容器映射到`map`中，对其进行打印即可
+
