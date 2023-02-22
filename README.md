@@ -185,7 +185,7 @@ int main() {
 - `std::cmp_greater`
 - `std::cmp_less_equal`
 - `std::cmp_greater_equal`
-如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于
+如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于。
 
 <br>
 
@@ -267,41 +267,108 @@ int main() {
 #include<iostream>
 
 template<std::integral T>
-void f(T t){}
+void f(T t) {}
 
 template<class T>
-	requires std::integral<T> || std::is_pointer_v<T>
-struct X {
+requires std::integral<T> || std::is_pointer_v<T>
+struct X {};
 
-};
-
-template<class T>
-	requires std::is_integral_v<T>
+template <class T>
+requires std::is_integral_v<T>
 T n{};
 
-template<class T>
+template <class T>
 concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_v<uint32_t, T>);
 
 void f2(love auto){}
 
 int main() {
-	f(1);
-	f('*');
+	f(1);            // 1 是 int，约束满足
+	f('*');          // '*' 是整数类型(Integer Type)之一，约束满足
 	//f(1.2);
-	X<int>x;
+	X<int> x;        // int 满足两个约束的析取之一：std::integral<T>，约束满足
 	//X<double>x2;
-	X<double*>x3;
+	X<double*> x3;   // double* 满足两个约束的析取之一：std::is_pointer_t<T>，约束满足
 	n<int> = 3;
 	//n<double>;
 	std::cout << n<int> << '\n';
-	f2(1);
-	f2(1u);
+	f2(1);           // 满足合取 std::is_integral_v<T> 和 std::is_same_v<int, T>
+	f2(1u);          // 满足合取 std::is_integral_v<T>，std::is_same_v<uint32_t, T>
 	//f2(1l);
 }
 
 //Requires表达式 https://zh.cppreference.com/w/cpp/language/requires
 //约束与概念 https://zh.cppreference.com/w/cpp/language/constraints
 ```
+>*约束(Constraint)是对模板形参提出的一种要求，这种要求的具名集合被称为概念(Concept)。每一个概念均为[**谓词**](https://zh.cppreference.com/w/cpp/named_req/Predicate) ，且在**编译期求值**，并在用作约束时成为模板接口的一部分*。
+
+作为  `C++20` 引入的四大新特性之一：`Concept` ，提出了一种比 *SFINAE* 更好的约束方法，它易于理解和编写，也能在出现问题时给出更可读的编译期报错。概念的定义形式如下：
+
+> **_template_** < <font color=grey><i>模板形参列表</i></font> >
+> **_concept_** <font color=grey><i>概念名</i></font> <font color=grey><i>属性</i></font><font color=green>(可选)</font> **=** <font color=grey><i>约束表达式</i></font> **;**
+
+在上述例子中，概念 `love` 的定义就是这样：
+```cpp
+template <class T>
+concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_v<uint32_t, T>);
+```
+其中，运算符 `&&` 构成两个约束的合取(*Conjunction*)，两个约束均满足时合取满足。`||` 构成的析取(*Disjunction*)则为两者之一满足则析取满足。
+
+`requires` 关键字可用于进行多个约束的分开表达，约束之间的关系均为合取，分为以下多种情况：
+
+- 简单约束
+```cpp
+// 1. 简单约束
+template <typename T>
+concept Addable = requires(T a, T b)
+{
+	a + b;    //编译器会检查该表达式是否 "合法"
+}
+```
+
+- 类型约束
+```cpp
+template <typename T>
+struct tmp
+{
+	using value = T;
+};
+
+template <typename T, typename = std::enable_if_t<std::is_same_v<T, V>>
+struct test {};
+
+template <typename T>
+using Ref = T&;
+
+template <typename T>
+concept Cpt = requires    //
+{
+	typename T::value;    // 检查 T 是否存在成员 T::value
+	typename X<T>         // 检查是否存在模板类 S 的特化 S<T>
+	typename Ref<T>       // 检查是否存在合法别名模板 Ref<T>
+}
+```
+
+- 复合约束
+复合约束用于约束表达式的返回类型。其定义为：
+
+> { <font color=grey><i>表达式</i></font> } **noexcept**<font color=green>(可选)</font> -> <font color=grey><i>类型约束</i></font> **;**
+
+例如：
+```cpp
+template <typename T>
+concept C = requires(T x) {
+  {x * 2} -> typename T::inner;    // 表达式 x * 2 的类型可转换为 T::inner
+  {x + 3} -> std::same_as<int>; // 表达式 x + 3 需要满足约束 std::same_as<int>
+};
+```
+
+复合约束的计算顺序为：
+- 计算 <font color=grey><i>表达式</i></font> 是否合法
+- 如果有 **noexcept** 限定，则 <font color=grey><i>表达式</i></font> 不能抛出异常
+- `decltype((expression))` 的类型必须满足 <font color=grey><i>类型约束</i></font>
+全满足则结果为 `true` ，否则为 `false`
+<br>
 
 ### [1.8模块](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
 
