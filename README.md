@@ -2351,3 +2351,41 @@ int main() {
 进入`do while`它的条件语句里是执行 [**`std::next_permutation`**](https://zh.cppreference.com/w/cpp/algorithm/next_permutation)，若新排列按字典序大于旧者则为 **true** 。若抵达最后重排并重置范围为首个排列则为 **false**。我们可以看数字的这个，它一开始是`1 2 3 `重新排列后是 `1 3 2 `按照字典序，肯定是大于旧的，所以返回`true`，循环会继续,直到`3 2 1`它是按照首个排列的，也就是从大到小，所以是 **false**，循环结束。
 
 其实我们看最后一段代码可以发现，它直接打印了一次`[3] [2] [1]`就结束了，因为这三个元素的最后一个字符是字典顺序的最后一个
+
+<br>
+
+### [6.10合并已排序容器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+```cpp
+#include"print.h"
+#include<vector>
+#include<algorithm>
+
+int main() {
+	std::vector<std::string>vs1{ "dog","cat","veloiraptor" };
+	std::vector<std::string>vs2{ "kirk","sulu","spock" };
+	std::vector<std::string>dest{};
+	printc(vs1, "vs1");
+	printc(vs2, "vs2");
+
+	std::ranges::sort(vs1);
+	std::ranges::sort(vs2);
+	printc(vs1, "vs1");
+	printc(vs2, "vs2");
+
+	std::merge(vs1.begin(), vs1.end(), vs2.begin(), vs2.end(), std::back_inserter(dest));
+	printc(dest, "dest");
+}
+
+```
+
+运行结果:
+
+	vs1: [dog] [cat] [veloiraptor]
+	vs2: [kirk] [sulu] [spock]
+	vs1: [cat] [dog] [veloiraptor]
+	vs2: [kirk] [spock] [sulu]
+	dest: [cat] [dog] [kirk] [spock] [sulu] [veloiraptor]
+
+[**`std::merge`**](https://zh.cppreference.com/w/cpp/algorithm/merge)算法接受两个已排序的序列，并创建第三个已合并并排序的序列
+
+前面四个参数表示两个输入范围，第五个参数表示结果序列发送的输出迭代器
