@@ -180,12 +180,14 @@ int main() {
 
 ```
 `C++20` 在 [**`utility`**](https://zh.cppreference.com/w/cpp/header/utility) 引入了一组[**比较函数**](https://zh.cppreference.com/w/cpp/utility/intcmp)，他们分别是：
+
 - `std::cmp_equal`
 - `std::cmp_not_equal`
 - `std::cmp_less`
 - `std::cmp_greater`
 - `std::cmp_less_equal`
 - `std::cmp_greater_equal`
+<br>
 如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于。
 
 <br>
@@ -340,7 +342,10 @@ int main() {
 template <class T>
 concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_v<uint32_t, T>);
 ```
+
 其中，运算符 `&&` 构成两个约束的合取(*Conjunction*)，两个约束均满足时合取满足。`||` 构成的析取(*Disjunction*)则为两者之一满足则析取满足。
+
+<br>
 
 `requires` 关键字可用于进行多个约束的分开表达，约束之间的关系均为合取，分为以下多种情况：
 
@@ -390,6 +395,8 @@ concept C = requires(T x) {
   {x + 3} -> std::same_as<int>;    // 表达式 x + 3 需要满足约束 std::same_as<int>
 };
 ```
+
+<br>
 
 复合约束的计算顺序为：
 - 计算 <font color=grey><i>表达式</i></font> 是否合法
