@@ -369,7 +369,7 @@ template <typename T>
 using Ref = T&;
 
 template <typename T>
-concept Cpt = requires    //
+concept Cpt = requires
 {
 	typename T::value;    // 检查 T 是否存在成员 T::value
 	typename X<T>         // 检查是否存在模板类 S 的特化 S<T>
@@ -387,7 +387,7 @@ concept Cpt = requires    //
 template <typename T>
 concept C = requires(T x) {
   {x * 2} -> typename T::inner;    // 表达式 x * 2 的类型可转换为 T::inner
-  {x + 3} -> std::same_as<int>; // 表达式 x + 3 需要满足约束 std::same_as<int>
+  {x + 3} -> std::same_as<int>;    // 表达式 x + 3 需要满足约束 std::same_as<int>
 };
 ```
 
