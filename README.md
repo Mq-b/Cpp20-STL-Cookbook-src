@@ -1923,6 +1923,39 @@ int main() {
 	print("{} \n", combined(2, 3));
 }
 ```
+`concat`较为复杂，所以先看传入一个参数时的情况。
+```cpp
+auto combined = concat(std::plus<int>{});
+print("{} \n", combined(2, 3));
+```
+因为只有一个参数`t`，`sizeof...(ts) > 0`求值结果为`flase`，所以函数直接返回传入的参数，即`plus<int>`对象。
+`concat`返回值初始化`combined`，`combined(2, 3)`的结果是5。<br>
+再来看传入两个参数时的情况。
+```cpp
+auto combined = concat(twice, std::plus<int>{});
+```
+为了便于理解，不妨手动实例化`concat`模板：
+```cpp
+//针对 concat(twice, std::plus<int>{}) 实例化后的伪代码，假设 twice_type 是 twice 的类型
+int concat(twice_type t, std::plus<int> ts){
+	if constexpr (1 > 0) {
+		return [=](auto ...parameters) {
+			return t(concat(ts)(parameters...));
+		};
+	}
+	else {
+		return t;
+	}
+}
+```
+这时`sizeof...(ts) > 0`求值为`true`，`concat`返回一个 lambda 表达式。这个 lambda 又返回了`twice`
+和`plus<int>`复合调用。这是因为`concat(std::plus<int>{})`正是一个参数时的情况，返回值是`std::plus<int>{}`。
+`combined`被这个由`twice`和`plus<int>`复合调用的lambda表达式初始化，`combined(2, 3)`结果是10。<br>
+结合以上两个例子，可以知道`concat`的作用就是将多个函数(可调用对象)进行连接调用，后一个函数的返回值作为前一个函数的参数，
+最后一个函数的参数是由新生成函数的参数传入。这类似于数学函数的复合<br>
+$$ (f \circ g \circ h)(x) = f(g(h(x))) $$<br>
+最后来看书中三个参数的情况。`concat`递归的复合`thrice`、`twice`、`std::plus<int>{}`三个可调用对象，
+并用lambda包装后返回并初始化`combined`，所以`combined(2, 3)`的结果是30。<br>
 
 ### [5.7将谓词与逻辑连接词连接起来](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
 ```cpp
