@@ -177,15 +177,14 @@ int main() {
 	std::cout << std::boolalpha << ::cmp_less(5u, 2u) << '\n';//false
 }
 
-//整数比较函数: https://zh.cppreference.com/w/cpp/utility/intcmp
 ```
-`C++20` 在 `utility` 引入了一组比较函数，他们分别是：
-- `cmp_equal`
-- `cmp_not_equal`
-- `cmp_less`
-- `cmp_greater`
-- `cmp_less_equal`
-- `cmp_greater_equal`
+`C++20` 在 [**`utility`**](https://zh.cppreference.com/w/cpp/header/utility) 引入了一组[**比较函数**](https://zh.cppreference.com/w/cpp/utility/intcmp)，他们分别是：
+- `std::cmp_equal`
+- `std::cmp_not_equal`
+- `std::cmp_less`
+- `std::cmp_greater`
+- `std::cmp_less_equal`
+- `std::cmp_greater_equal`
 如上述[代码](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)中的例子一样，它与内建比较运算符不同，**负有符号整数**与**无符号整数**的比较结果始终为小于，且不为等于
 
 <br>
