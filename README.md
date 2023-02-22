@@ -11,6 +11,7 @@
 
 ## 第一章 C++20的新特性
 ### [1.2格式化文本](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
+
  ```cpp
 #include<iostream>
 #include<string_view>
@@ -232,6 +233,33 @@ int main() {
 //默认比较: https://zh.cppreference.com/w/cpp/language/default_comparisons
 ```
 
+三路比较运算符表达式的形式为`表达式1 <=> 表达式2`该表达式将返回一个对象
+
+若`表达式1 < 表达式2`，则`(表达式1 <=> 表达式2) < 0`
+
+若`表达式1 > 表达式2`，则`(表达式1 <=> 表达式2) > 0`
+
+若`表达式1 == 表达式2`，则`(表达式1 <=> 表达式2) == 0`
+
+每当`<` `>` `<=` `>=` `<=>`被比较且重载决议选择该重载时，`operator<=>`都会被调用
+
+若`operator<=>`是默认版本且`operator==`完全没有被声明，则`operator==`将隐式采用默认版本
+```cpp
+struct C
+{
+    int num;
+    auto operator<=>(const C& c)const = default;
+};
+
+int main()
+{
+    C c1{1};
+    C c2{2};
+
+    std::cout << std::boolalpha << (c1 == c2) << '\n';//隐式调用默认版本
+}
+```
+
 ### [1.6查找特性测试宏](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 ``` cpp
 #include<iostream>
@@ -394,7 +422,7 @@ int main() {
 //编译设置:add_executable (Test1 "src/1.8模块.cpp" "src/test.ixx" "src/test2.ixx")
 ```
 
-`test.ixx`
+[`test.ixx`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/test.ixx)
 
 ```cpp
 module;
@@ -416,7 +444,7 @@ namespace mylib {
 }
 ```
 
-`test2.ixx`
+[`test2.ixx`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/test2.ixx)
 
 ```cpp
 export module test2;
@@ -427,7 +455,7 @@ export void t() {
 }
 ```
 
-`t.txt`
+[`t.txt`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/t.txt)
 
 ```
 1,2,3,4,5
