@@ -362,8 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# VS Code
+# VS Code workspace settings
 .vscode
 
-# Obsidian settings
+# Obsidian workspace settings
 .obsidian
