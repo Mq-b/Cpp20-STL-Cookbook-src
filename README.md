@@ -344,9 +344,8 @@ concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_
 ```
 
 其中，运算符 `&&` 构成两个约束的合取(*Conjunction*)，两个约束均满足时合取满足。`||` 构成的析取(*Disjunction*)则为两者之一满足则析取满足。
-
 <br>
-
+<br>
 `requires` 关键字可用于进行多个约束的分开表达，约束之间的关系均为合取，分为以下多种情况：
 
 - 简单约束
@@ -396,6 +395,7 @@ concept C = requires(T x) {
 };
 ```
 
+<br>
 <br>
 
 复合约束的计算顺序为：
