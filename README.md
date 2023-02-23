@@ -264,6 +264,8 @@ int main()
 }
 ```
 
+<br>
+
 ### [1.6查找特性测试宏](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 ``` cpp
 #include<iostream>
@@ -293,6 +295,8 @@ int main() {
 //库功能性测试宏: https://zh.cppreference.com/w/cpp/utility/feature_test
 //诊断指令: https://zh.cppreference.com/w/cpp/preprocessor/error
 ```
+
+<br>
 
 ### [1.7概念(`concept`)和约束(`constraint`)-创建更安全的模板](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
 ``` cpp
@@ -405,6 +409,7 @@ concept C = requires(T x) {
 - 如果有 **noexcept** 限定，则 <font color=grey><i>表达式</i></font> 不能抛出异常
 - `decltype((expression))` 的类型必须满足 <font color=grey><i>类型约束</i></font>
 全满足则结果为 `true` ，否则为 `false`
+
 <br>
 
 ### [1.8模块](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
@@ -1956,6 +1961,8 @@ int concat(twice_type t, std::plus<int> ts){
 $$ (f \circ g \circ h)(x) = f(g(h(x))) $$<br>
 最后来看书中三个参数的情况。`concat`递归的复合`thrice`、`twice`、`std::plus<int>{}`三个可调用对象，
 并用lambda包装后返回并初始化`combined`，所以`combined(2, 3)`的结果是30。<br>
+
+<br>
 
 ### [5.7将谓词与逻辑连接词连接起来](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
 ```cpp
