@@ -2583,3 +2583,20 @@ int main() {
 ```cpp
 using string  = basic_string<char, char_traits<char>, allocator<char>>;
 ```
+
+<br>
+
+- [轻量级字符串对象——`string_view`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+- [连接字符串]()
+- [转换字符串]()
+- [使用格式库格式化文本]()
+- [删除字符串中的空白]()
+- [从用户输入中读取字符串]()
+- [统计文件中的单词数]()
+- [使用文件输入初始化复杂结构体]()
+- [使用 `char_traits` 定义一个字符串类]()
+- [用正则表达式解析字符串]()
+
+<br>
+
+### [7.3轻量字符串对象`string_view`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
