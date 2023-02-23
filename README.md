@@ -10,7 +10,7 @@
 <br>
 
 ## 第一章 C++20的新特性
-### [1.2格式化文本](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
+### [1.2格式化文本](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
 
  ```cpp
 #include<iostream>
@@ -70,7 +70,7 @@ int main() {
 
 <br>
 
-### [1.3使用编译时constexpr `std::vector`和`std::string`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
+### [1.3使用编译时constexpr `std::vector`和`std::string`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
 ```cpp
 #include<iostream>
 #include<vector>
@@ -156,7 +156,7 @@ int main(){
 
 <br>
 
-### [1.4安全比较不同类型的整数`cmp_less`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
+### [1.4安全比较不同类型的整数`cmp_less`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
 
 ``` cpp
 #include<iostream>
@@ -194,7 +194,7 @@ int main() {
 
 <br>
 
-### [1.5三路比较运算符](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.5%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.cpp)
+### [1.5三路比较运算符](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.5%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.cpp)
 ``` cpp
 #include<iostream>
 
@@ -266,7 +266,7 @@ int main()
 
 <br>
 
-### [1.6查找特性测试宏](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
+### [1.6查找特性测试宏](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 ``` cpp
 #include<iostream>
 #include<version>
@@ -298,7 +298,7 @@ int main() {
 
 <br>
 
-### [1.7概念(`concept`)和约束(`constraint`)-创建更安全的模板](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
+### [1.7概念(`concept`)和约束(`constraint`)-创建更安全的模板](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
 ``` cpp
 #include<iostream>
 
@@ -412,7 +412,7 @@ concept C = requires(T x) {
 
 <br>
 
-### [1.8模块](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
+### [1.8模块](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
 
 `1.8模块.cpp`
 
@@ -436,7 +436,7 @@ int main() {
 //编译设置:add_executable (Test1 "src/1.8模块.cpp" "src/test.ixx" "src/test2.ixx")
 ```
 
-[`test.ixx`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/test.ixx)
+[`test.ixx`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/test.ixx)
 
 ```cpp
 module;
@@ -458,7 +458,7 @@ namespace mylib {
 }
 ```
 
-[`test2.ixx`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/test2.ixx)
+[`test2.ixx`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/test2.ixx)
 
 ```cpp
 export module test2;
@@ -469,7 +469,7 @@ export void t() {
 }
 ```
 
-[`t.txt`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/t.txt)
+[`t.txt`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/t.txt)
 
 ```
 1,2,3,4,5
@@ -477,7 +477,7 @@ export void t() {
 
 
 
-### [1.9视图](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.9%E8%A7%86%E5%9B%BE.cpp)
+### [1.9视图](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.9%E8%A7%86%E5%9B%BE.cpp)
 
 ``` cpp
 #include<iostream>
@@ -583,7 +583,7 @@ void printr(const auto& r, std::string_view s = "") {
 
 ---
 ## 第二章 STL的泛型特性
-### [2.2span类](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
+### [2.2span类](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
 
 ```cpp
 #include<iostream>
@@ -611,10 +611,10 @@ int main() {
 }
 
 //span文档: https://zh.cppreference.com/w/cpp/container/span
-//span简单实现: https://github.com/13870517674/c-plus-plus/blob/master/src/lib/span.hpp
+//span简单实现: https://github.com/Mq-b/c-plus-plus/blob/master/src/lib/span.hpp
 ```
 
-### [2.3结构化绑定](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
+### [2.3结构化绑定](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
 ```cpp
 #include<iostream>
 #include<format>
@@ -668,7 +668,7 @@ int main() {
 }
 ```
 
-### [2.4`if`&`switch`中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+### [2.4`if`&`switch`中的初始化](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
 ```cpp
 #include"print.h"
 #include<mutex>
@@ -721,7 +721,7 @@ int main() {
 }
 ```
 
-### [2.5模板参数推导](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+### [2.5模板参数推导](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
 ```cpp
 #include"print.h"
 
@@ -743,7 +743,7 @@ int main() {
 }
 ```
 
-### [2.6编译期`if`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+### [2.6编译期`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
 ```cpp
 #include"print.h"
 
@@ -779,7 +779,7 @@ int main() {
 
 ---
 ## 第三章 STL容器
-### [3.3使用擦除函数从容器中擦除项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
+### [3.3使用擦除函数从容器中擦除项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -817,7 +817,7 @@ int main() {
 }
 ```
 
-### [3.4常数时间内从未排序的向量中删除项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
+### [3.4常数时间内从未排序的向量中删除项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -855,7 +855,7 @@ int main() {
 }
 ```
 
-### [3.5安全的访问`std::vector`元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
+### [3.5安全的访问`std::vector`元素](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -891,7 +891,7 @@ int main() {
 }
 ```
 
-### [3.6保持`std::vector`元素的顺序](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
+### [3.6保持`std::vector`元素的顺序](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -940,7 +940,7 @@ int main() {
 }
 ```
 
-### [3.7高效的将元素插入到`std::map`中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
+### [3.7高效的将元素插入到`std::map`中](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
 ```cpp
 #include"print.h"
 
@@ -974,7 +974,7 @@ int main() {
 //重复键元素的问题参见 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300
 ```
 
-### [3.8高效的修改`std::map`项的键值](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
+### [3.8高效的修改`std::map`项的键值](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1010,7 +1010,7 @@ int main() {
 }
 ```
 
-### [3.9自定义键值的`std::unordered_map`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+### [3.9自定义键值的`std::unordered_map`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1043,7 +1043,7 @@ int main() {
 }
 ```
 
-### [3.10使用`std::set`进行输入和筛选](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+### [3.10使用`std::set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
 #include"print.h"
 #include<set>
@@ -1058,7 +1058,7 @@ int main() {
 }
 ```
 
-### [3.11实现简单的RPN计算器与`deque`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
+### [3.11实现简单的RPN计算器与`deque`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
 ```cpp
 #include"print.h"
 #include<deque>
@@ -1135,7 +1135,7 @@ int main() {
 }
 ```
 
-### [3.12使用`std::map`的词频计数器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
+### [3.12使用`std::map`的词频计数器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<ranges>
@@ -1181,7 +1181,7 @@ int main() {
 }
 ```
 
-### [3.13找出含有相应长句的`std::vector`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
+### [3.13找出含有相应长句的`std::vector`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
 ```cpp
 #include"print.h"
 #include<string_view>
@@ -1224,7 +1224,7 @@ int main() {
 }
 ```
 
-### [3.14使用`std::multimap`制作待办事项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
+### [3.14使用`std::multimap`制作待办事项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<map>
@@ -1247,7 +1247,7 @@ int main() {
 <br>
 
 ## 第四章 兼容迭代器
-### [4.3创建可迭代范围](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
+### [4.3创建可迭代范围](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
 ```cpp
 #include"print.h"
 
@@ -1304,7 +1304,7 @@ int main() {
 }
 ```
 
-### [4.4使迭代器与STL迭代器特性兼容](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
+### [4.4使迭代器与STL迭代器特性兼容](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
 ```cpp
 #include"print.h"
 
@@ -1369,7 +1369,7 @@ int main() {
 }
 ```
 
-### [4.5使用迭代器适配器填充STL容器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.5%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E5%A1%AB%E5%85%85STL%E5%AE%B9%E5%99%A8.cpp)
+### [4.5使用迭代器适配器填充STL容器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.5%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E5%A1%AB%E5%85%85STL%E5%AE%B9%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1421,7 +1421,7 @@ int main() {
 }
 ```
 
-### [4.6创建一个迭代器生成器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8.cpp)
+### [4.6创建一个迭代器生成器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 
@@ -1477,7 +1477,7 @@ int main() {
 }
 ```
 
-### [4.7反向迭代器的反向适配器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.7%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%8F%8D%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+### [4.7反向迭代器的反向适配器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.7%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%8F%8D%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1517,7 +1517,7 @@ int main() {
 }
 ```
 
-### [4.8用哨兵迭代未知长度的对象](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.8%E7%94%A8%E5%93%A8%E5%85%B5%E8%BF%AD%E4%BB%A3%E6%9C%AA%E7%9F%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AF%B9%E8%B1%A1.cpp)
+### [4.8用哨兵迭代未知长度的对象](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.8%E7%94%A8%E5%93%A8%E5%85%B5%E8%BF%AD%E4%BB%A3%E6%9C%AA%E7%9F%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AF%B9%E8%B1%A1.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1555,7 +1555,7 @@ int main() {
 }
 ```
 
-### [4.9构建zip迭代器适配器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.9%E6%9E%84%E5%BB%BAzip%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+### [4.9构建zip迭代器适配器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.9%E6%9E%84%E5%BB%BAzip%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1617,7 +1617,7 @@ int main() {
 }
 ```
 
-### [4.10创建随机访问迭代器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.10%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E8%BF%AD%E4%BB%A3%E5%99%A8.cpp)
+### [4.10创建随机访问迭代器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.10%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E8%BF%AD%E4%BB%A3%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<memory>
@@ -1781,7 +1781,7 @@ int main() {
 <br>
 
 ## 第五章 lambda表达式
-### [5.3用于作用域可重用代码](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
+### [5.3用于作用域可重用代码](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
 ```cpp
 #include"print.h"
 
@@ -1816,7 +1816,7 @@ int main() {
 }
 ```
 
-### [5.4算法库中作为谓词](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.4%E7%AE%97%E6%B3%95%E5%BA%93%E4%B8%AD%E4%BD%9C%E4%B8%BA%E8%B0%93%E8%AF%8D.cpp)
+### [5.4算法库中作为谓词](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.4%E7%AE%97%E6%B3%95%E5%BA%93%E4%B8%AD%E4%BD%9C%E4%B8%BA%E8%B0%93%E8%AF%8D.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1854,7 +1854,7 @@ int main() {
 }
 ```
 
-### [5.5与`std::function`一起作为多态包装器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.5%E4%B8%8Efunction%E4%B8%80%E8%B5%B7%E4%BD%9C%E4%B8%BA%E5%A4%9A%E6%80%81%E5%8C%85%E8%A3%85%E5%99%A8.cpp)
+### [5.5与`std::function`一起作为多态包装器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.5%E4%B8%8Efunction%E4%B8%80%E8%B5%B7%E4%BD%9C%E4%B8%BA%E5%A4%9A%E6%80%81%E5%8C%85%E8%A3%85%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1907,7 +1907,7 @@ int main() {
 }
 ```
 
-### [5.6用递归连接lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.6%E7%94%A8%E9%80%92%E5%BD%92%E8%BF%9E%E6%8E%A5lambda.cpp)
+### [5.6用递归连接lambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.6%E7%94%A8%E9%80%92%E5%BD%92%E8%BF%9E%E6%8E%A5lambda.cpp)
 ```cpp
 #include"print.h"
 template <typename F, typename ...Ts>
@@ -1964,7 +1964,7 @@ $$ (f \circ g \circ h)(x) = f(g(h(x))) $$<br>
 
 <br>
 
-### [5.7将谓词与逻辑连接词连接起来](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
+### [5.7将谓词与逻辑连接词连接起来](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
 ```cpp
 #include"print.h"
 #include <functional>
@@ -1994,7 +1994,7 @@ int main() {
 }
 ```
 
-### [5.8用相同的输入调用多个lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.8%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E5%A4%9A%E4%B8%AAlambda.cpp)
+### [5.8用相同的输入调用多个lambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.8%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E5%A4%9A%E4%B8%AAlambda.cpp)
 ```cpp
 #include"print.h"
 
@@ -2018,7 +2018,7 @@ int main() {
 }
 ```
 
-### [5.9对跳转表使用映射lambda](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.9%E5%AF%B9%E8%B7%B3%E8%BD%AC%E8%A1%A8%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84lambda.cpp)
+### [5.9对跳转表使用映射lambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.9%E5%AF%B9%E8%B7%B3%E8%BD%AC%E8%A1%A8%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84lambda.cpp)
 ```cpp
 #include"print.h"
 
@@ -2065,7 +2065,7 @@ int main() {
 <br>
 
 ## 第六章 STL算法
-### [6.2基于迭代器的复制](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
+### [6.2基于迭代器的复制](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2103,7 +2103,7 @@ int main() {
 }
 ```
 
-### [6.3将容器元素连接到以供字符串当中](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.3%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A5%E4%BE%9B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%93%E4%B8%AD.cpp)
+### [6.3将容器元素连接到以供字符串当中](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.3%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A5%E4%BE%9B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%93%E4%B8%AD.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2153,7 +2153,7 @@ int main() {
 }
 ```
 
-### [6.4`std::sort`排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
+### [6.4`std::sort`排序容器元素](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2219,7 +2219,7 @@ int main() {
 }
 ```
 
-### [6.5`std::transform`修改容器内容](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
+### [6.5`std::transform`修改容器内容](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2259,7 +2259,7 @@ int main() {
 
 <br>
 
-### [6.6查找特定项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.6%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E9%A1%B9.cpp)
+### [6.6查找特定项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.6%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2316,7 +2316,7 @@ int main() {
 
 <br>
 
-### [6.7将容器元素限制在`std::clamp`范围内](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.7%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E9%99%90%E5%88%B6%E5%9C%A8clamp%E8%8C%83%E5%9B%B4%E5%86%85.cpp)
+### [6.7将容器元素限制在`std::clamp`范围内](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.7%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E9%99%90%E5%88%B6%E5%9C%A8clamp%E8%8C%83%E5%9B%B4%E5%86%85.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2368,7 +2368,7 @@ std::cout << std::clamp(200, 0, 100) << '\n';//100
 
 <br>
 
-### [6.8`std::sample`采集样本数据集](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.8sample%E9%87%87%E9%9B%86%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%9B%86.cpp)
+### [6.8`std::sample`采集样本数据集](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.8sample%E9%87%87%E9%9B%86%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%9B%86.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2433,7 +2433,7 @@ int main() {
 
 进入`main`函数，我们定义了几个 **`constexpr`** 的常量，作用也都有注释:**数据大小、样本容器大小、均值、方差**。
 
-下面两行代码就是之前在 **[6.4sort排序容器元素](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)** 提起过的内容，随机数。
+下面两行代码就是之前在 **[6.4sort排序容器元素](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)** 提起过的内容，随机数。
 
 [`std::normal_distribution<>dist{ mean,dev };`](https://zh.cppreference.com/w/cpp/numeric/random/normal_distribution)需要注意，这个正态分布算本节重点，接受两个参数**均值与方差**，你可以简单理解我我们这节使用的随机数将以正态分布的方式随机，并且我们会将它的值打印出来直方图。
 
@@ -2445,7 +2445,7 @@ int main() {
 
 <br>
 
-### [6.9生成有序数据序列](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+### [6.9生成有序数据序列](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2498,7 +2498,7 @@ int main() {
 
 <br>
 
-### [6.10合并已排序容器](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+### [6.10合并已排序容器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2586,7 +2586,7 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 
 <br>
 
-- [轻量级字符串对象——`string_view`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+- [轻量级字符串对象——`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
 - [连接字符串]()
 - [转换字符串]()
 - [使用格式库格式化文本]()
@@ -2599,4 +2599,4 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 
 <br>
 
-### [7.3轻量字符串对象`string_view`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+### [7.3轻量字符串对象`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
