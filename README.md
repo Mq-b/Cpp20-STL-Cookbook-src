@@ -1,16 +1,16 @@
-# ¡¶C++20 STL Cookbook¡·2023
+# ã€ŠC++20 STL Cookbookã€‹2023
 
-###  »·¾³
-**Visual Studio Enterprise 2022(64Î») °æ±¾ 17.4.3**
+###  ç¯å¢ƒ
+**Visual Studio Enterprise 2022(64ä½) ç‰ˆæœ¬ 17.4.3**
 
 **CMake 3.8**
 
-###  [BÕ¾ÊÓÆµ½²½â](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
+###  [Bç«™è§†é¢‘è®²è§£](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
 
 <br>
 
-## µÚÒ»ÕÂ C++20µÄĞÂÌØĞÔ
-### [1.2¸ñÊ½»¯ÎÄ±¾](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
+## ç¬¬ä¸€ç«  C++20çš„æ–°ç‰¹æ€§
+### [1.2æ ¼å¼åŒ–æ–‡æœ¬](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
 
  ```cpp
 #include<iostream>
@@ -44,33 +44,33 @@ int main() {
 	Frac f{ 1,10 };
 	print("{}", f);
 }
-//ÌØ»¯¹æÔò²Î¼û:	https://zh.cppreference.com/w/cpp/named_req/Formatter
+//ç‰¹åŒ–è§„åˆ™å‚è§:	https://zh.cppreference.com/w/cpp/named_req/Formatter
  ```
 
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	1/10
 
-Äã¿ÉÒÔ°ÑÕâ¸öÄÚÈİ·ÖÎªÁ½¸ö²¿·Ö:
-1. ÊµÏÖÄ£°åº¯Êı **`print`**
+ä½ å¯ä»¥æŠŠè¿™ä¸ªå†…å®¹åˆ†ä¸ºä¸¤ä¸ªéƒ¨åˆ†:
+1. å®ç°æ¨¡æ¿å‡½æ•° **`print`**
 
-Ê¹ÓÃÓë`std::format()`º¯ÊıÏàÍ¬µÄ²ÎÊı¡£µÚÒ»¸ö²ÎÊıÊÇ¸ñÊ½×Ö·û´®µÄ `std::string_view` ¶ÔÏó£¬ºóÃæ×÷Îª²ÎÊı µÄ¿É±ä²ÎÊı°ü¡£
+ä½¿ç”¨ä¸`std::format()`å‡½æ•°ç›¸åŒçš„å‚æ•°ã€‚ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯æ ¼å¼å­—ç¬¦ä¸²çš„ `std::string_view` å¯¹è±¡ï¼Œåé¢ä½œä¸ºå‚æ•° çš„å¯å˜å‚æ•°åŒ…ã€‚
 
-[`std::make_format_args()`](https://zh.cppreference.com/w/cpp/utility/format/make_format_args) º¯ÊıµÄ×÷ÓÃ: *½ÓÊÜ²ÎÊı°ü²¢·µ»ØÒ»¸ö¶ÔÏó£¬¸Ã¶ÔÏó°üº¬ÊÊºÏ¸ñÊ½»¯µÄÒÑ²Á³ı ÀàĞÍµÄÖµ¡£*
+[`std::make_format_args()`](https://zh.cppreference.com/w/cpp/utility/format/make_format_args) å‡½æ•°çš„ä½œç”¨: *æ¥å—å‚æ•°åŒ…å¹¶è¿”å›ä¸€ä¸ªå¯¹è±¡ï¼Œè¯¥å¯¹è±¡åŒ…å«é€‚åˆæ ¼å¼åŒ–çš„å·²æ“¦é™¤ ç±»å‹çš„å€¼ã€‚*
 
-`fmt_str`¾ÍÊÇ´«µİµÄ¸ñÊ½»¯×Ö·û´®£¬`fmt_args`ÊÇÒ»¸ö±£ÓĞ¸ñÊ½»¯²ÎÊıµÄ¶ÔÏó£¬Ê¹ÓÃ[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)¼´¿É·µ»Ø¸ñÊ½»¯Íê±ÏµÄ×Ö·û´®¡£ÎÒÃÇÊ¹ÓÃ `fputs()` ½«ÖµÊä³öµ½¿ØÖÆÌ¨ÉÏ (Õâ±È `cout` ¸ßĞ§µÃ¶à)¡£
+`fmt_str`å°±æ˜¯ä¼ é€’çš„æ ¼å¼åŒ–å­—ç¬¦ä¸²ï¼Œ`fmt_args`æ˜¯ä¸€ä¸ªä¿æœ‰æ ¼å¼åŒ–å‚æ•°çš„å¯¹è±¡ï¼Œä½¿ç”¨[`std::vformat(fmt_str, fmt_args)`](https://zh.cppreference.com/w/cpp/utility/format/vformat)å³å¯è¿”å›æ ¼å¼åŒ–å®Œæ¯•çš„å­—ç¬¦ä¸²ã€‚æˆ‘ä»¬ä½¿ç”¨ `fputs()` å°†å€¼è¾“å‡ºåˆ°æ§åˆ¶å°ä¸Š (è¿™æ¯” `cout` é«˜æ•ˆå¾—å¤š)ã€‚
 
-2. [**`std::formatter`**](https://zh.cppreference.com/w/cpp/utility/format/formatter) ÌØ»¯
+2. [**`std::formatter`**](https://zh.cppreference.com/w/cpp/utility/format/formatter) ç‰¹åŒ–
 
-¶ÔÓÚ×Ô¶¨Òå£¬»òÕßËµ±ê×¼Ã»ÓĞ¶ÔÆäÓĞÌØ»¯µÄÀàĞÍ£¬ĞèÒªÎÒÃÇ×ÔĞĞÌØ»¯`std::formatter`²Å¿ÉÒÔÕıÈ·µÄ¸ñÊ½»¯¡£
+å¯¹äºè‡ªå®šä¹‰ï¼Œæˆ–è€…è¯´æ ‡å‡†æ²¡æœ‰å¯¹å…¶æœ‰ç‰¹åŒ–çš„ç±»å‹ï¼Œéœ€è¦æˆ‘ä»¬è‡ªè¡Œç‰¹åŒ–`std::formatter`æ‰å¯ä»¥æ­£ç¡®çš„æ ¼å¼åŒ–ã€‚
 
-**`parse() `** º¯Êı½âÎö¸ñÊ½×Ö·û´®£¬´ÓÃ°ºÅÖ®ºó (ÈôÃ»ÓĞÃ°ºÅ£¬ÔòÔÚ¿ª´óÀ¨ºÅÖ®ºó) Ö±µ½µ«²»°üÀ¨½á Êø´óÀ¨ºÅ (¾ÍÊÇÖ¸¶¨¶ÔÏóÀàĞÍµÄ²¿·Ö)¡£Æä½ÓÊÜÒ»¸ö `ParseContext `¶ÔÏó£¬**²¢·µ»ØÒ»¸öµü´úÆ÷**¡£ÕâÀï£¬¿ÉÒÔÖ»·µ»Ø `begin()` µü´úÆ÷¡£ÒòÎªÎÒÃÇµÄÀàĞÍ²»ĞèÒªĞÂÓï·¨£¬ËùÒÔÎŞĞè×¼±¸ÈÎºÎ¶«Î÷¡£ 
+**`parse() `** å‡½æ•°è§£ææ ¼å¼å­—ç¬¦ä¸²ï¼Œä»å†’å·ä¹‹å (è‹¥æ²¡æœ‰å†’å·ï¼Œåˆ™åœ¨å¼€å¤§æ‹¬å·ä¹‹å) ç›´åˆ°ä½†ä¸åŒ…æ‹¬ç»“ æŸå¤§æ‹¬å· (å°±æ˜¯æŒ‡å®šå¯¹è±¡ç±»å‹çš„éƒ¨åˆ†)ã€‚å…¶æ¥å—ä¸€ä¸ª `ParseContext `å¯¹è±¡ï¼Œ**å¹¶è¿”å›ä¸€ä¸ªè¿­ä»£å™¨**ã€‚è¿™é‡Œï¼Œå¯ä»¥åªè¿”å› `begin()` è¿­ä»£å™¨ã€‚å› ä¸ºæˆ‘ä»¬çš„ç±»å‹ä¸éœ€è¦æ–°è¯­æ³•ï¼Œæ‰€ä»¥æ— éœ€å‡†å¤‡ä»»ä½•ä¸œè¥¿ã€‚ 
 
-**`format()`** º¯Êı½ÓÊÜÒ»¸ö `Frac` ¶ÔÏóºÍÒ»¸ö `FormatContext` ¶ÔÏó£¬**·µ»Ø½áÊøµü´úÆ÷**¡£**`format_to()`** º¯Êı¿ÉÊ¹Õâ±äµÃºÜÈİÒ×£¬**Æä¿ÉÒÔ½ÓÊÜÒ»¸öµü´úÆ÷¡¢Ò»¸ö¸ñÊ½×Ö·û´®ºÍÒ»¸ö²ÎÊı°ü**¡£±¾ÀıÖĞ£¬²ÎÊı°üÊÇ Frac ÀàµÄÁ½¸öÊôĞÔ£¬·Ö×ÓºÍ·ÖÄ¸¡£ ĞèÒª×öµÄ¾ÍÊÇÌá¹©Ò»¸ö¼òµ¥µÄ¸ñÊ½×Ö·û´®`¡°{0}/{1}¡±`ÒÔ¼°·Ö×ÓºÍ·ÖÄ¸µÄÖµ (0 ºÍ 1 ±íÊ¾²ÎÊıµÄ Î»ÖÃ)¡£
+**`format()`** å‡½æ•°æ¥å—ä¸€ä¸ª `Frac` å¯¹è±¡å’Œä¸€ä¸ª `FormatContext` å¯¹è±¡ï¼Œ**è¿”å›ç»“æŸè¿­ä»£å™¨**ã€‚**`format_to()`** å‡½æ•°å¯ä½¿è¿™å˜å¾—å¾ˆå®¹æ˜“ï¼Œ**å…¶å¯ä»¥æ¥å—ä¸€ä¸ªè¿­ä»£å™¨ã€ä¸€ä¸ªæ ¼å¼å­—ç¬¦ä¸²å’Œä¸€ä¸ªå‚æ•°åŒ…**ã€‚æœ¬ä¾‹ä¸­ï¼Œå‚æ•°åŒ…æ˜¯ Frac ç±»çš„ä¸¤ä¸ªå±æ€§ï¼Œåˆ†å­å’Œåˆ†æ¯ã€‚ éœ€è¦åšçš„å°±æ˜¯æä¾›ä¸€ä¸ªç®€å•çš„æ ¼å¼å­—ç¬¦ä¸²`â€œ{0}/{1}â€`ä»¥åŠåˆ†å­å’Œåˆ†æ¯çš„å€¼ (0 å’Œ 1 è¡¨ç¤ºå‚æ•°çš„ ä½ç½®)ã€‚
 
 <br>
 
-### [1.3Ê¹ÓÃ±àÒëÊ±constexpr `std::vector`ºÍ`std::string`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
+### [1.3ä½¿ç”¨ç¼–è¯‘æ—¶constexpr `std::vector`å’Œ`std::string`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.3%E4%BD%BF%E7%94%A8%E7%BC%96%E8%AF%91%E6%97%B6constexpr%20vector%E5%92%8Cstring.cpp)
 ```cpp
 #include<iostream>
 #include<vector>
@@ -80,36 +80,36 @@ constexpr auto f() {
 }
 constexpr auto f2() {
 	int* p = new int{ 10 };
-	//Î´delete½â³ı·ÖÅä
+	//æœªdeleteè§£é™¤åˆ†é…
 	return *p;
 }
 
 int main() {
-	constexpr auto n = f().size();//¡Ì
+	constexpr auto n = f().size();//âˆš
 	//constexpr auto n2 = f()//error
 	//constexpr auto n3 = f2()//error
 }
 
 ```
 
-`C++20` ÔÊĞíÔÚĞÂµÄÉÏÏÂÎÄÖĞÊ¹ÓÃ [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)£¬ÕâĞ©Óï¾ä¿ÉÒÔÔÚ±àÒëÊ±¼ÆËã£¬´Ó¶øÌá¸ßÁËĞ§ÂÊ(´Ë¹Ø¼ü×Ö×Ô`c++11`µ®Éú£¬Ò»Ö±ÔÚÔö¼ÓºÍ¸Ä½ø£¬ÎÒÃÇ²»ÔÙÇ¿µ÷)¡£
+`C++20` å…è®¸åœ¨æ–°çš„ä¸Šä¸‹æ–‡ä¸­ä½¿ç”¨ [**`constexpr`**](https://zh.cppreference.com/w/cpp/language/constexpr)ï¼Œè¿™äº›è¯­å¥å¯ä»¥åœ¨ç¼–è¯‘æ—¶è®¡ç®—ï¼Œä»è€Œæé«˜äº†æ•ˆç‡(æ­¤å…³é”®å­—è‡ª`c++11`è¯ç”Ÿï¼Œä¸€ç›´åœ¨å¢åŠ å’Œæ”¹è¿›ï¼Œæˆ‘ä»¬ä¸å†å¼ºè°ƒ)ã€‚
 
 <br>
 
-ÆäÖĞ°üÀ¨ÔÚ `constexpr` ÉÏÏÂÎÄÖĞÊ¹ÓÃ [`string`](https://zh.cppreference.com/w/cpp/string/basic_string) ºÍ [`vector`](https://zh.cppreference.com/w/cpp/container/vector) ¶ÔÏóµÄÄÜÁ¦¡£ËùÒÔ **£¬ÕâĞ©¶ÔÏó±¾Éí¿ÉÄÜ²»Éù Ã÷Îª constexpr**£¬**µ«¿ÉÒÔÔÚ±àÒëÊ±ÉÏÏÂÎÄÖĞÊ¹ÓÃ¡£**
+å…¶ä¸­åŒ…æ‹¬åœ¨ `constexpr` ä¸Šä¸‹æ–‡ä¸­ä½¿ç”¨ [`string`](https://zh.cppreference.com/w/cpp/string/basic_string) å’Œ [`vector`](https://zh.cppreference.com/w/cpp/container/vector) å¯¹è±¡çš„èƒ½åŠ›ã€‚æ‰€ä»¥ **ï¼Œè¿™äº›å¯¹è±¡æœ¬èº«å¯èƒ½ä¸å£° æ˜ä¸º constexpr**ï¼Œ**ä½†å¯ä»¥åœ¨ç¼–è¯‘æ—¶ä¸Šä¸‹æ–‡ä¸­ä½¿ç”¨ã€‚**
 
 ```cpp
 constexpr void f() {
-	constexpr std::string s{ "ÀÖ" };
-}//´íÎó
+	constexpr std::string s{ "ä¹" };
+}//é”™è¯¯
 constexpr void f() {
-	std::string s{ "ÀÖ" };
-}//ÕıÈ·
+	std::string s{ "ä¹" };
+}//æ­£ç¡®
 ```
 
 <br>
 
-Ò²¿ÉÒÔÔÚ`constexpr`ÉÏÏÂÎÄÖĞÊ¹ÓÃËã·¨:
+ä¹Ÿå¯ä»¥åœ¨`constexpr`ä¸Šä¸‹æ–‡ä¸­ä½¿ç”¨ç®—æ³•:
 
 ```cpp
 constexpr int use_vector() {
@@ -124,10 +124,10 @@ int main() {
 
 <br>
 
-`C++20` ¿ªÊ¼£¬±ê×¼ `string` ºÍ `vector` Àà¾ßÓĞ`constexpr`ÏŞ¶¨µÄ¹¹Ôìº¯ÊıºÍÎö¹¹º¯Êı£¬ÕâÊÇ¿ÉÔÚ±àÒëÊ±Ê¹ÓÃµÄ
-Ç°Ìá¡£ËùÒÔ£¬·ÖÅä¸ø `string` »ò `vector` ¶ÔÏóµÄÄÚ´æ£¬Ò²±ØĞëÔÚ±àÒëÊ±ÊÍ·Å¡£
+`C++20` å¼€å§‹ï¼Œæ ‡å‡† `string` å’Œ `vector` ç±»å…·æœ‰`constexpr`é™å®šçš„æ„é€ å‡½æ•°å’Œææ„å‡½æ•°ï¼Œè¿™æ˜¯å¯åœ¨ç¼–è¯‘æ—¶ä½¿ç”¨çš„
+å‰æã€‚æ‰€ä»¥ï¼Œåˆ†é…ç»™ `string` æˆ– `vector` å¯¹è±¡çš„å†…å­˜ï¼Œä¹Ÿå¿…é¡»åœ¨ç¼–è¯‘æ—¶é‡Šæ”¾ã€‚
 
-ÀıÈç£¬`constexpr` º¯Êı·µ»ØÒ»¸ö `vector`£¬±àÒëÊ±²»»á³ö´í(µ«ÊÇÊµ²â **`gcc msvc clang`** È«²¿±àÒë´íÎó):
+ä¾‹å¦‚ï¼Œ`constexpr` å‡½æ•°è¿”å›ä¸€ä¸ª `vector`ï¼Œç¼–è¯‘æ—¶ä¸ä¼šå‡ºé”™(ä½†æ˜¯å®æµ‹ **`gcc msvc clang`** å…¨éƒ¨ç¼–è¯‘é”™è¯¯):
 ```cpp
 constexpr auto f() {
 	std::vector<int>v{ 1,2,3 };
@@ -141,8 +141,8 @@ int main() {
 
 <br>
 
-ÔÚ±àÒëÆÚ¼ä·ÖÅäºÍÊÍ·ÅÁË `vector` ¶ÔÏó£¬¸Ã¶ÔÏóÔÚÔËĞĞÊ±²»¿ÉÓÃ£¬ÀíÂÛÉÏ¿ÉÒÔ·µ»ØÍ¨¹ı±àÒë£¬Êµ¼Ê²»¿É£¬¾ÍËã¿É£¬Äã·µ»ØÁËÒ²Ã»ÓĞ
-°ì·¨È¥Ê¹ÓÃ¡£ÔÚÔËĞĞÊ±Ê¹ÓÃÒ»Ğ© `vector` ¶ÔÏóµÄÊÊÅä `constexpr` µÄ·½·¨£¬±ÈÈç `size()`£¬ËüÊÇ`constexpr`ÏŞ¶¨µÄ¡£
+åœ¨ç¼–è¯‘æœŸé—´åˆ†é…å’Œé‡Šæ”¾äº† `vector` å¯¹è±¡ï¼Œè¯¥å¯¹è±¡åœ¨è¿è¡Œæ—¶ä¸å¯ç”¨ï¼Œç†è®ºä¸Šå¯ä»¥è¿”å›é€šè¿‡ç¼–è¯‘ï¼Œå®é™…ä¸å¯ï¼Œå°±ç®—å¯ï¼Œä½ è¿”å›äº†ä¹Ÿæ²¡æœ‰
+åŠæ³•å»ä½¿ç”¨ã€‚åœ¨è¿è¡Œæ—¶ä½¿ç”¨ä¸€äº› `vector` å¯¹è±¡çš„é€‚é… `constexpr` çš„æ–¹æ³•ï¼Œæ¯”å¦‚ `size()`ï¼Œå®ƒæ˜¯`constexpr`é™å®šçš„ã€‚
 
 ```cpp
 constexpr auto f() {
@@ -150,20 +150,20 @@ constexpr auto f() {
 	return v;
 }
 int main(){
-	constexpr auto n = f();//¡Ì
+	constexpr auto n = f();//âˆš
 }
 ```
 
 <br>
 
-### [1.4°²È«±È½Ï²»Í¬ÀàĞÍµÄÕûÊı`cmp_less`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
+### [1.4å®‰å…¨æ¯”è¾ƒä¸åŒç±»å‹çš„æ•´æ•°`cmp_less`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.4%E5%AE%89%E5%85%A8%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B4%E6%95%B0cmp_less.cpp)
 
 ``` cpp
 #include<iostream>
 
 template<class T,class U>
 constexpr bool cmp_less(T t, U u)noexcept {
-	using UT = std::make_unsigned_t<T>;//ÓĞ·ûºÅÀàĞÍµ½ÎŞ·ûºÅÀàĞÍµÄ°²È«×ª»»¡£
+	using UT = std::make_unsigned_t<T>;//æœ‰ç¬¦å·ç±»å‹åˆ°æ— ç¬¦å·ç±»å‹çš„å®‰å…¨è½¬æ¢ã€‚
 	using UU = std::make_unsigned_t<U>;
 	if constexpr (std::is_signed_v <T> == std::is_signed_v<U>)
 		return t < u;
@@ -179,7 +179,7 @@ int main() {
 }
 
 ```
-`C++20` ÔÚ [**`utility`**](https://zh.cppreference.com/w/cpp/header/utility) ÒıÈëÁËÒ»×é[**±È½Ïº¯Êı**](https://zh.cppreference.com/w/cpp/utility/intcmp)£¬ËûÃÇ·Ö±ğÊÇ£º
+`C++20` åœ¨ [**`utility`**](https://zh.cppreference.com/w/cpp/header/utility) å¼•å…¥äº†ä¸€ç»„[**æ¯”è¾ƒå‡½æ•°**](https://zh.cppreference.com/w/cpp/utility/intcmp)ï¼Œä»–ä»¬åˆ†åˆ«æ˜¯ï¼š
 
 - `std::cmp_equal`
 - `std::cmp_not_equal`
@@ -190,11 +190,11 @@ int main() {
 
 <br>
 
-ÈçÉÏÊö[´úÂë](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)ÖĞµÄÀı×ÓÒ»Ñù£¬ËüÓëÄÚ½¨±È½ÏÔËËã·û²»Í¬£¬**¸ºÓĞ·ûºÅÕûÊı**Óë**ÎŞ·ûºÅÕûÊı**µÄ±È½Ï½á¹ûÊ¼ÖÕÎªĞ¡ÓÚ£¬ÇÒ²»ÎªµÈÓÚ¡£
+å¦‚ä¸Šè¿°[ä»£ç ](https://zh.cppreference.com/w/cpp/utility/intcmp#.E5.8F.AF.E8.83.BD.E7.9A.84.E5.AE.9E.E7.8E.B0)ä¸­çš„ä¾‹å­ä¸€æ ·ï¼Œå®ƒä¸å†…å»ºæ¯”è¾ƒè¿ç®—ç¬¦ä¸åŒï¼Œ**è´Ÿæœ‰ç¬¦å·æ•´æ•°**ä¸**æ— ç¬¦å·æ•´æ•°**çš„æ¯”è¾ƒç»“æœå§‹ç»ˆä¸ºå°äºï¼Œä¸”ä¸ä¸ºç­‰äºã€‚
 
 <br>
 
-### [1.5ÈıÂ·±È½ÏÔËËã·û](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.5%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.cpp)
+### [1.5ä¸‰è·¯æ¯”è¾ƒè¿ç®—ç¬¦](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.5%E4%B8%89%E8%B7%AF%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6.cpp)
 ``` cpp
 #include<iostream>
 
@@ -209,7 +209,7 @@ struct Y {
 	int a = 6;
 };
 
-auto operator<=>(const Y& y, const Y& y2)noexcept->int {//×Ô¶¨Òå
+auto operator<=>(const Y& y, const Y& y2)noexcept->int {//è‡ªå®šä¹‰
 	if (y.a == y2.a)return 0;
 	if (y.a > y2.a)return 1;
 	if (y.a < y2.a)return -1;
@@ -233,21 +233,21 @@ int main() {
 	std::cout << std::boolalpha << (y != y2) << '\n';//true
 }
 
-//ÈıÂ·±È½ÏÔËËã·û: https://zh.cppreference.com/w/cpp/language/operator_comparison
-//Ä¬ÈÏ±È½Ï: https://zh.cppreference.com/w/cpp/language/default_comparisons
+//ä¸‰è·¯æ¯”è¾ƒè¿ç®—ç¬¦: https://zh.cppreference.com/w/cpp/language/operator_comparison
+//é»˜è®¤æ¯”è¾ƒ: https://zh.cppreference.com/w/cpp/language/default_comparisons
 ```
 
-ÈıÂ·±È½ÏÔËËã·û±í´ïÊ½µÄĞÎÊ½Îª`±í´ïÊ½1 <=> ±í´ïÊ½2`¸Ã±í´ïÊ½½«·µ»ØÒ»¸ö¶ÔÏó
+ä¸‰è·¯æ¯”è¾ƒè¿ç®—ç¬¦è¡¨è¾¾å¼çš„å½¢å¼ä¸º`è¡¨è¾¾å¼1 <=> è¡¨è¾¾å¼2`è¯¥è¡¨è¾¾å¼å°†è¿”å›ä¸€ä¸ªå¯¹è±¡
 
-Èô`±í´ïÊ½1 < ±í´ïÊ½2`£¬Ôò`(±í´ïÊ½1 <=> ±í´ïÊ½2) < 0`
+è‹¥`è¡¨è¾¾å¼1 < è¡¨è¾¾å¼2`ï¼Œåˆ™`(è¡¨è¾¾å¼1 <=> è¡¨è¾¾å¼2) < 0`
 
-Èô`±í´ïÊ½1 > ±í´ïÊ½2`£¬Ôò`(±í´ïÊ½1 <=> ±í´ïÊ½2) > 0`
+è‹¥`è¡¨è¾¾å¼1 > è¡¨è¾¾å¼2`ï¼Œåˆ™`(è¡¨è¾¾å¼1 <=> è¡¨è¾¾å¼2) > 0`
 
-Èô`±í´ïÊ½1 == ±í´ïÊ½2`£¬Ôò`(±í´ïÊ½1 <=> ±í´ïÊ½2) == 0`
+è‹¥`è¡¨è¾¾å¼1 == è¡¨è¾¾å¼2`ï¼Œåˆ™`(è¡¨è¾¾å¼1 <=> è¡¨è¾¾å¼2) == 0`
 
-Ã¿µ±`<` `>` `<=` `>=` `<=>`±»±È½ÏÇÒÖØÔØ¾öÒéÑ¡Ôñ¸ÃÖØÔØÊ±£¬`operator<=>`¶¼»á±»µ÷ÓÃ
+æ¯å½“`<` `>` `<=` `>=` `<=>`è¢«æ¯”è¾ƒä¸”é‡è½½å†³è®®é€‰æ‹©è¯¥é‡è½½æ—¶ï¼Œ`operator<=>`éƒ½ä¼šè¢«è°ƒç”¨
 
-Èô`operator<=>`ÊÇÄ¬ÈÏ°æ±¾ÇÒ`operator==`ÍêÈ«Ã»ÓĞ±»ÉùÃ÷£¬Ôò`operator==`½«ÒşÊ½²ÉÓÃÄ¬ÈÏ°æ±¾
+è‹¥`operator<=>`æ˜¯é»˜è®¤ç‰ˆæœ¬ä¸”`operator==`å®Œå…¨æ²¡æœ‰è¢«å£°æ˜ï¼Œåˆ™`operator==`å°†éšå¼é‡‡ç”¨é»˜è®¤ç‰ˆæœ¬
 ```cpp
 struct C
 {
@@ -260,13 +260,13 @@ int main()
     C c1{1};
     C c2{2};
 
-    std::cout << std::boolalpha << (c1 == c2) << '\n';//ÒşÊ½µ÷ÓÃÄ¬ÈÏ°æ±¾
+    std::cout << std::boolalpha << (c1 == c2) << '\n';//éšå¼è°ƒç”¨é»˜è®¤ç‰ˆæœ¬
 }
 ```
 
 <br>
 
-### [1.6²éÕÒÌØĞÔ²âÊÔºê](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
+### [1.6æŸ¥æ‰¾ç‰¹æ€§æµ‹è¯•å®](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 ``` cpp
 #include<iostream>
 #include<version>
@@ -274,31 +274,31 @@ int main()
 #ifdef __cpp_lib_three_way_comparison
 # include<compare>
 #else
-# error Ã»ÓĞÓëÖ®¶ÔÓ¦µÄÍ·ÎÄ¼ş
+# error æ²¡æœ‰ä¸ä¹‹å¯¹åº”çš„å¤´æ–‡ä»¶
 #endif // __cpp_lib_three_way_comparison
 
 #ifdef __cpp_lib_format
 # include<format>
 #else
-# error Ã»ÓĞÓëÖ®¶ÔÓ¦µÄÍ·ÎÄ¼ş
+# error æ²¡æœ‰ä¸ä¹‹å¯¹åº”çš„å¤´æ–‡ä»¶
 #endif // __cpp_lib_three_way_comparison
 
-#if __has_include(<iostream>)//¼ì²éÄÜ²»ÄÜÕÒµ½Õâ¸öÎÄ¼ş£¬Èç¹ûÄÜÕÒµ½Õâ¸öºê¾Í·µ»Ø1
+#if __has_include(<iostream>)//æ£€æŸ¥èƒ½ä¸èƒ½æ‰¾åˆ°è¿™ä¸ªæ–‡ä»¶ï¼Œå¦‚æœèƒ½æ‰¾åˆ°è¿™ä¸ªå®å°±è¿”å›1
 #  include <iostream>
 #endif
 
 int main() {
-	std::cout << __cpp_lib_three_way_comparison << '\n';//Îª 201907£¬ÒâÎ¶×ÅÆäÔÚ 2019 Äê 7 ÔÂ²ÉÄÉ¡£
-	std::cout << __cpp_lib_format << '\n'; //Îª 202110£¬ÒâÎ¶×ÅÆäÔÚ 2021 Äê 10 ÔÂ²ÉÄÉ¡£
+	std::cout << __cpp_lib_three_way_comparison << '\n';//ä¸º 201907ï¼Œæ„å‘³ç€å…¶åœ¨ 2019 å¹´ 7 æœˆé‡‡çº³ã€‚
+	std::cout << __cpp_lib_format << '\n'; //ä¸º 202110ï¼Œæ„å‘³ç€å…¶åœ¨ 2021 å¹´ 10 æœˆé‡‡çº³ã€‚
 }
 
-//¿â¹¦ÄÜĞÔ²âÊÔºê: https://zh.cppreference.com/w/cpp/utility/feature_test
-//Õï¶ÏÖ¸Áî: https://zh.cppreference.com/w/cpp/preprocessor/error
+//åº“åŠŸèƒ½æ€§æµ‹è¯•å®: https://zh.cppreference.com/w/cpp/utility/feature_test
+//è¯Šæ–­æŒ‡ä»¤: https://zh.cppreference.com/w/cpp/preprocessor/error
 ```
 
 <br>
 
-### [1.7¸ÅÄî(`concept`)ºÍÔ¼Êø(`constraint`)-´´½¨¸ü°²È«µÄÄ£°å](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
+### [1.7æ¦‚å¿µ(`concept`)å’Œçº¦æŸ(`constraint`)-åˆ›å»ºæ›´å®‰å…¨çš„æ¨¡æ¿](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.7%E6%A6%82%E5%BF%B5(concept)%E5%92%8C%E7%BA%A6%E6%9D%9F(constraint)-%E5%88%9B%E5%BB%BA%E6%9B%B4%E5%AE%89%E5%85%A8%E7%9A%84%E6%A8%A1%E6%9D%BF.cpp)
 ``` cpp
 #include<iostream>
 
@@ -319,52 +319,52 @@ concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_
 void f2(love auto){}
 
 int main() {
-	f(1);            // 1 ÊÇ int£¬Ô¼ÊøÂú×ã
-	f('*');          // '*' ÊÇÕûÊıÀàĞÍ(Integer Type)Ö®Ò»£¬Ô¼ÊøÂú×ã
+	f(1);            // 1 æ˜¯ intï¼Œçº¦æŸæ»¡è¶³
+	f('*');          // '*' æ˜¯æ•´æ•°ç±»å‹(Integer Type)ä¹‹ä¸€ï¼Œçº¦æŸæ»¡è¶³
 	//f(1.2);
-	X<int> x;        // int Âú×ãÁ½¸öÔ¼ÊøµÄÎöÈ¡Ö®Ò»£ºstd::integral<T>£¬Ô¼ÊøÂú×ã
+	X<int> x;        // int æ»¡è¶³ä¸¤ä¸ªçº¦æŸçš„æå–ä¹‹ä¸€ï¼šstd::integral<T>ï¼Œçº¦æŸæ»¡è¶³
 	//X<double>x2;
-	X<double*> x3;   // double* Âú×ãÁ½¸öÔ¼ÊøµÄÎöÈ¡Ö®Ò»£ºstd::is_pointer_t<T>£¬Ô¼ÊøÂú×ã
+	X<double*> x3;   // double* æ»¡è¶³ä¸¤ä¸ªçº¦æŸçš„æå–ä¹‹ä¸€ï¼šstd::is_pointer_t<T>ï¼Œçº¦æŸæ»¡è¶³
 	n<int> = 3;
 	//n<double>;
 	std::cout << n<int> << '\n';
-	f2(1);           // Âú×ãºÏÈ¡ std::is_integral_v<T> ºÍ std::is_same_v<int, T>
-	f2(1u);          // Âú×ãºÏÈ¡ std::is_integral_v<T>£¬std::is_same_v<uint32_t, T>
+	f2(1);           // æ»¡è¶³åˆå– std::is_integral_v<T> å’Œ std::is_same_v<int, T>
+	f2(1u);          // æ»¡è¶³åˆå– std::is_integral_v<T>ï¼Œstd::is_same_v<uint32_t, T>
 	//f2(1l);
 }
 
-//Requires±í´ïÊ½ https://zh.cppreference.com/w/cpp/language/requires
-//Ô¼ÊøÓë¸ÅÄî https://zh.cppreference.com/w/cpp/language/constraints
+//Requiresè¡¨è¾¾å¼ https://zh.cppreference.com/w/cpp/language/requires
+//çº¦æŸä¸æ¦‚å¿µ https://zh.cppreference.com/w/cpp/language/constraints
 ```
->*Ô¼Êø(Constraint)ÊÇ¶ÔÄ£°åĞÎ²ÎÌá³öµÄÒ»ÖÖÒªÇó£¬ÕâÖÖÒªÇóµÄ¾ßÃû¼¯ºÏ±»³ÆÎª¸ÅÄî(Concept)¡£Ã¿Ò»¸ö¸ÅÄî¾ùÎª[**Î½´Ê**](https://zh.cppreference.com/w/cpp/named_req/Predicate) £¬ÇÒÔÚ**±àÒëÆÚÇóÖµ**£¬²¢ÔÚÓÃ×÷Ô¼ÊøÊ±³ÉÎªÄ£°å½Ó¿ÚµÄÒ»²¿·Ö*¡£
+>*çº¦æŸ(Constraint)æ˜¯å¯¹æ¨¡æ¿å½¢å‚æå‡ºçš„ä¸€ç§è¦æ±‚ï¼Œè¿™ç§è¦æ±‚çš„å…·åé›†åˆè¢«ç§°ä¸ºæ¦‚å¿µ(Concept)ã€‚æ¯ä¸€ä¸ªæ¦‚å¿µå‡ä¸º[**è°“è¯**](https://zh.cppreference.com/w/cpp/named_req/Predicate) ï¼Œä¸”åœ¨**ç¼–è¯‘æœŸæ±‚å€¼**ï¼Œå¹¶åœ¨ç”¨ä½œçº¦æŸæ—¶æˆä¸ºæ¨¡æ¿æ¥å£çš„ä¸€éƒ¨åˆ†*ã€‚
 
-×÷Îª  `C++20` ÒıÈëµÄËÄ´óĞÂÌØĞÔÖ®Ò»£º`Concept` £¬Ìá³öÁËÒ»ÖÖ±È *SFINAE* ¸üºÃµÄÔ¼Êø·½·¨£¬ËüÒ×ÓÚÀí½âºÍ±àĞ´£¬Ò²ÄÜÔÚ³öÏÖÎÊÌâÊ±¸ø³ö¸ü¿É¶ÁµÄ±àÒëÆÚ±¨´í¡£¸ÅÄîµÄ¶¨ÒåĞÎÊ½ÈçÏÂ£º
+ä½œä¸º  `C++20` å¼•å…¥çš„å››å¤§æ–°ç‰¹æ€§ä¹‹ä¸€ï¼š`Concept` ï¼Œæå‡ºäº†ä¸€ç§æ¯” *SFINAE* æ›´å¥½çš„çº¦æŸæ–¹æ³•ï¼Œå®ƒæ˜“äºç†è§£å’Œç¼–å†™ï¼Œä¹Ÿèƒ½åœ¨å‡ºç°é—®é¢˜æ—¶ç»™å‡ºæ›´å¯è¯»çš„ç¼–è¯‘æœŸæŠ¥é”™ã€‚æ¦‚å¿µçš„å®šä¹‰å½¢å¼å¦‚ä¸‹ï¼š
 
-> **_template_** < <font color=grey><i>Ä£°åĞÎ²ÎÁĞ±í</i></font> >
-> **_concept_**?<font color=grey><i>¸ÅÄîÃû</i></font> <font color=grey><i>ÊôĞÔ</i></font><font color=green>(¿ÉÑ¡)</font>?**=**?<font color=grey><i>Ô¼Êø±í´ïÊ½</i></font> **;**
+> **_template_** < <font color=grey><i>æ¨¡æ¿å½¢å‚åˆ—è¡¨</i></font> >
+> **_concept_**?<font color=grey><i>æ¦‚å¿µå</i></font> <font color=grey><i>å±æ€§</i></font><font color=green>(å¯é€‰)</font>?**=**?<font color=grey><i>çº¦æŸè¡¨è¾¾å¼</i></font> **;**
 
-ÔÚÉÏÊöÀı×ÓÖĞ£¬¸ÅÄî `love` µÄ¶¨Òå¾ÍÊÇÕâÑù£º
+åœ¨ä¸Šè¿°ä¾‹å­ä¸­ï¼Œæ¦‚å¿µ `love` çš„å®šä¹‰å°±æ˜¯è¿™æ ·ï¼š
 ```cpp
 template <class T>
 concept love = std::is_integral_v<T> && (std::is_same_v<int, T> || std::is_same_v<uint32_t, T>);
 ```
 
-ÆäÖĞ£¬ÔËËã·û `&&` ¹¹³ÉÁ½¸öÔ¼ÊøµÄºÏÈ¡(*Conjunction*)£¬Á½¸öÔ¼Êø¾ùÂú×ãÊ±ºÏÈ¡Âú×ã¡£`||` ¹¹³ÉµÄÎöÈ¡(*Disjunction*)ÔòÎªÁ½ÕßÖ®Ò»Âú×ãÔòÎöÈ¡Âú×ã¡£
+å…¶ä¸­ï¼Œè¿ç®—ç¬¦ `&&` æ„æˆä¸¤ä¸ªçº¦æŸçš„åˆå–(*Conjunction*)ï¼Œä¸¤ä¸ªçº¦æŸå‡æ»¡è¶³æ—¶åˆå–æ»¡è¶³ã€‚`||` æ„æˆçš„æå–(*Disjunction*)åˆ™ä¸ºä¸¤è€…ä¹‹ä¸€æ»¡è¶³åˆ™æå–æ»¡è¶³ã€‚
 <br>
 <br>
-`requires` ¹Ø¼ü×Ö¿ÉÓÃÓÚ½øĞĞ¶à¸öÔ¼ÊøµÄ·Ö¿ª±í´ï£¬Ô¼ÊøÖ®¼äµÄ¹ØÏµ¾ùÎªºÏÈ¡£¬·ÖÎªÒÔÏÂ¶àÖÖÇé¿ö£º
+`requires` å…³é”®å­—å¯ç”¨äºè¿›è¡Œå¤šä¸ªçº¦æŸçš„åˆ†å¼€è¡¨è¾¾ï¼Œçº¦æŸä¹‹é—´çš„å…³ç³»å‡ä¸ºåˆå–ï¼Œåˆ†ä¸ºä»¥ä¸‹å¤šç§æƒ…å†µï¼š
 
-- ¼òµ¥Ô¼Êø
+- ç®€å•çº¦æŸ
 ```cpp
-// 1. ¼òµ¥Ô¼Êø
+// 1. ç®€å•çº¦æŸ
 template <typename T>
 concept Addable = requires(T a, T b)
 {
-	a + b;    //±àÒëÆ÷»á¼ì²é¸Ã±í´ïÊ½ÊÇ·ñ "ºÏ·¨"
+	a + b;    //ç¼–è¯‘å™¨ä¼šæ£€æŸ¥è¯¥è¡¨è¾¾å¼æ˜¯å¦ "åˆæ³•"
 }
 ```
 
-- ÀàĞÍÔ¼Êø
+- ç±»å‹çº¦æŸ
 ```cpp
 template <typename T>
 struct tmp
@@ -381,40 +381,40 @@ using Ref = T&;
 template <typename T>
 concept Cpt = requires
 {
-	typename T::value;    // ¼ì²é T ÊÇ·ñ´æÔÚ³ÉÔ± T::value
-	typename X<T>         // ¼ì²éÊÇ·ñ´æÔÚÄ£°åÀà S µÄÌØ»¯ S<T>
-	typename Ref<T>       // ¼ì²éÊÇ·ñ´æÔÚºÏ·¨±ğÃûÄ£°å Ref<T>
+	typename T::value;    // æ£€æŸ¥ T æ˜¯å¦å­˜åœ¨æˆå‘˜ T::value
+	typename X<T>         // æ£€æŸ¥æ˜¯å¦å­˜åœ¨æ¨¡æ¿ç±» S çš„ç‰¹åŒ– S<T>
+	typename Ref<T>       // æ£€æŸ¥æ˜¯å¦å­˜åœ¨åˆæ³•åˆ«åæ¨¡æ¿ Ref<T>
 }
 ```
 
-- ¸´ºÏÔ¼Êø
-¸´ºÏÔ¼ÊøÓÃÓÚÔ¼Êø±í´ïÊ½µÄ·µ»ØÀàĞÍ¡£Æä¶¨ÒåÎª£º
+- å¤åˆçº¦æŸ
+å¤åˆçº¦æŸç”¨äºçº¦æŸè¡¨è¾¾å¼çš„è¿”å›ç±»å‹ã€‚å…¶å®šä¹‰ä¸ºï¼š
 
-> { <font color=grey><i>±í´ïÊ½</i></font> } **noexcept**<font color=green>(¿ÉÑ¡)</font> -> <font color=grey><i>ÀàĞÍÔ¼Êø</i></font> **;**
+> { <font color=grey><i>è¡¨è¾¾å¼</i></font> } **noexcept**<font color=green>(å¯é€‰)</font> -> <font color=grey><i>ç±»å‹çº¦æŸ</i></font> **;**
 
-ÀıÈç£º
+ä¾‹å¦‚ï¼š
 ```cpp
 template <typename T>
 concept C = requires(T x) {
-  {x * 2} -> typename T::inner;    // ±í´ïÊ½ x * 2 µÄÀàĞÍ¿É×ª»»Îª T::inner
-  {x + 3} -> std::same_as<int>;    // ±í´ïÊ½ x + 3 ĞèÒªÂú×ãÔ¼Êø std::same_as<int>
+  {x * 2} -> typename T::inner;    // è¡¨è¾¾å¼ x * 2 çš„ç±»å‹å¯è½¬æ¢ä¸º T::inner
+  {x + 3} -> std::same_as<int>;    // è¡¨è¾¾å¼ x + 3 éœ€è¦æ»¡è¶³çº¦æŸ std::same_as<int>
 };
 ```
 
 <br>
 <br>
 
-¸´ºÏÔ¼ÊøµÄ¼ÆËãË³ĞòÎª£º
-- ¼ÆËã <font color=grey><i>±í´ïÊ½</i></font> ÊÇ·ñºÏ·¨
-- Èç¹ûÓĞ **noexcept** ÏŞ¶¨£¬Ôò <font color=grey><i>±í´ïÊ½</i></font> ²»ÄÜÅ×³öÒì³£
-- `decltype((expression))` µÄÀàĞÍ±ØĞëÂú×ã <font color=grey><i>ÀàĞÍÔ¼Êø</i></font>
-È«Âú×ãÔò½á¹ûÎª `true` £¬·ñÔòÎª `false`
+å¤åˆçº¦æŸçš„è®¡ç®—é¡ºåºä¸ºï¼š
+- è®¡ç®— <font color=grey><i>è¡¨è¾¾å¼</i></font> æ˜¯å¦åˆæ³•
+- å¦‚æœæœ‰ **noexcept** é™å®šï¼Œåˆ™ <font color=grey><i>è¡¨è¾¾å¼</i></font> ä¸èƒ½æŠ›å‡ºå¼‚å¸¸
+- `decltype((expression))` çš„ç±»å‹å¿…é¡»æ»¡è¶³ <font color=grey><i>ç±»å‹çº¦æŸ</i></font>
+å…¨æ»¡è¶³åˆ™ç»“æœä¸º `true` ï¼Œå¦åˆ™ä¸º `false`
 
 <br>
 
-### [1.8Ä£¿é](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
+### [1.8æ¨¡å—](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.8%E6%A8%A1%E5%9D%97.cpp)
 
-`1.8Ä£¿é.cpp`
+`1.8æ¨¡å—.cpp`
 
 ``` cpp
 import test;
@@ -432,8 +432,8 @@ int main() {
 	t();
 }
 
-//Ä£¿é: https://zh.cppreference.com/w/cpp/language/modules
-//±àÒëÉèÖÃ:add_executable (Test1 "src/1.8Ä£¿é.cpp" "src/test.ixx" "src/test2.ixx")
+//æ¨¡å—: https://zh.cppreference.com/w/cpp/language/modules
+//ç¼–è¯‘è®¾ç½®:add_executable (Test1 "src/1.8æ¨¡å—.cpp" "src/test.ixx" "src/test2.ixx")
 ```
 
 [`test.ixx`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/test.ixx)
@@ -465,7 +465,7 @@ export module test2;
 import<iostream>;
 
 export void t() {
-	std::cout << "ÀÖ\n";
+	std::cout << "ä¹\n";
 }
 ```
 
@@ -477,7 +477,7 @@ export void t() {
 
 
 
-### [1.9ÊÓÍ¼](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.9%E8%A7%86%E5%9B%BE.cpp)
+### [1.9è§†å›¾](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.9%E8%A7%86%E5%9B%BE.cpp)
 
 ``` cpp
 #include<iostream>
@@ -499,7 +499,7 @@ int main() {
 	print(ret2);
 	auto ret3 = nums | stdv::transform([](int i) {return i * i; });
 	print(ret3);
-	print(nums);//ÊÓÍ¼ÊÇ²»»á¸Ä±äÔ­À´µÄÊı¾İµÄ
+	print(nums);//è§†å›¾æ˜¯ä¸ä¼šæ”¹å˜åŸæ¥çš„æ•°æ®çš„
 
 	std::vector<std::string>strs{ "?","?","?","?" };
 	auto ret4 = strs | stdv::reverse;
@@ -517,13 +517,13 @@ int main() {
 	stdr::copy(strs | stdv::reverse | stdv::drop(2), std::ostream_iterator<std::string>(std::cout," "));
 }
 
-//·¶Î§¿â: https://zh.cppreference.com/w/cpp/ranges
+//èŒƒå›´åº“: https://zh.cppreference.com/w/cpp/ranges
 ```
 
-### µÚÒ»ÕÂ×Ü½á
-µÚÒ»ÕÂµÄÄÚÈİĞèÒªÏ¸¿´£¬ºÜ¶àÆäÊµÊéËµµÄ²¢²»È«Ãæ£¬±ÈÈç·¶Î§£¬Ä£¿é£¬Ô¼ÊøÓë¸ÅÄî£¬×Ô¼º×¢ÒâÈ¥¿´ÎÒÃÇÌáµ½µÄÖ®Ç°½²¹ıµÄÊÓÆµ£¬ÒÔ¼°ÕâĞ©demo
-Èç¹ûÄãÊÇ³õÑ§£¬×îºÃ¶¼×Ô¼ºĞ´Ò»ÏÂÔËĞĞ£¬Ë³±ãÌáÒ»ÏÂ`print.h`ºóÃæÎÒÃÇ»á¾­³£ÓÃµ½Õâ¸öÍ·ÎÄ¼ş£¬ÎÒÃÇÆäÊµÊÇÒ»²½²½²¹³äµÄ£¬µ«ÊÇÎÒÃÇÖ±½Ó°Ñ
-Õâ¸öÍ·ÎÄ¼şµÄÄÚÈİÏÈ·Å³öÀ´°É£¬ÓĞ²»ÉÙµÄ´òÓ¡Ä£°åº¯Êı
+### ç¬¬ä¸€ç« æ€»ç»“
+ç¬¬ä¸€ç« çš„å†…å®¹éœ€è¦ç»†çœ‹ï¼Œå¾ˆå¤šå…¶å®ä¹¦è¯´çš„å¹¶ä¸å…¨é¢ï¼Œæ¯”å¦‚èŒƒå›´ï¼Œæ¨¡å—ï¼Œçº¦æŸä¸æ¦‚å¿µï¼Œè‡ªå·±æ³¨æ„å»çœ‹æˆ‘ä»¬æåˆ°çš„ä¹‹å‰è®²è¿‡çš„è§†é¢‘ï¼Œä»¥åŠè¿™äº›demo
+å¦‚æœä½ æ˜¯åˆå­¦ï¼Œæœ€å¥½éƒ½è‡ªå·±å†™ä¸€ä¸‹è¿è¡Œï¼Œé¡ºä¾¿æä¸€ä¸‹`print.h`åé¢æˆ‘ä»¬ä¼šç»å¸¸ç”¨åˆ°è¿™ä¸ªå¤´æ–‡ä»¶ï¼Œæˆ‘ä»¬å…¶å®æ˜¯ä¸€æ­¥æ­¥è¡¥å……çš„ï¼Œä½†æ˜¯æˆ‘ä»¬ç›´æ¥æŠŠ
+è¿™ä¸ªå¤´æ–‡ä»¶çš„å†…å®¹å…ˆæ”¾å‡ºæ¥å§ï¼Œæœ‰ä¸å°‘çš„æ‰“å°æ¨¡æ¿å‡½æ•°
 
 **`print.h`**
 ```cpp
@@ -582,8 +582,8 @@ void printr(const auto& r, std::string_view s = "") {
 <br>
 
 ---
-## µÚ¶şÕÂ STLµÄ·ºĞÍÌØĞÔ
-### [2.2spanÀà](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
+## ç¬¬äºŒç«  STLçš„æ³›å‹ç‰¹æ€§
+### [2.2spanç±»](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
 
 ```cpp
 #include<iostream>
@@ -610,11 +610,11 @@ int main() {
 	pspan<int>(array);
 }
 
-//spanÎÄµµ: https://zh.cppreference.com/w/cpp/container/span
-//span¼òµ¥ÊµÏÖ: https://github.com/Mq-b/c-plus-plus/blob/master/src/lib/span.hpp
+//spanæ–‡æ¡£: https://zh.cppreference.com/w/cpp/container/span
+//spanç®€å•å®ç°: https://github.com/Mq-b/c-plus-plus/blob/master/src/lib/span.hpp
 ```
 
-### [2.3½á¹¹»¯°ó¶¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
+### [2.3ç»“æ„åŒ–ç»‘å®š](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
 ```cpp
 #include<iostream>
 #include<format>
@@ -668,7 +668,7 @@ int main() {
 }
 ```
 
-### [2.4`if`&`switch`ÖĞµÄ³õÊ¼»¯](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+### [2.4`if`&`switch`ä¸­çš„åˆå§‹åŒ–](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
 ```cpp
 #include"print.h"
 #include<mutex>
@@ -679,7 +679,7 @@ bool flag = true;
 
 void f(int n) {
 	if (std::lock_guard lg{ m }; flag) {
-		print("ÀÖ\t");
+		print("ä¹\t");
 		print("???\n");
 	}
 }
@@ -721,7 +721,7 @@ int main() {
 }
 ```
 
-### [2.5Ä£°å²ÎÊıÍÆµ¼](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+### [2.5æ¨¡æ¿å‚æ•°æ¨å¯¼](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
 ```cpp
 #include"print.h"
 
@@ -743,7 +743,7 @@ int main() {
 }
 ```
 
-### [2.6±àÒëÆÚ`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+### [2.6ç¼–è¯‘æœŸ`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
 ```cpp
 #include"print.h"
 
@@ -771,17 +771,17 @@ int main() {
 	print("\n");
 }
 ```
-### µÚ¶şÕÂ×Ü½á
-µÚ¶şÕÂÄÚÈİ×ÜÌå±È½Ï¼òµ¥£¬²¢Ã»ÓĞÊ²Ã´À§ÄÑµÄ£¬ÖØÔÚÔËÓÃ£¬×îºÃÕâĞ©demo¶¼×Ô¼º³­»òÕßĞ´Ò»±é¡£
-¼ÓÉîÀí½â
+### ç¬¬äºŒç« æ€»ç»“
+ç¬¬äºŒç« å†…å®¹æ€»ä½“æ¯”è¾ƒç®€å•ï¼Œå¹¶æ²¡æœ‰ä»€ä¹ˆå›°éš¾çš„ï¼Œé‡åœ¨è¿ç”¨ï¼Œæœ€å¥½è¿™äº›demoéƒ½è‡ªå·±æŠ„æˆ–è€…å†™ä¸€éã€‚
+åŠ æ·±ç†è§£
 
 <br>
 
 ---
-## µÚÈıÕÂ STLÈİÆ÷
+## ç¬¬ä¸‰ç«  STLå®¹å™¨
 
 
-### [3.1Ê¹ÓÃ`set`½øĞĞÊäÈëºÍÉ¸Ñ¡](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+### [3.1ä½¿ç”¨`set`è¿›è¡Œè¾“å…¥å’Œç­›é€‰](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
 #include"print.h"
 #include<set>
@@ -789,7 +789,7 @@ int main() {
 #include<ranges>
 
 int main() {
-	std::set<std::string> sets;//set ÈİÆ÷ÓÃÓÚ´æ´¢¼üÊÊÓÃÓÚË÷Òı¹Ø¼ü×Ö
+	std::set<std::string> sets;//set å®¹å™¨ç”¨äºå­˜å‚¨é”®é€‚ç”¨äºç´¢å¼•å…³é”®å­—
 
 	std::copy(std::istream_iterator<std::string>{std::cin}, {},
 		std::inserter(sets, sets.end()));
@@ -797,37 +797,37 @@ int main() {
 	print(sets);
 }
 ```
-[**``std::copy``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  ÓÃÓÚ½«Êı¾İ¿½±´µ½¶ÔÓ¦ÈİÆ÷ÖĞ
-- ²ÎÊı1 `_First` ĞèÒª¿½±´µÄÆğÊ¼µü´úÆ÷(ÕâÀïÊ¹ÓÃ``istream``µÄµü´úÆ÷À´¶ÁÈ¡ÊäÈëÁ÷×Ö·û´®)   
-- ²ÎÊı2 `_Last`  ¿½±´µÄ½ØÖ¹µü´úÆ÷ (ÕâÀïÊ¹ÓÃ `{}` Õ¼Î» ¼´¿½±´ËùÓĞÊäÈëÁ÷ÖĞµÄ×Ö·û)   
-- ²ÎÊı2 `_Dest`  ÈçºÎ¿½±´(ÕâÀïÊ¹ÓÃ``std::inserter``½øĞĞ²åÈë)   
+[**``std::copy``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  ç”¨äºå°†æ•°æ®æ‹·è´åˆ°å¯¹åº”å®¹å™¨ä¸­
+- å‚æ•°1 `_First` éœ€è¦æ‹·è´çš„èµ·å§‹è¿­ä»£å™¨(è¿™é‡Œä½¿ç”¨``istream``çš„è¿­ä»£å™¨æ¥è¯»å–è¾“å…¥æµå­—ç¬¦ä¸²)   
+- å‚æ•°2 `_Last`  æ‹·è´çš„æˆªæ­¢è¿­ä»£å™¨ (è¿™é‡Œä½¿ç”¨ `{}` å ä½ å³æ‹·è´æ‰€æœ‰è¾“å…¥æµä¸­çš„å­—ç¬¦)   
+- å‚æ•°2 `_Dest`  å¦‚ä½•æ‹·è´(è¿™é‡Œä½¿ç”¨``std::inserter``è¿›è¡Œæ’å…¥)   
  
-[**``std::inserter``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  ½«Ã¿Ò»×éÊäÈëµÄ×Ö·û´®×÷Îª `key` ²åÈëµ½ÈİÆ÷ÖĞ
-- ²ÎÊı1 `_Cont`	 ĞèÒª²åÈëÊı¾İµÄÈİÆ÷(ÕâÀïÊÇsets)   
-- ²ÎÊı2 `_Where` ĞèÒª²åÈëµÄÎ»ÖÃ(ÕâÀïÊ¼ÖÕ²åÈëµ½`sets`µÄÎ²²¿)   
+[**``std::inserter``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  å°†æ¯ä¸€ç»„è¾“å…¥çš„å­—ç¬¦ä¸²ä½œä¸º `key` æ’å…¥åˆ°å®¹å™¨ä¸­
+- å‚æ•°1 `_Cont`	 éœ€è¦æ’å…¥æ•°æ®çš„å®¹å™¨(è¿™é‡Œæ˜¯sets)   
+- å‚æ•°2 `_Where` éœ€è¦æ’å…¥çš„ä½ç½®(è¿™é‡Œå§‹ç»ˆæ’å…¥åˆ°`sets`çš„å°¾éƒ¨)   
 
-**ÔËĞĞ½á¹û**
+**è¿è¡Œç»“æœ**
 
-		ÊäÈë:  1 12 3 3 3 3 3 ^Z
-		Êä³ö:  size: 3 [ 1 12 3 ]
+		è¾“å…¥:  1 12 3 3 3 3 3 ^Z
+		è¾“å‡º:  size: 3 [ 1 12 3 ]
  
-`set` ÈİÆ÷µÄ `key` ÊÇ²»¿ÉÖØ¸´µÄ,Èç¹ûĞèÒªÔËĞĞÖØ¸´ `key` µÄ `set` ¿ÉÒÔÊ¹ÓÃ `std::multiset`   
+`set` å®¹å™¨çš„ `key` æ˜¯ä¸å¯é‡å¤çš„,å¦‚æœéœ€è¦è¿è¡Œé‡å¤ `key` çš„ `set` å¯ä»¥ä½¿ç”¨ `std::multiset`   
 
-`set` ÈİÆ÷ÄÚ²¿Í¨¹ıÒ»¿Å `R&BÊ÷(ºìºÚÊ÷)`À´´æ´¢Êı¾İ,Æä¶Ô×Ö·û´®µÄÅÅĞò·½Ê½ÊÇ°´ÕÕ [**×ÖµäĞò**](https://baike.baidu.com/item/%E5%AD%97%E5%85%B8%E5%BA%8F#:~:text=%E5%9C%A8%E6%95%B0%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AD%97%E5%85%B8%E6%88%96,%E9%A1%BA%E5%BA%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82)¹ÊÊä³öÊ± `12` ³öÏÖÔÚ `3` Ö®Ç°
+`set` å®¹å™¨å†…éƒ¨é€šè¿‡ä¸€é¢— `R&Bæ ‘(çº¢é»‘æ ‘)`æ¥å­˜å‚¨æ•°æ®,å…¶å¯¹å­—ç¬¦ä¸²çš„æ’åºæ–¹å¼æ˜¯æŒ‰ç…§ [**å­—å…¸åº**](https://baike.baidu.com/item/%E5%AD%97%E5%85%B8%E5%BA%8F#:~:text=%E5%9C%A8%E6%95%B0%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AD%97%E5%85%B8%E6%88%96,%E9%A1%BA%E5%BA%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82)æ•…è¾“å‡ºæ—¶ `12` å‡ºç°åœ¨ `3` ä¹‹å‰
 
 <br>
 
-### [3.3Ê¹ÓÃ²Á³ıº¯Êı´ÓÈİÆ÷ÖĞ²Á³ıÏî](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
+### [3.3ä½¿ç”¨æ“¦é™¤å‡½æ•°ä»å®¹å™¨ä¸­æ“¦é™¤é¡¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
 #include<list>
 
 template<typename Tc,typename Tv>
-void remove_value(Tc& c, const Tv& v) {//C++20Ö®Ç°µÄ×ö·¨
-	//std::remove½«ºÍ´«ÈëÔªËØÏàÍ¬µÄÔªËØÒÆ¶¯·Åµ½Ä©Î²£¬²¢·µ»Øµü´úÆ÷Î»ÖÃ£¬»¹ÓĞÒ»¸östd::remove_ifµÄ°æ±¾
-	auto remove_it = std::remove(c.begin(), c.end(), v);//remove_itÊÇÊ×¸öĞèÒª±»É¾³ıÔªËØµÄÎ»ÖÃ
-	c.erase(remove_it, c.end());//É¾³ıremove_itµ½end()Õâ¸ö·¶Î§µÄÔªËØ
+void remove_value(Tc& c, const Tv& v) {//C++20ä¹‹å‰çš„åšæ³•
+	//std::removeå°†å’Œä¼ å…¥å…ƒç´ ç›¸åŒçš„å…ƒç´ ç§»åŠ¨æ”¾åˆ°æœ«å°¾ï¼Œå¹¶è¿”å›è¿­ä»£å™¨ä½ç½®ï¼Œè¿˜æœ‰ä¸€ä¸ªstd::remove_ifçš„ç‰ˆæœ¬
+	auto remove_it = std::remove(c.begin(), c.end(), v);//remove_itæ˜¯é¦–ä¸ªéœ€è¦è¢«åˆ é™¤å…ƒç´ çš„ä½ç½®
+	c.erase(remove_it, c.end());//åˆ é™¤remove_itåˆ°end()è¿™ä¸ªèŒƒå›´çš„å…ƒç´ 
 }
 
 int main() {
@@ -835,9 +835,9 @@ int main() {
 	print(v);
 	::remove_value(v, 1);
 	print(v);
-	std::erase(v,5);//C++20Æğ£¬¹¦ÄÜºÍremove_value()ÏàÍ¬
+	std::erase(v,5);//C++20èµ·ï¼ŒåŠŸèƒ½å’Œremove_value()ç›¸åŒ
 	print(v);
-	std::erase_if(v, [](int i) {return i % 2 != 0; });//µÚ¶ş¸ö°æ±¾
+	std::erase_if(v, [](int i) {return i % 2 != 0; });//ç¬¬äºŒä¸ªç‰ˆæœ¬
 	print(v);
 
 	std::list list{ 1,2,3,4,5,6,7,8,9,10 };
@@ -855,14 +855,14 @@ int main() {
 }
 ```
 
-### [3.4³£ÊıÊ±¼äÄÚ´ÓÎ´ÅÅĞòµÄÏòÁ¿ÖĞÉ¾³ıÏî](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
+### [3.4å¸¸æ•°æ—¶é—´å†…ä»æœªæ’åºçš„å‘é‡ä¸­åˆ é™¤é¡¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
 #include<ranges>
 namespace stdr = std::ranges;
 
-//Ê¹ÓÃÏÂ±êµÄ°æ±¾
+//ä½¿ç”¨ä¸‹æ ‡çš„ç‰ˆæœ¬
 template<typename T>
 void quick_delete(T& v, size_t idx) {
 	if (idx < v.size()) {
@@ -870,7 +870,7 @@ void quick_delete(T& v, size_t idx) {
 		v.pop_back();
 	}
 }
-//Ê¹ÓÃµü´úÆ÷µÄ°æ±¾
+//ä½¿ç”¨è¿­ä»£å™¨çš„ç‰ˆæœ¬
 template<typename T>
 void quick_delete(T& v, typename T::iterator it) {
 	if (it < v.end()) {
@@ -878,31 +878,31 @@ void quick_delete(T& v, typename T::iterator it) {
 		v.pop_back();
 	}
 }
-//Èô vector ÖĞÏîÄ¿µÄË³Ğò²»ÖØÒª£¬¾Í¿ÉÒÔÓÅ»¯Õâ¸ö¹ı³Ì£¬Ê¹Æä»¨·Ñ O(1)(³£Êı) Ê±¼ä
-//×ö·¨ºÜ¼òµ¥£¬½«´«ÈëµÄÒªÉ¾³ıµÄµü´úÆ÷»òË÷Òı¸³ÖµÎªÄ©Î²ÔªËØµÄÖµ£¬È»ºó½«Ä©Î²ÔªËØÉ¾³ı£¬¾ÍÍê³ÉÁË£¬µ«ÊÇÃ»ÓĞË³Ğò
+//è‹¥ vector ä¸­é¡¹ç›®çš„é¡ºåºä¸é‡è¦ï¼Œå°±å¯ä»¥ä¼˜åŒ–è¿™ä¸ªè¿‡ç¨‹ï¼Œä½¿å…¶èŠ±è´¹ O(1)(å¸¸æ•°) æ—¶é—´
+//åšæ³•å¾ˆç®€å•ï¼Œå°†ä¼ å…¥çš„è¦åˆ é™¤çš„è¿­ä»£å™¨æˆ–ç´¢å¼•èµ‹å€¼ä¸ºæœ«å°¾å…ƒç´ çš„å€¼ï¼Œç„¶åå°†æœ«å°¾å…ƒç´ åˆ é™¤ï¼Œå°±å®Œæˆäº†ï¼Œä½†æ˜¯æ²¡æœ‰é¡ºåº
 
 int main() {
 	std::vector v{ 1,2,3,4,5 };
 	print(v);
 	auto it = stdr::find(v, 3);
 	quick_delete(v, it);
-	print(v);//Ë³Ğò²»¶Ô£¬Õı³£ÏÖÏó
+	print(v);//é¡ºåºä¸å¯¹ï¼Œæ­£å¸¸ç°è±¡
 
 	quick_delete(v, 2);
 	print(v);
 }
 ```
 
-### [3.5°²È«µÄ·ÃÎÊ`std::vector`ÔªËØ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
+### [3.5å®‰å…¨çš„è®¿é—®`std::vector`å…ƒç´ ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.5%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%BF%E9%97%AEvector%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
 
 void test1() {
 	std::vector v{ 1,2,3,4,5 };
-	v[5] = 2001;//Ğ´Èë·Ç·¨ÄÚ´æ£¬·ÃÎÊÒ²ÊÇÔ½½ç
-	auto& i = v[5];//ÒıÓÃÁË´íÎóµÄÄÚ´æ
-	print("{}\n", i);//¿ÉÄÜ·¢Éú´íÎó£¬²»±£Ö¤
+	v[5] = 2001;//å†™å…¥éæ³•å†…å­˜ï¼Œè®¿é—®ä¹Ÿæ˜¯è¶Šç•Œ
+	auto& i = v[5];//å¼•ç”¨äº†é”™è¯¯çš„å†…å­˜
+	print("{}\n", i);//å¯èƒ½å‘ç”Ÿé”™è¯¯ï¼Œä¸ä¿è¯
 }
 
 void test2()try {
@@ -929,7 +929,7 @@ int main() {
 }
 ```
 
-### [3.6±£³Ö`std::vector`ÔªËØµÄË³Ğò](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
+### [3.6ä¿æŒ`std::vector`å…ƒç´ çš„é¡ºåº](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.6%E4%BF%9D%E6%8C%81vector%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -947,9 +947,9 @@ void psorted(stdr::range auto&& v) {
 }
 
 void insert_sorted(Vstr& v, const std::string& s) {
-	//lower_bound() Ëã·¨²éÕÒ²»Ğ¡ÓÚÊµ²ÎµÄµÚÒ»¸öÔªËØµÄµü´úÆ÷
+	//lower_bound() ç®—æ³•æŸ¥æ‰¾ä¸å°äºå®å‚çš„ç¬¬ä¸€ä¸ªå…ƒç´ çš„è¿­ä»£å™¨
 	const auto pos{ stdr::lower_bound(v,s) };
-	v.insert(pos, s);//Ê¹ÓÃ lower_bound() ·µ»ØµÄµü´úÆ÷ÔÚÕıÈ·µÄÎ»ÖÃ²åÈëÒ»¸öÔªËØ
+	v.insert(pos, s);//ä½¿ç”¨ lower_bound() è¿”å›çš„è¿­ä»£å™¨åœ¨æ­£ç¡®çš„ä½ç½®æ’å…¥ä¸€ä¸ªå…ƒç´ 
 }
 
 template<stdr::range C,typename E>
@@ -960,25 +960,25 @@ void insert_sorted(C& c, const E& e) {
 
 int main() {
 	std::vector<std::string> v{ "2","1","3"};
-	psorted(v);//ÎŞĞò
+	psorted(v);//æ— åº
 
 	stdr::sort(v);
-	psorted(v);//ÓĞĞò
+	psorted(v);//æœ‰åº
 
 	//v.emplace_back("0");
-	//psorted(v);//ÎŞĞò
+	//psorted(v);//æ— åº
 
 	::insert_sorted(v, "0");
-	psorted(v);//ÓĞĞò£¬Ïà±ÈÓÚÆÕÍ¨²åÈëµÄÓÅÊÆ
-	//ÓÃlist²âÊÔ¸ÄĞ´·ºĞÍµÄ°æ±¾
+	psorted(v);//æœ‰åºï¼Œç›¸æ¯”äºæ™®é€šæ’å…¥çš„ä¼˜åŠ¿
+	//ç”¨listæµ‹è¯•æ”¹å†™æ³›å‹çš„ç‰ˆæœ¬
 	std::list<int>list{ 1,2,3,4,5 };
-	psorted(list);//ÓĞĞò
+	psorted(list);//æœ‰åº
 	::insert_sorted(list, 0);
-	psorted(list);//ÓĞĞò
+	psorted(list);//æœ‰åº
 }
 ```
 
-### [3.7¸ßĞ§µÄ½«ÔªËØ²åÈëµ½`std::map`ÖĞ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
+### [3.7é«˜æ•ˆçš„å°†å…ƒç´ æ’å…¥åˆ°`std::map`ä¸­](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.7%E9%AB%98%E6%95%88%E7%9A%84%E5%B0%86%E5%85%83%E7%B4%A0%E6%8F%92%E5%85%A5%E5%88%B0map%E4%B8%AD.cpp)
 ```cpp
 #include"print.h"
 
@@ -997,29 +997,29 @@ void printm(const std::map<int, X>& map) {
 
 int main() {
 	std::map<int, X>map{};
-	map[1] = "?";//Á½¸ö¹¹ÔìµÄ¿ªÏú£¬ÓĞ²ÎºÍÄ¬ÈÏ
+	map[1] = "?";//ä¸¤ä¸ªæ„é€ çš„å¼€é”€ï¼Œæœ‰å‚å’Œé»˜è®¤
 	print("\n");
-	//Ö±½Ó×ª·¢£¬Ö»ÓĞÒ»¸öÓĞ²Î¹¹ÔìµÄ¿ªÏú,ÕâÀïÊ¹ÓÃtry_emplaceºÍemplaceĞ§¹ûÍêÈ«Ò»Ñù
+	//ç›´æ¥è½¬å‘ï¼Œåªæœ‰ä¸€ä¸ªæœ‰å‚æ„é€ çš„å¼€é”€,è¿™é‡Œä½¿ç”¨try_emplaceå’Œemplaceæ•ˆæœå®Œå…¨ä¸€æ ·
 	map.emplace(2,"?");
 	map.emplace(3, "?");
 	printm(map);
 	print("\n");
 
-	map.emplace(1, "ÀÖ");//Ìí¼ÓÒ»¸ö¾ßÓĞÖØ¸´¼üµÄÔªËØ
-	map.try_emplace(1, "ÀÖ");
+	map.emplace(1, "ä¹");//æ·»åŠ ä¸€ä¸ªå…·æœ‰é‡å¤é”®çš„å…ƒç´ 
+	map.try_emplace(1, "ä¹");
 	printm(map);
 }
-//ÖØ¸´¼üÔªËØµÄÎÊÌâ²Î¼û https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300
+//é‡å¤é”®å…ƒç´ çš„é—®é¢˜å‚è§ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300
 ```
 
-### [3.8¸ßĞ§µÄĞŞ¸Ä`std::map`ÏîµÄ¼üÖµ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
+### [3.8é«˜æ•ˆçš„ä¿®æ”¹`std::map`é¡¹çš„é”®å€¼](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.8%E9%AB%98%E6%95%88%E7%9A%84%E4%BF%AE%E6%94%B9map%E9%A1%B9%E7%9A%84%E9%94%AE%E5%80%BC.cpp)
 ```cpp
 #include"print.h"
 #include<string>
 
 template<typename M,typename K>
 bool node_swap(M& m, K k1, K k2) {
-	//extract ÊÇ¸ü»» map µÄ¼ü¶ø²»ÖØ·ÖÅäµÄÎ¨Ò»·½Ê½
+	//extract æ˜¯æ›´æ¢ map çš„é”®è€Œä¸é‡åˆ†é…çš„å”¯ä¸€æ–¹å¼
 	auto node1{ m.extract(k1) };
 	auto node2{ m.extract(k2) };
 	if (node1.empty() || node2.empty())
@@ -1043,12 +1043,12 @@ int main() {
 	auto t =maps.insert(std::move(node));
 	print(maps);
 	if (!t.inserted) {
-		print("²åÈëÊ§°Ü {}\n",t.position->second);
+		print("æ’å…¥å¤±è´¥ {}\n",t.position->second);
 	}
 }
 ```
 
-### [3.9×Ô¶¨Òå¼üÖµµÄ`std::unordered_map`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+### [3.9è‡ªå®šä¹‰é”®å€¼çš„`std::unordered_map`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1081,7 +1081,7 @@ int main() {
 }
 ```
 
-### [3.10Ê¹ÓÃ`std::set`½øĞĞÊäÈëºÍÉ¸Ñ¡](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+### [3.10ä½¿ç”¨`std::set`è¿›è¡Œè¾“å…¥å’Œç­›é€‰](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
 #include"print.h"
 #include<set>
@@ -1096,7 +1096,7 @@ int main() {
 }
 ```
 
-### [3.11ÊµÏÖ¼òµ¥µÄRPN¼ÆËãÆ÷Óë`deque`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
+### [3.11å®ç°ç®€å•çš„RPNè®¡ç®—å™¨ä¸`deque`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
 ```cpp
 #include"print.h"
 #include<deque>
@@ -1173,7 +1173,7 @@ int main() {
 }
 ```
 
-### [3.12Ê¹ÓÃ`std::map`µÄ´ÊÆµ¼ÆÊıÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
+### [3.12ä½¿ç”¨`std::map`çš„è¯é¢‘è®¡æ•°å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.12%E4%BD%BF%E7%94%A8map%E7%9A%84%E8%AF%8D%E9%A2%91%E8%AE%A1%E6%95%B0%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<ranges>
@@ -1194,13 +1194,13 @@ int main() {
 		auto words_begin{ std::sregex_iterator(s.begin(),s.end(),word_re) };
 		auto words_end{ std::sregex_iterator() };
 		for (auto r_it{ words_begin }; r_it != words_end; ++r_it) {
-			std::smatch match{ *r_it };//×Ö·û´®Æ¥ÅäÀà
-			auto word_str{ match.str() };//µÃµ½ÊäÈëµÄµ¥´Ê
-			stdr::transform(word_str, word_str.begin(), [](uint8_t c) {return tolower(c); });//½«×ÖÄ¸È«²¿´óĞ´
-			auto [map_it, result] = wordmap.try_emplace(word_str, 0);//²åÈëµ½mapÖĞ£¬mapµÄ¼ü²»»áÓĞÖØ¸´£¬×Ô¶¯È¥ÖØ
+			std::smatch match{ *r_it };//å­—ç¬¦ä¸²åŒ¹é…ç±»
+			auto word_str{ match.str() };//å¾—åˆ°è¾“å…¥çš„å•è¯
+			stdr::transform(word_str, word_str.begin(), [](uint8_t c) {return tolower(c); });//å°†å­—æ¯å…¨éƒ¨å¤§å†™
+			auto [map_it, result] = wordmap.try_emplace(word_str, 0);//æ’å…¥åˆ°mapä¸­ï¼Œmapçš„é”®ä¸ä¼šæœ‰é‡å¤ï¼Œè‡ªåŠ¨å»é‡
 			auto& [w, count] = *map_it;
 			++total_words;
-			++count;//Ôö¼Óµ¥´Ê¼ÆÊı
+			++count;//å¢åŠ å•è¯è®¡æ•°
 		}
 	}
 	auto unique_words = wordmap.size();
@@ -1210,8 +1210,8 @@ int main() {
 		return (a.second != b.second) ? (a.second > b.second) : (a.first < b.first);
 	});
 
-	print("unique word count: {}\n", total_words);//×Ü¹²µÄµ¥´Ê¸öÊı
-	print("unqiue word count: {}\n", unique_words);//È¥³ıÖØ¸´Ö®ºóµÄ
+	print("unique word count: {}\n", total_words);//æ€»å…±çš„å•è¯ä¸ªæ•°
+	print("unqiue word count: {}\n", unique_words);//å»é™¤é‡å¤ä¹‹åçš„
 	for (int limit{ 20 }; auto & [w, count]:wordvec) {
 		print("{}: {}\n", count, w);
 		//if (--limit == 0)break;
@@ -1219,7 +1219,7 @@ int main() {
 }
 ```
 
-### [3.13ÕÒ³öº¬ÓĞÏàÓ¦³¤¾äµÄ`std::vector`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
+### [3.13æ‰¾å‡ºå«æœ‰ç›¸åº”é•¿å¥çš„`std::vector`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.13%E6%89%BE%E5%87%BA%E5%90%AB%E6%9C%89%E7%9B%B8%E5%BA%94%E9%95%BF%E5%8F%A5%E7%9A%84vector.cpp)
 ```cpp
 #include"print.h"
 #include<string_view>
@@ -1262,7 +1262,7 @@ int main() {
 }
 ```
 
-### [3.14Ê¹ÓÃ`std::multimap`ÖÆ×÷´ı°ìÊÂÏî](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
+### [3.14ä½¿ç”¨`std::multimap`åˆ¶ä½œå¾…åŠäº‹é¡¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<map>
@@ -1277,15 +1277,15 @@ int main() {
 	rprint(todo);
 }
 ```
-### µÚÈıÕÂ×Ü½á
-µÚÈıÕÂÄÚÈİ½Ï¶à£¬ĞèÒª¶ÔSTLÈİÆ÷ÓĞÒ»¶¨µÄÁË½â£¬½¨ÒéÃ¿Ò»¸ödemo¶¼×Ô¼ºĞ´ÍêÀí½âÒâÒåºóÔÙÍùÏÂÔÄ¶Á¡£
+### ç¬¬ä¸‰ç« æ€»ç»“
+ç¬¬ä¸‰ç« å†…å®¹è¾ƒå¤šï¼Œéœ€è¦å¯¹STLå®¹å™¨æœ‰ä¸€å®šçš„äº†è§£ï¼Œå»ºè®®æ¯ä¸€ä¸ªdemoéƒ½è‡ªå·±å†™å®Œç†è§£æ„ä¹‰åå†å¾€ä¸‹é˜…è¯»ã€‚
 
 ---
 
 <br>
 
-## µÚËÄÕÂ ¼æÈİµü´úÆ÷
-### [4.3´´½¨¿Éµü´ú·¶Î§](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
+## ç¬¬å››ç«  å…¼å®¹è¿­ä»£å™¨
+### [4.3åˆ›å»ºå¯è¿­ä»£èŒƒå›´](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
 ```cpp
 #include"print.h"
 
@@ -1342,7 +1342,7 @@ int main() {
 }
 ```
 
-### [4.4Ê¹µü´úÆ÷ÓëSTLµü´úÆ÷ÌØĞÔ¼æÈİ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
+### [4.4ä½¿è¿­ä»£å™¨ä¸STLè¿­ä»£å™¨ç‰¹æ€§å…¼å®¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
 ```cpp
 #include"print.h"
 
@@ -1407,7 +1407,7 @@ int main() {
 }
 ```
 
-### [4.5Ê¹ÓÃµü´úÆ÷ÊÊÅäÆ÷Ìî³äSTLÈİÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.5%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E5%A1%AB%E5%85%85STL%E5%AE%B9%E5%99%A8.cpp)
+### [4.5ä½¿ç”¨è¿­ä»£å™¨é€‚é…å™¨å¡«å……STLå®¹å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.5%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8%E5%A1%AB%E5%85%85STL%E5%AE%B9%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1459,7 +1459,7 @@ int main() {
 }
 ```
 
-### [4.6´´½¨Ò»¸öµü´úÆ÷Éú³ÉÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8.cpp)
+### [4.6åˆ›å»ºä¸€ä¸ªè¿­ä»£å™¨ç”Ÿæˆå™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 
@@ -1515,7 +1515,7 @@ int main() {
 }
 ```
 
-### [4.7·´Ïòµü´úÆ÷µÄ·´ÏòÊÊÅäÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.7%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%8F%8D%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+### [4.7åå‘è¿­ä»£å™¨çš„åå‘é€‚é…å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.7%E5%8F%8D%E5%90%91%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%8F%8D%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1555,7 +1555,7 @@ int main() {
 }
 ```
 
-### [4.8ÓÃÉÚ±øµü´úÎ´Öª³¤¶ÈµÄ¶ÔÏó](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.8%E7%94%A8%E5%93%A8%E5%85%B5%E8%BF%AD%E4%BB%A3%E6%9C%AA%E7%9F%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AF%B9%E8%B1%A1.cpp)
+### [4.8ç”¨å“¨å…µè¿­ä»£æœªçŸ¥é•¿åº¦çš„å¯¹è±¡](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.8%E7%94%A8%E5%93%A8%E5%85%B5%E8%BF%AD%E4%BB%A3%E6%9C%AA%E7%9F%A5%E9%95%BF%E5%BA%A6%E7%9A%84%E5%AF%B9%E8%B1%A1.cpp)
 ```cpp
 #include"print.h"
 #include<string>
@@ -1593,7 +1593,7 @@ int main() {
 }
 ```
 
-### [4.9¹¹½¨zipµü´úÆ÷ÊÊÅäÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.9%E6%9E%84%E5%BB%BAzip%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8.cpp)
+### [4.9æ„å»ºzipè¿­ä»£å™¨é€‚é…å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.9%E6%9E%84%E5%BB%BAzip%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1611,7 +1611,7 @@ class zip_iterator {
 	it_t itb_begin_{};
 	it_t ita_end_{};
 	it_t itb_end_{};
-	zip_iterator(it_t ita, it_t itb) :ita_{ ita }, itb_{ itb } {}//ÓÃ×÷beginºÍend·µ»ØµÄµü´úÆ÷¹¹Ôìº¯Êı
+	zip_iterator(it_t ita, it_t itb) :ita_{ ita }, itb_{ itb } {}//ç”¨ä½œbeginå’Œendè¿”å›çš„è¿­ä»£å™¨æ„é€ å‡½æ•°
 
 public:
 	using value_type = std::pair<val_t, val_t>;
@@ -1647,15 +1647,15 @@ int main() {
 	print("\n");
 
 	std::map<std::string, std::string>name_map{};
-	for (auto [a, b] : zip_iterator{ vec_a,vec_b }) {//²åÈëµ½mapÖĞ
+	for (auto [a, b] : zip_iterator{ vec_a,vec_b }) {//æ’å…¥åˆ°mapä¸­
 		name_map.emplace(a, b);
 	}
-	print(name_map);//´òÓ¡
+	print(name_map);//æ‰“å°
 
 }
 ```
 
-### [4.10´´½¨Ëæ»ú·ÃÎÊµü´úÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.10%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E8%BF%AD%E4%BB%A3%E5%99%A8.cpp)
+### [4.10åˆ›å»ºéšæœºè®¿é—®è¿­ä»£å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.10%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E8%BF%AD%E4%BB%A3%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<memory>
@@ -1811,15 +1811,15 @@ int main() {
 	
 }
 ```
-### µÚËÄÕÂ×Ü½á
-¹ØÓÚÕâ¸öµü´úÆ÷µÄÄÚÈİ£¬ÊéÉÏÕâĞ©demo×ÜµÄÀ´Ëµ»¹ÊÇ¿ÉÒÔµÄ£¬ÖµµÃÂıÂı¿´£¬×îºÃ¶¼ÊÇ×Ô¼ºÕÕ×ÅĞ´Ò»±é¾ÍĞĞ¡£
+### ç¬¬å››ç« æ€»ç»“
+å…³äºè¿™ä¸ªè¿­ä»£å™¨çš„å†…å®¹ï¼Œä¹¦ä¸Šè¿™äº›demoæ€»çš„æ¥è¯´è¿˜æ˜¯å¯ä»¥çš„ï¼Œå€¼å¾—æ…¢æ…¢çœ‹ï¼Œæœ€å¥½éƒ½æ˜¯è‡ªå·±ç…§ç€å†™ä¸€éå°±è¡Œã€‚
 
 ---
 
 <br>
 
-## µÚÎåÕÂ lambda±í´ïÊ½
-### [5.3ÓÃÓÚ×÷ÓÃÓò¿ÉÖØÓÃ´úÂë](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
+## ç¬¬äº”ç«  lambdaè¡¨è¾¾å¼
+### [5.3ç”¨äºä½œç”¨åŸŸå¯é‡ç”¨ä»£ç ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
 ```cpp
 #include"print.h"
 
@@ -1828,10 +1828,10 @@ int main() {
 	auto two = [] {return "two"; };
 	print("{} {}\n", one(), two());
 
-	auto p = [](auto f) {//·ºĞÍlambda£¬C++20Ö®Ç°Ö»ÄÜÊ¹ÓÃÕâÖÖ·½Ê½
+	auto p = [](auto f) {//æ³›å‹lambdaï¼ŒC++20ä¹‹å‰åªèƒ½ä½¿ç”¨è¿™ç§æ–¹å¼
 		print("{}\n", f()); 
 	};
-	p([] {return "ÀÖ"; });
+	p([] {return "ä¹"; });
 
 	auto p2 = []<typename T>(T&& f) { print("{}\n", f()); };
 	p2(one);
@@ -1854,7 +1854,7 @@ int main() {
 }
 ```
 
-### [5.4Ëã·¨¿âÖĞ×÷ÎªÎ½´Ê](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.4%E7%AE%97%E6%B3%95%E5%BA%93%E4%B8%AD%E4%BD%9C%E4%B8%BA%E8%B0%93%E8%AF%8D.cpp)
+### [5.4ç®—æ³•åº“ä¸­ä½œä¸ºè°“è¯](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.4%E7%AE%97%E6%B3%95%E5%BA%93%E4%B8%AD%E4%BD%9C%E4%B8%BA%E8%B0%93%E8%AF%8D.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1886,13 +1886,13 @@ int main() {
 		print("{} ", count);
 	}
 
-	//²»´ø²¶»ñµÄlambda±í´ïÊ½¿ÉÒÔÓĞ×ª»»º¯Êı£¬ÒşÊ½×ª»»µ½¶ÔÓ¦µÄº¯ÊıÖ¸Õë
+	//ä¸å¸¦æ•è·çš„lambdaè¡¨è¾¾å¼å¯ä»¥æœ‰è½¬æ¢å‡½æ•°ï¼Œéšå¼è½¬æ¢åˆ°å¯¹åº”çš„å‡½æ•°æŒ‡é’ˆ
 	int(*p)(int) = [](int a) {return a; };
 	print("{}\n", p(10));
 }
 ```
 
-### [5.5Óë`std::function`Ò»Æğ×÷Îª¶àÌ¬°ü×°Æ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.5%E4%B8%8Efunction%E4%B8%80%E8%B5%B7%E4%BD%9C%E4%B8%BA%E5%A4%9A%E6%80%81%E5%8C%85%E8%A3%85%E5%99%A8.cpp)
+### [5.5ä¸`std::function`ä¸€èµ·ä½œä¸ºå¤šæ€åŒ…è£…å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.5%E4%B8%8Efunction%E4%B8%80%E8%B5%B7%E4%BD%9C%E4%B8%BA%E5%A4%9A%E6%80%81%E5%8C%85%E8%A3%85%E5%99%A8.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -1945,7 +1945,7 @@ int main() {
 }
 ```
 
-### [5.6ÓÃµİ¹éÁ¬½Ólambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.6%E7%94%A8%E9%80%92%E5%BD%92%E8%BF%9E%E6%8E%A5lambda.cpp)
+### [5.6ç”¨é€’å½’è¿æ¥lambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.6%E7%94%A8%E9%80%92%E5%BD%92%E8%BF%9E%E6%8E%A5lambda.cpp)
 ```cpp
 #include"print.h"
 template <typename F, typename ...Ts>
@@ -1966,20 +1966,20 @@ int main() {
 	print("{} \n", combined(2, 3));
 }
 ```
-`concat`½ÏÎª¸´ÔÓ£¬ËùÒÔÏÈ¿´´«ÈëÒ»¸ö²ÎÊıÊ±µÄÇé¿ö¡£
+`concat`è¾ƒä¸ºå¤æ‚ï¼Œæ‰€ä»¥å…ˆçœ‹ä¼ å…¥ä¸€ä¸ªå‚æ•°æ—¶çš„æƒ…å†µã€‚
 ```cpp
 auto combined = concat(std::plus<int>{});
 print("{} \n", combined(2, 3));
 ```
-ÒòÎªÖ»ÓĞÒ»¸ö²ÎÊı`t`£¬`sizeof...(ts) > 0`ÇóÖµ½á¹ûÎª`flase`£¬ËùÒÔº¯ÊıÖ±½Ó·µ»Ø´«ÈëµÄ²ÎÊı£¬¼´`plus<int>`¶ÔÏó¡£
-`concat`·µ»ØÖµ³õÊ¼»¯`combined`£¬`combined(2, 3)`µÄ½á¹ûÊÇ5¡£<br>
-ÔÙÀ´¿´´«ÈëÁ½¸ö²ÎÊıÊ±µÄÇé¿ö¡£
+å› ä¸ºåªæœ‰ä¸€ä¸ªå‚æ•°`t`ï¼Œ`sizeof...(ts) > 0`æ±‚å€¼ç»“æœä¸º`flase`ï¼Œæ‰€ä»¥å‡½æ•°ç›´æ¥è¿”å›ä¼ å…¥çš„å‚æ•°ï¼Œå³`plus<int>`å¯¹è±¡ã€‚
+`concat`è¿”å›å€¼åˆå§‹åŒ–`combined`ï¼Œ`combined(2, 3)`çš„ç»“æœæ˜¯5ã€‚<br>
+å†æ¥çœ‹ä¼ å…¥ä¸¤ä¸ªå‚æ•°æ—¶çš„æƒ…å†µã€‚
 ```cpp
 auto combined = concat(twice, std::plus<int>{});
 ```
-ÎªÁË±ãÓÚÀí½â£¬²»·ÁÊÖ¶¯ÊµÀı»¯`concat`Ä£°å£º
+ä¸ºäº†ä¾¿äºç†è§£ï¼Œä¸å¦¨æ‰‹åŠ¨å®ä¾‹åŒ–`concat`æ¨¡æ¿ï¼š
 ```cpp
-//Õë¶Ô concat(twice, std::plus<int>{}) ÊµÀı»¯ºóµÄÎ±´úÂë£¬¼ÙÉè twice_type ÊÇ twice µÄÀàĞÍ
+//é’ˆå¯¹ concat(twice, std::plus<int>{}) å®ä¾‹åŒ–åçš„ä¼ªä»£ç ï¼Œå‡è®¾ twice_type æ˜¯ twice çš„ç±»å‹
 int concat(twice_type t, std::plus<int> ts){
 	if constexpr (1 > 0) {
 		return [=](auto ...parameters) {
@@ -1991,18 +1991,18 @@ int concat(twice_type t, std::plus<int> ts){
 	}
 }
 ```
-ÕâÊ±`sizeof...(ts) > 0`ÇóÖµÎª`true`£¬`concat`·µ»ØÒ»¸ö lambda ±í´ïÊ½¡£Õâ¸ö lambda ÓÖ·µ»ØÁË`twice`
-ºÍ`plus<int>`¸´ºÏµ÷ÓÃ¡£ÕâÊÇÒòÎª`concat(std::plus<int>{})`ÕıÊÇÒ»¸ö²ÎÊıÊ±µÄÇé¿ö£¬·µ»ØÖµÊÇ`std::plus<int>{}`¡£
-`combined`±»Õâ¸öÓÉ`twice`ºÍ`plus<int>`¸´ºÏµ÷ÓÃµÄlambda±í´ïÊ½³õÊ¼»¯£¬`combined(2, 3)`½á¹ûÊÇ10¡£<br>
-½áºÏÒÔÉÏÁ½¸öÀı×Ó£¬¿ÉÒÔÖªµÀ`concat`µÄ×÷ÓÃ¾ÍÊÇ½«¶à¸öº¯Êı(¿Éµ÷ÓÃ¶ÔÏó)½øĞĞÁ¬½Óµ÷ÓÃ£¬ºóÒ»¸öº¯ÊıµÄ·µ»ØÖµ×÷ÎªÇ°Ò»¸öº¯ÊıµÄ²ÎÊı£¬
-×îºóÒ»¸öº¯ÊıµÄ²ÎÊıÊÇÓÉĞÂÉú³Éº¯ÊıµÄ²ÎÊı´«Èë¡£ÕâÀàËÆÓÚÊıÑ§º¯ÊıµÄ¸´ºÏ<br>
+è¿™æ—¶`sizeof...(ts) > 0`æ±‚å€¼ä¸º`true`ï¼Œ`concat`è¿”å›ä¸€ä¸ª lambda è¡¨è¾¾å¼ã€‚è¿™ä¸ª lambda åˆè¿”å›äº†`twice`
+å’Œ`plus<int>`å¤åˆè°ƒç”¨ã€‚è¿™æ˜¯å› ä¸º`concat(std::plus<int>{})`æ­£æ˜¯ä¸€ä¸ªå‚æ•°æ—¶çš„æƒ…å†µï¼Œè¿”å›å€¼æ˜¯`std::plus<int>{}`ã€‚
+`combined`è¢«è¿™ä¸ªç”±`twice`å’Œ`plus<int>`å¤åˆè°ƒç”¨çš„lambdaè¡¨è¾¾å¼åˆå§‹åŒ–ï¼Œ`combined(2, 3)`ç»“æœæ˜¯10ã€‚<br>
+ç»“åˆä»¥ä¸Šä¸¤ä¸ªä¾‹å­ï¼Œå¯ä»¥çŸ¥é“`concat`çš„ä½œç”¨å°±æ˜¯å°†å¤šä¸ªå‡½æ•°(å¯è°ƒç”¨å¯¹è±¡)è¿›è¡Œè¿æ¥è°ƒç”¨ï¼Œåä¸€ä¸ªå‡½æ•°çš„è¿”å›å€¼ä½œä¸ºå‰ä¸€ä¸ªå‡½æ•°çš„å‚æ•°ï¼Œ
+æœ€åä¸€ä¸ªå‡½æ•°çš„å‚æ•°æ˜¯ç”±æ–°ç”Ÿæˆå‡½æ•°çš„å‚æ•°ä¼ å…¥ã€‚è¿™ç±»ä¼¼äºæ•°å­¦å‡½æ•°çš„å¤åˆ<br>
 $$ (f \circ g \circ h)(x) = f(g(h(x))) $$<br>
-×îºóÀ´¿´ÊéÖĞÈı¸ö²ÎÊıµÄÇé¿ö¡£`concat`µİ¹éµÄ¸´ºÏ`thrice`¡¢`twice`¡¢`std::plus<int>{}`Èı¸ö¿Éµ÷ÓÃ¶ÔÏó£¬
-²¢ÓÃlambda°ü×°ºó·µ»Ø²¢³õÊ¼»¯`combined`£¬ËùÒÔ`combined(2, 3)`µÄ½á¹ûÊÇ30¡£<br>
+æœ€åæ¥çœ‹ä¹¦ä¸­ä¸‰ä¸ªå‚æ•°çš„æƒ…å†µã€‚`concat`é€’å½’çš„å¤åˆ`thrice`ã€`twice`ã€`std::plus<int>{}`ä¸‰ä¸ªå¯è°ƒç”¨å¯¹è±¡ï¼Œ
+å¹¶ç”¨lambdaåŒ…è£…åè¿”å›å¹¶åˆå§‹åŒ–`combined`ï¼Œæ‰€ä»¥`combined(2, 3)`çš„ç»“æœæ˜¯30ã€‚<br>
 
 <br>
 
-### [5.7½«Î½´ÊÓëÂß¼­Á¬½Ó´ÊÁ¬½ÓÆğÀ´](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
+### [5.7å°†è°“è¯ä¸é€»è¾‘è¿æ¥è¯è¿æ¥èµ·æ¥](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.7%E5%B0%86%E8%B0%93%E8%AF%8D%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%9E%E6%8E%A5%E8%AF%8D%E8%BF%9E%E6%8E%A5%E8%B5%B7%E6%9D%A5.cpp)
 ```cpp
 #include"print.h"
 #include <functional>
@@ -2032,7 +2032,7 @@ int main() {
 }
 ```
 
-### [5.8ÓÃÏàÍ¬µÄÊäÈëµ÷ÓÃ¶à¸ölambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.8%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E5%A4%9A%E4%B8%AAlambda.cpp)
+### [5.8ç”¨ç›¸åŒçš„è¾“å…¥è°ƒç”¨å¤šä¸ªlambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.8%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E5%A4%9A%E4%B8%AAlambda.cpp)
 ```cpp
 #include"print.h"
 
@@ -2056,7 +2056,7 @@ int main() {
 }
 ```
 
-### [5.9¶ÔÌø×ª±íÊ¹ÓÃÓ³Éälambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.9%E5%AF%B9%E8%B7%B3%E8%BD%AC%E8%A1%A8%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84lambda.cpp)
+### [5.9å¯¹è·³è½¬è¡¨ä½¿ç”¨æ˜ å°„lambda](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/5.9%E5%AF%B9%E8%B7%B3%E8%BD%AC%E8%A1%A8%E4%BD%BF%E7%94%A8%E6%98%A0%E5%B0%84lambda.cpp)
 ```cpp
 #include"print.h"
 
@@ -2065,9 +2065,9 @@ const char prompt(const char* p) {
     print("{} > ", p);
     std::getline(std::cin, r, '\n');
 
-    if (r.size() < 1) return '\0';//Èç¹û×ßÕâ¸ö·ÖÖ§£¬¾ÍÊÇÖ±½ÓÏÂÒ»¸öÑ­»·
+    if (r.size() < 1) return '\0';//å¦‚æœèµ°è¿™ä¸ªåˆ†æ”¯ï¼Œå°±æ˜¯ç›´æ¥ä¸‹ä¸€ä¸ªå¾ªç¯
     if (r.size() > 1) {
-        print("ÏìÓ¦Ê±¼ä¹ı³¤\n");
+        print("å“åº”æ—¶é—´è¿‡é•¿\n");
         return '\0';
     }
     return toupper(r[0]);
@@ -2089,21 +2089,21 @@ int main() {
         if ((select = prompt("select A/B/C/D/X"))) {
             auto it = jumpmap.find(select);
             if (it != jumpmap.end()) it->second();
-            else print("Ã»ÓĞ¶ÔÓ¦µÄÑ¡Ïî£¡\n");
+            else print("æ²¡æœ‰å¯¹åº”çš„é€‰é¡¹ï¼\n");
         }
     }
 }
 ```
 
-### µÚÎåÕÂ×Ü½á
-¹ØÓÚlambdaµÄÒ»Ğ©¸ÅÄî£¬ÊéÉÏÃèÊöµÄÊÇÓĞÎÊÌâµÄ£¬²»Òª±»Îóµ¼£¬ÊÓÆµÒ²Ìáµ½ÁË¡£ÆäËûµÄÒ»Ğ©demoÊ²Ã´µÄÃ»ÎÊÌâ£¬¶¼Ğ´Ğ´¡£
+### ç¬¬äº”ç« æ€»ç»“
+å…³äºlambdaçš„ä¸€äº›æ¦‚å¿µï¼Œä¹¦ä¸Šæè¿°çš„æ˜¯æœ‰é—®é¢˜çš„ï¼Œä¸è¦è¢«è¯¯å¯¼ï¼Œè§†é¢‘ä¹Ÿæåˆ°äº†ã€‚å…¶ä»–çš„ä¸€äº›demoä»€ä¹ˆçš„æ²¡é—®é¢˜ï¼Œéƒ½å†™å†™ã€‚
 
 ---
 
 <br>
 
-## µÚÁùÕÂ STLËã·¨
-### [6.2»ùÓÚµü´úÆ÷µÄ¸´ÖÆ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
+## ç¬¬å…­ç«  STLç®—æ³•
+### [6.2åŸºäºè¿­ä»£å™¨çš„å¤åˆ¶](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2141,7 +2141,7 @@ int main() {
 }
 ```
 
-### [6.3½«ÈİÆ÷ÔªËØÁ¬½Óµ½ÒÔ¹©×Ö·û´®µ±ÖĞ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.3%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A5%E4%BE%9B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%93%E4%B8%AD.cpp)
+### [6.3å°†å®¹å™¨å…ƒç´ è¿æ¥åˆ°ä»¥ä¾›å­—ç¬¦ä¸²å½“ä¸­](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.3%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BB%A5%E4%BE%9B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BD%93%E4%B8%AD.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2191,7 +2191,7 @@ int main() {
 }
 ```
 
-### [6.4`std::sort`ÅÅĞòÈİÆ÷ÔªËØ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
+### [6.4`std::sort`æ’åºå®¹å™¨å…ƒç´ ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2257,7 +2257,7 @@ int main() {
 }
 ```
 
-### [6.5`std::transform`ĞŞ¸ÄÈİÆ÷ÄÚÈİ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
+### [6.5`std::transform`ä¿®æ”¹å®¹å™¨å†…å®¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.5transform%E4%BF%AE%E6%94%B9%E5%AE%B9%E5%99%A8%E5%86%85%E5%AE%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2297,7 +2297,7 @@ int main() {
 
 <br>
 
-### [6.6²éÕÒÌØ¶¨Ïî](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.6%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E9%A1%B9.cpp)
+### [6.6æŸ¥æ‰¾ç‰¹å®šé¡¹](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.6%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2344,17 +2344,17 @@ int main() {
 }
 ```
 
-Õâ¸öÄÚÈİ´ó¸ÅËÄ¸ö²¿·Ö
-1. Ê¹ÓÃ[**`std::find`**](https://zh.cppreference.com/w/cpp/algorithm/find)²éÕÒ±êÁ¿ÔªËØ
-2. Ê¹ÓÃ`std::find`²éÕÒ×Ô¶¨ÒåÀàĞÍÔªËØ(ĞèÒªÖØÔØ`operator==`)
-3. Ê¹ÓÃ **`std::find_if`** ²éÕÒ×Ô¶¨ÒåÀàĞÍ·ûºÏÎ½´ÊÒªÇóµÄÔªËØ
-4. Ê¹ÓÃ [**`std::views::filter`**](https://zh.cppreference.com/w/cpp/ranges/filter_view) ·µ»Ø·ûºÏÎ½´ÊÒªÇóµÄÊÓÍ¼£¬¿ÉÒÔÏñÆÕÍ¨ÈİÆ÷Ò»Ñù±éÀú
+è¿™ä¸ªå†…å®¹å¤§æ¦‚å››ä¸ªéƒ¨åˆ†
+1. ä½¿ç”¨[**`std::find`**](https://zh.cppreference.com/w/cpp/algorithm/find)æŸ¥æ‰¾æ ‡é‡å…ƒç´ 
+2. ä½¿ç”¨`std::find`æŸ¥æ‰¾è‡ªå®šä¹‰ç±»å‹å…ƒç´ (éœ€è¦é‡è½½`operator==`)
+3. ä½¿ç”¨ **`std::find_if`** æŸ¥æ‰¾è‡ªå®šä¹‰ç±»å‹ç¬¦åˆè°“è¯è¦æ±‚çš„å…ƒç´ 
+4. ä½¿ç”¨ [**`std::views::filter`**](https://zh.cppreference.com/w/cpp/ranges/filter_view) è¿”å›ç¬¦åˆè°“è¯è¦æ±‚çš„è§†å›¾ï¼Œå¯ä»¥åƒæ™®é€šå®¹å™¨ä¸€æ ·éå†
 
-`std::find`»ò`std::find_if`µÄ·µ»ØÖµÊÇ**µü´úÆ÷**£¬Èç¹ûÃ»ÓĞ²éÕÒµ½£¬Ôò·µ»Ø`end()`¡£
+`std::find`æˆ–`std::find_if`çš„è¿”å›å€¼æ˜¯**è¿­ä»£å™¨**ï¼Œå¦‚æœæ²¡æœ‰æŸ¥æ‰¾åˆ°ï¼Œåˆ™è¿”å›`end()`ã€‚
 
 <br>
 
-### [6.7½«ÈİÆ÷ÔªËØÏŞÖÆÔÚ`std::clamp`·¶Î§ÄÚ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.7%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E9%99%90%E5%88%B6%E5%9C%A8clamp%E8%8C%83%E5%9B%B4%E5%86%85.cpp)
+### [6.7å°†å®¹å™¨å…ƒç´ é™åˆ¶åœ¨`std::clamp`èŒƒå›´å†…](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.7%E5%B0%86%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0%E9%99%90%E5%88%B6%E5%9C%A8clamp%E8%8C%83%E5%9B%B4%E5%86%85.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2388,7 +2388,7 @@ int main() {
 	printc_(loi);
 }
 ```
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	vector voi before:
 	0   -12  2001     4     5   -14   100   200
@@ -2398,7 +2398,7 @@ int main() {
 	0   -12  2001     4     5   -14   100   200
 	list loi after:
 	0     0   500     4     5     0   100   200
-[**`std::clamp`**](https://zh.cppreference.com/w/cpp/algorithm/clamp) µÄ×÷ÓÃ·Ç³£µ¥´¿£¬¾ÍÊÇÏŞÖÆÔªËØµÄ·¶Î§
+[**`std::clamp`**](https://zh.cppreference.com/w/cpp/algorithm/clamp) çš„ä½œç”¨éå¸¸å•çº¯ï¼Œå°±æ˜¯é™åˆ¶å…ƒç´ çš„èŒƒå›´
 ```cpp
 std::cout << std::clamp(-10, 0, 100) << '\n';//0
 std::cout << std::clamp(200, 0, 100) << '\n';//100
@@ -2406,7 +2406,7 @@ std::cout << std::clamp(200, 0, 100) << '\n';//100
 
 <br>
 
-### [6.8`std::sample`²É¼¯Ñù±¾Êı¾İ¼¯](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.8sample%E9%87%87%E9%9B%86%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%9B%86.cpp)
+### [6.8`std::sample`é‡‡é›†æ ·æœ¬æ•°æ®é›†](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.8sample%E9%87%87%E9%9B%86%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E9%9B%86.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2414,18 +2414,18 @@ std::cout << std::clamp(200, 0, 100) << '\n';//100
 #include<array>
 
 int iround(const double& d) {
-	return static_cast<int>(std::round(d));//ËÄÉáÎåÈë·µ»Ødouble£¬½øĞĞÏÔÊ½ÀàĞÍ×ª»»
+	return static_cast<int>(std::round(d));//å››èˆäº”å…¥è¿”å›doubleï¼Œè¿›è¡Œæ˜¾å¼ç±»å‹è½¬æ¢
 }
 
 int main() {
-	constexpr size_t n_data{ 200000 };//Êı¾İ´óĞ¡
-	constexpr size_t n_samples{ 500 };//Ñù±¾ÈİÆ÷´óĞ¡
-	constexpr int mean{ 0 };//¾ùÖµ
-	constexpr size_t dev{ 3 };//·½²î
+	constexpr size_t n_data{ 200000 };//æ•°æ®å¤§å°
+	constexpr size_t n_samples{ 500 };//æ ·æœ¬å®¹å™¨å¤§å°
+	constexpr int mean{ 0 };//å‡å€¼
+	constexpr size_t dev{ 3 };//æ–¹å·®
 	
-	std::random_device rd;//Ìá¹©¶ÔÓ²¼şËæ»úÊıÉú³ÉÆ÷µÄ·ÃÎÊ
-	std::mt19937 rng{ rd() };//Ëæ»úÊıÉú³ÉÆ÷
-	std::normal_distribution<>dist{ mean,dev };//ÕıÌ¬·Ö²¼µÄÁ½¸ö²ÎÊı ¾ùÖµÓë·½²î
+	std::random_device rd;//æä¾›å¯¹ç¡¬ä»¶éšæœºæ•°ç”Ÿæˆå™¨çš„è®¿é—®
+	std::mt19937 rng{ rd() };//éšæœºæ•°ç”Ÿæˆå™¨
+	std::normal_distribution<>dist{ mean,dev };//æ­£æ€åˆ†å¸ƒçš„ä¸¤ä¸ªå‚æ•° å‡å€¼ä¸æ–¹å·®
 	std::array<int, n_data>data{};
 	for (auto& e : data)e = iround(dist(rng));
 
@@ -2443,7 +2443,7 @@ int main() {
 }
 ```
 
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	  n count graph/scale
 	-11 (  1) *
@@ -2467,23 +2467,23 @@ int main() {
 	  7 (  5) *****
 	  8 (  2) **
 
-Õâ¸öÄÚÈİÎÒÃÇÂıÂı¿´¡£Ê×ÏÈ¿´º¯Êı`iround`£¬ËüµÄ×÷ÓÃÊ®·Ö¼òµ¥£¬ÒòÎª±ê×¼¿âÃ»ÓĞ¸øÎÒÃÇÌá¹©·µ»Ø`int`µÄËÄÉáÎåÈëµÄº¯Êı£¬ËùÒÔ×Ô¼ºÉÔÎ¢°ü×°Ò»ÏÂ£¬ÔÚÀïÃæÊ¹ÓÃ`static_cast<int>`×ª»»ºóÔÙ·µ»Ø£¬¿´×Å»áÊæ·şµã¡£
+è¿™ä¸ªå†…å®¹æˆ‘ä»¬æ…¢æ…¢çœ‹ã€‚é¦–å…ˆçœ‹å‡½æ•°`iround`ï¼Œå®ƒçš„ä½œç”¨ååˆ†ç®€å•ï¼Œå› ä¸ºæ ‡å‡†åº“æ²¡æœ‰ç»™æˆ‘ä»¬æä¾›è¿”å›`int`çš„å››èˆäº”å…¥çš„å‡½æ•°ï¼Œæ‰€ä»¥è‡ªå·±ç¨å¾®åŒ…è£…ä¸€ä¸‹ï¼Œåœ¨é‡Œé¢ä½¿ç”¨`static_cast<int>`è½¬æ¢åå†è¿”å›ï¼Œçœ‹ç€ä¼šèˆ’æœç‚¹ã€‚
 
-½øÈë`main`º¯Êı£¬ÎÒÃÇ¶¨ÒåÁË¼¸¸ö **`constexpr`** µÄ³£Á¿£¬×÷ÓÃÒ²¶¼ÓĞ×¢ÊÍ:**Êı¾İ´óĞ¡¡¢Ñù±¾ÈİÆ÷´óĞ¡¡¢¾ùÖµ¡¢·½²î**¡£
+è¿›å…¥`main`å‡½æ•°ï¼Œæˆ‘ä»¬å®šä¹‰äº†å‡ ä¸ª **`constexpr`** çš„å¸¸é‡ï¼Œä½œç”¨ä¹Ÿéƒ½æœ‰æ³¨é‡Š:**æ•°æ®å¤§å°ã€æ ·æœ¬å®¹å™¨å¤§å°ã€å‡å€¼ã€æ–¹å·®**ã€‚
 
-ÏÂÃæÁ½ĞĞ´úÂë¾ÍÊÇÖ®Ç°ÔÚ **[6.4sortÅÅĞòÈİÆ÷ÔªËØ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)** ÌáÆğ¹ıµÄÄÚÈİ£¬Ëæ»úÊı¡£
+ä¸‹é¢ä¸¤è¡Œä»£ç å°±æ˜¯ä¹‹å‰åœ¨ **[6.4sortæ’åºå®¹å™¨å…ƒç´ ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.4sort%E6%8E%92%E5%BA%8F%E5%AE%B9%E5%99%A8%E5%85%83%E7%B4%A0.cpp)** æèµ·è¿‡çš„å†…å®¹ï¼Œéšæœºæ•°ã€‚
 
-[`std::normal_distribution<>dist{ mean,dev };`](https://zh.cppreference.com/w/cpp/numeric/random/normal_distribution)ĞèÒª×¢Òâ£¬Õâ¸öÕıÌ¬·Ö²¼Ëã±¾½ÚÖØµã£¬½ÓÊÜÁ½¸ö²ÎÊı**¾ùÖµÓë·½²î**£¬Äã¿ÉÒÔ¼òµ¥Àí½âÎÒÎÒÃÇÕâ½ÚÊ¹ÓÃµÄËæ»úÊı½«ÒÔÕıÌ¬·Ö²¼µÄ·½Ê½Ëæ»ú£¬²¢ÇÒÎÒÃÇ»á½«ËüµÄÖµ´òÓ¡³öÀ´Ö±·½Í¼¡£
+[`std::normal_distribution<>dist{ mean,dev };`](https://zh.cppreference.com/w/cpp/numeric/random/normal_distribution)éœ€è¦æ³¨æ„ï¼Œè¿™ä¸ªæ­£æ€åˆ†å¸ƒç®—æœ¬èŠ‚é‡ç‚¹ï¼Œæ¥å—ä¸¤ä¸ªå‚æ•°**å‡å€¼ä¸æ–¹å·®**ï¼Œä½ å¯ä»¥ç®€å•ç†è§£æˆ‘æˆ‘ä»¬è¿™èŠ‚ä½¿ç”¨çš„éšæœºæ•°å°†ä»¥æ­£æ€åˆ†å¸ƒçš„æ–¹å¼éšæœºï¼Œå¹¶ä¸”æˆ‘ä»¬ä¼šå°†å®ƒçš„å€¼æ‰“å°å‡ºæ¥ç›´æ–¹å›¾ã€‚
 
-ºóÃæ×ÔÈ»¶øÈ»µÄ¾ÍÊÇÎª`std::array`¶ÔÏó±éÀúÔªËØ¸³Öµ°´ÕÕÕıÌ¬·Ö²¼µÄËæ»úÖµÁË¡£
+åé¢è‡ªç„¶è€Œç„¶çš„å°±æ˜¯ä¸º`std::array`å¯¹è±¡éå†å…ƒç´ èµ‹å€¼æŒ‰ç…§æ­£æ€åˆ†å¸ƒçš„éšæœºå€¼äº†ã€‚
 
-È»ºóÎÒÃÇ¾ÍÒª¿ªÊ¼³éÈ¡Ñù±¾ÁË: ´ËÊ±¾ÍÒªÔÙ´´ÔìÒ»¸öÊı×é¶ÔÏó£¬È»ºóÊ¹ÓÃ[**`std::sample`**](https://zh.cppreference.com/w/cpp/algorithm/sample)Ëã·¨£¬Ç°ÃæÁ½¸ö²ÎÊıÊÇ±»³éÈ¡Ñù±¾µÄ·¶Î§£¬µÚÈı¸ö²ÎÊıÊÇĞ´ÈëÑù±¾µÄÊä³öµü´úÆ÷£¬µÚËÄ¸ö²ÎÊıÊÇÒª³éÈ¡Ñù±¾Êı`n_samples`£¬µÚÎå¸ö²ÎÊıÊÇÓÃ×÷Ëæ»úÔ´µÄËæ»úÊıÉú³ÉÆ÷`rng`
+ç„¶åæˆ‘ä»¬å°±è¦å¼€å§‹æŠ½å–æ ·æœ¬äº†: æ­¤æ—¶å°±è¦å†åˆ›é€ ä¸€ä¸ªæ•°ç»„å¯¹è±¡ï¼Œç„¶åä½¿ç”¨[**`std::sample`**](https://zh.cppreference.com/w/cpp/algorithm/sample)ç®—æ³•ï¼Œå‰é¢ä¸¤ä¸ªå‚æ•°æ˜¯è¢«æŠ½å–æ ·æœ¬çš„èŒƒå›´ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯å†™å…¥æ ·æœ¬çš„è¾“å‡ºè¿­ä»£å™¨ï¼Œç¬¬å››ä¸ªå‚æ•°æ˜¯è¦æŠ½å–æ ·æœ¬æ•°`n_samples`ï¼Œç¬¬äº”ä¸ªå‚æ•°æ˜¯ç”¨ä½œéšæœºæºçš„éšæœºæ•°ç”Ÿæˆå™¨`rng`
 
-ºóÃæ¾ÍÊÇ¼ò¼òµ¥µ¥µÄ±éÀúÒ»ÏÂÈİÆ÷Ó³Éäµ½`map`ÖĞ£¬¶ÔÆä½øĞĞ´òÓ¡¼´¿É
+åé¢å°±æ˜¯ç®€ç®€å•å•çš„éå†ä¸€ä¸‹å®¹å™¨æ˜ å°„åˆ°`map`ä¸­ï¼Œå¯¹å…¶è¿›è¡Œæ‰“å°å³å¯
 
 <br>
 
-### [6.9Éú³ÉÓĞĞòÊı¾İĞòÁĞ](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+### [6.9ç”Ÿæˆæœ‰åºæ•°æ®åºåˆ—](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2502,7 +2502,7 @@ int main() {
 		printc(v);
 	} while (std::next_permutation(v.begin(),v.end()));
 	
-	print("´Ó´óµ½Ğ¡:\n");
+	print("ä»å¤§åˆ°å°:\n");
 	std::sort(v.begin(), v.end(), std::greater<int>{});
 	do
 	{
@@ -2511,7 +2511,7 @@ int main() {
 }
 ```
 
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	[cat] [dog] [velociraptor]
 	[cat] [velociraptor] [dog]
@@ -2525,18 +2525,18 @@ int main() {
 	[2] [3] [1]
 	[3] [1] [2]
 	[3] [2] [1]
-	´Ó´óµ½Ğ¡:
+	ä»å¤§åˆ°å°:
 	[3] [2] [1]
 
-Õâ¸öÀı×ÓÓ¦¸ÃÊÇ·Ç³£µÄ¼ò¶ÌÁË£¬ÎÒÃÇ¿´µ½£¬ÏÈÊÇ´´½¨ÁËÒ»¸ö`std::vector<std::string>`µÄ¶ÔÏó²¢ÇÒ³õÊ¼»¯£¬È»ºóÏÈ¶ÔÆä½øĞĞÄ¬ÈÏµÄ½µĞòÅÅĞò¡£
+è¿™ä¸ªä¾‹å­åº”è¯¥æ˜¯éå¸¸çš„ç®€çŸ­äº†ï¼Œæˆ‘ä»¬çœ‹åˆ°ï¼Œå…ˆæ˜¯åˆ›å»ºäº†ä¸€ä¸ª`std::vector<std::string>`çš„å¯¹è±¡å¹¶ä¸”åˆå§‹åŒ–ï¼Œç„¶åå…ˆå¯¹å…¶è¿›è¡Œé»˜è®¤çš„é™åºæ’åºã€‚
 
-½øÈë`do while`ËüµÄÌõ¼şÓï¾äÀïÊÇÖ´ĞĞ [**`std::next_permutation`**](https://zh.cppreference.com/w/cpp/algorithm/next_permutation)£¬ÈôĞÂÅÅÁĞ°´×ÖµäĞò´óÓÚ¾ÉÕßÔòÎª **true** ¡£ÈôµÖ´ï×îºóÖØÅÅ²¢ÖØÖÃ·¶Î§ÎªÊ×¸öÅÅÁĞÔòÎª **false**¡£ÎÒÃÇ¿ÉÒÔ¿´Êı×ÖµÄÕâ¸ö£¬ËüÒ»¿ªÊ¼ÊÇ`1 2 3 `ÖØĞÂÅÅÁĞºóÊÇ `1 3 2 `°´ÕÕ×ÖµäĞò£¬¿Ï¶¨ÊÇ´óÓÚ¾ÉµÄ£¬ËùÒÔ·µ»Ø`true`£¬Ñ­»·»á¼ÌĞø,Ö±µ½`3 2 1`ËüÊÇ°´ÕÕÊ×¸öÅÅÁĞµÄ£¬Ò²¾ÍÊÇ´Ó´óµ½Ğ¡£¬ËùÒÔÊÇ **false**£¬Ñ­»·½áÊø¡£
+è¿›å…¥`do while`å®ƒçš„æ¡ä»¶è¯­å¥é‡Œæ˜¯æ‰§è¡Œ [**`std::next_permutation`**](https://zh.cppreference.com/w/cpp/algorithm/next_permutation)ï¼Œè‹¥æ–°æ’åˆ—æŒ‰å­—å…¸åºå¤§äºæ—§è€…åˆ™ä¸º **true** ã€‚è‹¥æŠµè¾¾æœ€åé‡æ’å¹¶é‡ç½®èŒƒå›´ä¸ºé¦–ä¸ªæ’åˆ—åˆ™ä¸º **false**ã€‚æˆ‘ä»¬å¯ä»¥çœ‹æ•°å­—çš„è¿™ä¸ªï¼Œå®ƒä¸€å¼€å§‹æ˜¯`1 2 3 `é‡æ–°æ’åˆ—åæ˜¯ `1 3 2 `æŒ‰ç…§å­—å…¸åºï¼Œè‚¯å®šæ˜¯å¤§äºæ—§çš„ï¼Œæ‰€ä»¥è¿”å›`true`ï¼Œå¾ªç¯ä¼šç»§ç»­,ç›´åˆ°`3 2 1`å®ƒæ˜¯æŒ‰ç…§é¦–ä¸ªæ’åˆ—çš„ï¼Œä¹Ÿå°±æ˜¯ä»å¤§åˆ°å°ï¼Œæ‰€ä»¥æ˜¯ **false**ï¼Œå¾ªç¯ç»“æŸã€‚
 
-ÆäÊµÎÒÃÇ¿´×îºóÒ»¶Î´úÂë¿ÉÒÔ·¢ÏÖ£¬ËüÖ±½Ó´òÓ¡ÁËÒ»´Î`[3] [2] [1]`¾Í½áÊøÁË£¬ÒòÎªÕâÈı¸öÔªËØµÄ×îºóÒ»¸ö×Ö·ûÊÇ×ÖµäË³ĞòµÄ×îºóÒ»¸ö
+å…¶å®æˆ‘ä»¬çœ‹æœ€åä¸€æ®µä»£ç å¯ä»¥å‘ç°ï¼Œå®ƒç›´æ¥æ‰“å°äº†ä¸€æ¬¡`[3] [2] [1]`å°±ç»“æŸäº†ï¼Œå› ä¸ºè¿™ä¸‰ä¸ªå…ƒç´ çš„æœ€åä¸€ä¸ªå­—ç¬¦æ˜¯å­—å…¸é¡ºåºçš„æœ€åä¸€ä¸ª
 
 <br>
 
-### [6.10ºÏ²¢ÒÑÅÅĞòÈİÆ÷](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
+### [6.10åˆå¹¶å·²æ’åºå®¹å™¨](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/6.9%E7%94%9F%E6%88%90%E6%9C%89%E5%BA%8F%E6%95%B0%E6%8D%AE%E5%BA%8F%E5%88%97.cpp)
 ```cpp
 #include"print.h"
 #include<vector>
@@ -2560,7 +2560,7 @@ int main() {
 
 ```
 
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	vs1: [dog] [cat] [veloiraptor]
 	vs2: [kirk] [sulu] [spock]
@@ -2568,30 +2568,30 @@ int main() {
 	vs2: [kirk] [spock] [sulu]
 	dest: [cat] [dog] [kirk] [spock] [sulu] [veloiraptor]
 
-[**`std::merge`**](https://zh.cppreference.com/w/cpp/algorithm/merge)Ëã·¨½ÓÊÜÁ½¸öÒÑÅÅĞòµÄĞòÁĞ£¬²¢´´½¨µÚÈı¸öÒÑºÏ²¢²¢ÅÅĞòµÄĞòÁĞ
+[**`std::merge`**](https://zh.cppreference.com/w/cpp/algorithm/merge)ç®—æ³•æ¥å—ä¸¤ä¸ªå·²æ’åºçš„åºåˆ—ï¼Œå¹¶åˆ›å»ºç¬¬ä¸‰ä¸ªå·²åˆå¹¶å¹¶æ’åºçš„åºåˆ—
 
-Ç°ÃæËÄ¸ö²ÎÊı±íÊ¾Á½¸öÊäÈë·¶Î§£¬µÚÎå¸ö²ÎÊı±íÊ¾½á¹ûĞòÁĞ·¢ËÍµÄÊä³öµü´úÆ÷
+å‰é¢å››ä¸ªå‚æ•°è¡¨ç¤ºä¸¤ä¸ªè¾“å…¥èŒƒå›´ï¼Œç¬¬äº”ä¸ªå‚æ•°è¡¨ç¤ºç»“æœåºåˆ—å‘é€çš„è¾“å‡ºè¿­ä»£å™¨
 
-### µÚÁùÕÂ×Ü½á
-µÚÁùÕÂµÄÄÚÈİÆÕ±é±È½Ï¼ò¶Ì¼òµ¥£¬¶¼ÊÇÒ»Ğ©¿âµÄÊ¹ÓÃ£¬Èç¹ûÄãÊÇµÚÒ»´Î¼û£¬ÄÇ×îºÃ»¹ÊÇ×Ô¼ºĞ´Ò»ÏÂ¶àÓÃÓÃ
+### ç¬¬å…­ç« æ€»ç»“
+ç¬¬å…­ç« çš„å†…å®¹æ™®éæ¯”è¾ƒç®€çŸ­ç®€å•ï¼Œéƒ½æ˜¯ä¸€äº›åº“çš„ä½¿ç”¨ï¼Œå¦‚æœä½ æ˜¯ç¬¬ä¸€æ¬¡è§ï¼Œé‚£æœ€å¥½è¿˜æ˜¯è‡ªå·±å†™ä¸€ä¸‹å¤šç”¨ç”¨
 
 ---
 
 <br>
 
-## µÚÆßÕÂ ×Ö·û´®¡¢Á÷ºÍ¸ñÊ½»¯
+## ç¬¬ä¸ƒç«  å­—ç¬¦ä¸²ã€æµå’Œæ ¼å¼åŒ–
 
-STL ×Ö·û´®ÀàÊÇÒ»¸ö¹¦ÄÜÇ¿´óµÄÈ«¹¦ÄÜ¹¤¾ß£¬ÓÃÓÚ´æ´¢¡¢²Ù×÷ºÍÏÔÊ¾»ùÓÚ×Ö·ûµÄÊı¾İ¡£ÔÚ¸ß¼¶½Å±¾ÓïÑÔÖĞ£¬¿ÉÒÔÕÒµ½µÄĞí¶à×Ö·û´®Ïà¹ØµÄ±ãÀû¡¢¿ìËÙºÍÃô½İµÄ¹¦ÄÜ¡£
+STL å­—ç¬¦ä¸²ç±»æ˜¯ä¸€ä¸ªåŠŸèƒ½å¼ºå¤§çš„å…¨åŠŸèƒ½å·¥å…·ï¼Œç”¨äºå­˜å‚¨ã€æ“ä½œå’Œæ˜¾ç¤ºåŸºäºå­—ç¬¦çš„æ•°æ®ã€‚åœ¨é«˜çº§è„šæœ¬è¯­è¨€ä¸­ï¼Œå¯ä»¥æ‰¾åˆ°çš„è®¸å¤šå­—ç¬¦ä¸²ç›¸å…³çš„ä¾¿åˆ©ã€å¿«é€Ÿå’Œæ•æ·çš„åŠŸèƒ½ã€‚
 
-**`std::string`** Àà»ùÓÚ [**`std::basic_string`**](https://zh.cppreference.com/w/cpp/string/basic_string)£¬ÕâÊÇÒ»¸öÁ¬ĞøµÄÈİÆ÷Àà£¬¿ÉÒÔÓÃ×Ö·ûÀàĞÍÊµÀı»¯¡£ÆäÀàÇ©ÃûÊÇÕâÑù
+**`std::string`** ç±»åŸºäº [**`std::basic_string`**](https://zh.cppreference.com/w/cpp/string/basic_string)ï¼Œè¿™æ˜¯ä¸€ä¸ªè¿ç»­çš„å®¹å™¨ç±»ï¼Œå¯ä»¥ç”¨å­—ç¬¦ç±»å‹å®ä¾‹åŒ–ã€‚å…¶ç±»ç­¾åæ˜¯è¿™æ ·
 
 ```cpp
 template <class _Elem, class _Traits = char_traits<_Elem>, class _Alloc = allocator<_Elem>>
 class basic_string
 ```
-`Trait` ºÍ `Allocator` Ä£°å²ÎÊıÍ¨³£±£ÁôÄ¬ÈÏÖµ¡£
+`Trait` å’Œ `Allocator` æ¨¡æ¿å‚æ•°é€šå¸¸ä¿ç•™é»˜è®¤å€¼ã€‚
 
-`basic_string` µÄµ×²ã´æ´¢ÊÇÒ»¸öÁ¬ĞøµÄ CharT ĞòÁĞ£¬¿ÉÒÔÍ¨¹ı `data()` ³ÉÔ±º¯Êı·ÃÎÊ:
+`basic_string` çš„åº•å±‚å­˜å‚¨æ˜¯ä¸€ä¸ªè¿ç»­çš„ CharT åºåˆ—ï¼Œå¯ä»¥é€šè¿‡ `data()` æˆå‘˜å‡½æ•°è®¿é—®:
 ```cpp
 #include<string>
 #include<iostream>
@@ -2606,17 +2606,17 @@ int main() {
 }
 ```
 
-ÔËĞĞ½á¹û:
+è¿è¡Œç»“æœ:
 
 	h e l l o
 
-`data()` ³ÉÔ±º¯Êı·µ»ØÒ»¸öÖ¸Ïòµ×²ã×Ö·ûÊı×éµÄ `CharT*`¡£´Ó C++11 Æğ£¬data() ·µ»ØµÄÊı×éÒÔ¿Õ½á
-Êø£¬Ê¹µÃ `data()` **µÈ¼ÛÓÚ** `c_str()`¡£
+`data()` æˆå‘˜å‡½æ•°è¿”å›ä¸€ä¸ªæŒ‡å‘åº•å±‚å­—ç¬¦æ•°ç»„çš„ `CharT*`ã€‚ä» C++11 èµ·ï¼Œdata() è¿”å›çš„æ•°ç»„ä»¥ç©ºç»“
+æŸï¼Œä½¿å¾— `data()` **ç­‰ä»·äº** `c_str()`ã€‚
 
-`basic_string` Àà°üº¬Ğí¶àÔÚÆäËûÁ¬Ğø´æ´¢ÀàÖĞ¿ÉÒÔÕÒµ½µÄ·½·¨£¬°üÀ¨ `insert()`¡¢`erase()`¡¢`push_back()`¡¢
-`pop_back()` µÈ£¬ÕâĞ©·½·¨¿ÉÒÔ²Ù×÷µ×²ãµÄ CharT Êı×é¡£
+`basic_string` ç±»åŒ…å«è®¸å¤šåœ¨å…¶ä»–è¿ç»­å­˜å‚¨ç±»ä¸­å¯ä»¥æ‰¾åˆ°çš„æ–¹æ³•ï¼ŒåŒ…æ‹¬ `insert()`ã€`erase()`ã€`push_back()`ã€
+`pop_back()` ç­‰ï¼Œè¿™äº›æ–¹æ³•å¯ä»¥æ“ä½œåº•å±‚çš„ CharT æ•°ç»„ã€‚
 
-`std::string` ÊÇ `std::basic_string<char>` ÀàĞÍµÄ±ğÃû:
+`std::string` æ˜¯ `std::basic_string<char>` ç±»å‹çš„åˆ«å:
 
 ```cpp
 using string  = basic_string<char, char_traits<char>, allocator<char>>;
@@ -2624,17 +2624,17 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 
 <br>
 
-- [ÇáÁ¿¼¶×Ö·û´®¶ÔÏó¡ª¡ª`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
-- [Á¬½Ó×Ö·û´®]()
-- [×ª»»×Ö·û´®]()
-- [Ê¹ÓÃ¸ñÊ½¿â¸ñÊ½»¯ÎÄ±¾]()
-- [É¾³ı×Ö·û´®ÖĞµÄ¿Õ°×]()
-- [´ÓÓÃ»§ÊäÈëÖĞ¶ÁÈ¡×Ö·û´®]()
-- [Í³¼ÆÎÄ¼şÖĞµÄµ¥´ÊÊı]()
-- [Ê¹ÓÃÎÄ¼şÊäÈë³õÊ¼»¯¸´ÔÓ½á¹¹Ìå]()
-- [Ê¹ÓÃ `char_traits` ¶¨ÒåÒ»¸ö×Ö·û´®Àà]()
-- [ÓÃÕıÔò±í´ïÊ½½âÎö×Ö·û´®]()
+- [è½»é‡çº§å­—ç¬¦ä¸²å¯¹è±¡â€”â€”`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+- [è¿æ¥å­—ç¬¦ä¸²]()
+- [è½¬æ¢å­—ç¬¦ä¸²]()
+- [ä½¿ç”¨æ ¼å¼åº“æ ¼å¼åŒ–æ–‡æœ¬]()
+- [åˆ é™¤å­—ç¬¦ä¸²ä¸­çš„ç©ºç™½]()
+- [ä»ç”¨æˆ·è¾“å…¥ä¸­è¯»å–å­—ç¬¦ä¸²]()
+- [ç»Ÿè®¡æ–‡ä»¶ä¸­çš„å•è¯æ•°]()
+- [ä½¿ç”¨æ–‡ä»¶è¾“å…¥åˆå§‹åŒ–å¤æ‚ç»“æ„ä½“]()
+- [ä½¿ç”¨ `char_traits` å®šä¹‰ä¸€ä¸ªå­—ç¬¦ä¸²ç±»]()
+- [ç”¨æ­£åˆ™è¡¨è¾¾å¼è§£æå­—ç¬¦ä¸²]()
 
 <br>
 
-### [7.3ÇáÁ¿×Ö·û´®¶ÔÏó`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+### [7.3è½»é‡å­—ç¬¦ä¸²å¯¹è±¡`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
