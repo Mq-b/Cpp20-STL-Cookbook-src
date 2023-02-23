@@ -778,7 +778,7 @@ int main() {
 <br>
 
 ---
-## 第三章STL容器
+## 第三章 STL容器
 ### [3.3使用擦除函数从容器中擦除项](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
@@ -1246,7 +1246,7 @@ int main() {
 
 <br>
 
-## 第四章兼容迭代器
+## 第四章 兼容迭代器
 ### [4.3创建可迭代范围](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/4.3%E5%88%9B%E5%BB%BA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E8%8C%83%E5%9B%B4.cpp)
 ```cpp
 #include"print.h"
@@ -1780,7 +1780,7 @@ int main() {
 
 <br>
 
-## 第五章lambda表达式
+## 第五章 lambda表达式
 ### [5.3用于作用域可重用代码](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/5.3%E7%94%A8%E4%BA%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AF%E9%87%8D%E7%94%A8%E4%BB%A3%E7%A0%81.cpp)
 ```cpp
 #include"print.h"
@@ -2064,7 +2064,7 @@ int main() {
 
 <br>
 
-## 第六章STL算法
+## 第六章 STL算法
 ### [6.2基于迭代器的复制](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/6.2%E5%9F%BA%E4%BA%8E%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%A4%8D%E5%88%B6.cpp)
 ```cpp
 #include"print.h"
@@ -2533,3 +2533,53 @@ int main() {
 [**`std::merge`**](https://zh.cppreference.com/w/cpp/algorithm/merge)算法接受两个已排序的序列，并创建第三个已合并并排序的序列
 
 前面四个参数表示两个输入范围，第五个参数表示结果序列发送的输出迭代器
+
+### 第六章总结
+第六章的内容普遍比较简短简单，都是一些库的使用，如果你是第一次见，那最好还是自己写一下多用用
+
+---
+
+<br>
+
+## 第七章 字符串、流和格式化
+
+STL 字符串类是一个功能强大的全功能工具，用于存储、操作和显示基于字符的数据。在高级脚本语言中，可以找到的许多字符串相关的便利、快速和敏捷的功能。
+
+**`std::string`** 类基于 [**`std::basic_string`**](https://zh.cppreference.com/w/cpp/string/basic_string)，这是一个连续的容器类，可以用字符类型实例化。其类签名是这样
+
+```cpp
+template <class _Elem, class _Traits = char_traits<_Elem>, class _Alloc = allocator<_Elem>>
+class basic_string
+```
+`Trait` 和 `Allocator` 模板参数通常保留默认值。
+
+`basic_string` 的底层存储是一个连续的 CharT 序列，可以通过 `data()` 成员函数访问:
+```cpp
+#include<string>
+#include<iostream>
+
+int main() {
+	const std::basic_string<char>s{ "hello" };
+	const char* sdata = s.data();
+	for (size_t i = 0; i < s.size(); i++){
+		std::cout << sdata[i] << ' ';
+	}
+	std::cout << '\n';
+}
+```
+
+运行结果:
+
+	h e l l o
+
+`data()` 成员函数返回一个指向底层字符数组的 `CharT*`。从 C++11 起，data() 返回的数组以空结
+束，使得 `data()` **等价于** `c_str()`。
+
+`basic_string` 类包含许多在其他连续存储类中可以找到的方法，包括 `insert()`、`erase()`、`push_back()`、
+`pop_back()` 等，这些方法可以操作底层的 CharT 数组。
+
+`std::string` 是 `std::basic_string<char>` 类型的别名:
+
+```cpp
+using string  = basic_string<char, char_traits<char>, allocator<char>>;
+```
