@@ -2,5 +2,5 @@
 #include<string>
 
 int main() {
-	
+
 }
