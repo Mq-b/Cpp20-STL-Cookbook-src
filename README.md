@@ -583,12 +583,14 @@ void printr(const auto& r, std::string_view s = "") {
 
 ---
 ## 第二章 STL的泛型特性
-### [2.2span类](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
+### [2.2span类](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.2span%E7%B1%BB.cpp)
 
 ```cpp
-#include<iostream>
-#include<format>
-#include<span>
+#include <iostream>
+#include <format>
+#include <span>
+#include <vector>
+#include <array>
 
 template < typename... Args>
 void print(const std::string_view fmt_str, Args&&... args) {
@@ -598,20 +600,50 @@ void print(const std::string_view fmt_str, Args&&... args) {
 }
 
 template<class T>
-void pspan(std::span<T>s) {
-	print("number of elemnts: {}\n", s.size());
-	print("size of span: {}\n", s.size_bytes());
-	for (auto i : s)print("{} ", i);
+void pspan(std::span<T> s) {
+	print("number of elemnts: {}\n", s.size());//  返回序列中的元素个数
+	print("size of span: {}\n", s.size_bytes());// 返回以字节表示的序列大小
+	for (auto i : s) print("{} ", i);
 	endl(std::cout);
 }
 
 int main() {
-	int array[]{ 1,2,3,4,5,6 };
-	pspan<int>(array);
+	int a[]{ 1, 2, 3, 4, 5, 6 };
+	pspan<int>(a);
+
+	std::endl(std::cout);
+	std::vector<int> b{1, 2, 3, 4, 5 };
+	pspan<int>(b);
+
+	std::endl(std::cout);
+	std::array<int, 4> c{ 1, 2, 3, 4 };
+	pspan<int>(c);
 }
 
 //span文档: https://zh.cppreference.com/w/cpp/container/span
-//span简单实现: https://github.com/Mq-b/c-plus-plus/blob/master/src/lib/span.hpp
+//span简单实现: https://github.com/13870517674/c-plus-plus/blob/master/src/lib/span.hpp
+```
+
+运行结果:
+
+```cpp
+number of elemnts: 6
+size of span: 24
+1 2 3 4 5 6
+```
+
+**std::span** 在C++20中被引入
+
+**std::span** 给具有连续对象的序列提供了轻量级的视图，以更加安全的方式对其进行迭代和索引，比如std::array、 std::vector、原生数组和原生指针。
+
+常用于去包裹原生数组，并提供了更加安全的一系列函数：如front()，begin(), size(), empty()等
+
+经典的实现中只有两个成员：
+
+```cpp
+private:
+	pointer _ptr;//指向元素的指针
+	std::size_t _size;//元素个数
 ```
 
 ### [2.3结构化绑定](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
