@@ -620,8 +620,6 @@ int main() {
 	pspan<int>(c);
 }
 
-//span文档: https://zh.cppreference.com/w/cpp/container/span
-//span简单实现: https://github.com/13870517674/c-plus-plus/blob/master/src/lib/span.hpp
 ```
 
 运行结果:
@@ -632,11 +630,11 @@ size of span: 24
 1 2 3 4 5 6
 ```
 
-**std::span** 在C++20中被引入
+[**`std::span`**](https://zh.cppreference.com/w/cpp/container/span) 在C++20中被引入
 
-**std::span** 给具有连续对象的序列提供了轻量级的视图，以更加安全的方式对其进行迭代和索引，比如std::array、 std::vector、原生数组和原生指针。
+它给具有连续对象的序列提供了轻量级的视图，以更加安全的方式对其进行迭代和索引，比如`std::array`、 `std::vector`、原生数组和原生指针。
 
-常用于去包裹原生数组，并提供了更加安全的一系列函数：如front()，begin(), size(), empty()等
+常用于去包裹原生数组，并提供了更加安全的一系列函数：如`front()`，`begin()`, `size()`, `empty()`等
 
 经典的实现中只有两个成员：
 
@@ -645,6 +643,8 @@ private:
 	pointer _ptr;//指向元素的指针
 	std::size_t _size;//元素个数
 ```
+
+<br>
 
 ### [2.3结构化绑定](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
 ```cpp
