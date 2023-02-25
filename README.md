@@ -341,7 +341,7 @@ int main() {
 作为  `C++20` 引入的四大新特性之一：`Concept` ，提出了一种比 *SFINAE* 更好的约束方法，它易于理解和编写，也能在出现问题时给出更可读的编译期报错。概念的定义形式如下：
 
 > **_template_** < <font color=grey><i>模板形参列表</i></font> >
-> **_concept_**?<font color=grey><i>概念名</i></font> <font color=grey><i>属性</i></font><font color=green>(可选)</font>?**=**?<font color=grey><i>约束表达式</i></font> **;**
+> **_concept_** <font color=grey><i>概念名</i></font> <font color=grey><i>属性</i></font><font color=green>(可选)</font> **=** <font color=grey><i>约束表达式</i></font> **;**
 
 在上述例子中，概念 `love` 的定义就是这样：
 ```cpp
@@ -501,7 +501,7 @@ int main() {
 	print(ret3);
 	print(nums);//视图是不会改变原来的数据的
 
-	std::vector<std::string>strs{ "?","?","?","?" };
+	std::vector<std::string>strs{ "🐴","🐭","🥵","🤣" };
 	auto ret4 = strs | stdv::reverse;
 	print(ret4);
 
@@ -680,11 +680,11 @@ int main() {
 	auto [a_, b_, c_, d_] = arr;// a_ 是 arr.at(0) 的值拷贝, b_ 是 arr.at(1) 的值拷贝 ...
 	print("{} {} {} {}\n", a_, b_, c_, d_);
 
-	std::tuple<int, double, std::string>tu{ 10,3.14,"?" };
+	std::tuple<int, double, std::string>tu{ 10,3.14,"🥵" };
 	auto [t1, t2, t3] = tu;// 对 tuple 成员进行绑定，值拷贝
 	print("{} {} {}\n", t1, t2, t3);
 
-	X x{ 1,5.2,"?" };
+	X x{ 1,5.2,"🤣" };
 	auto [x1, x2, x3] = x;// 对 结构体 数据成员按声明顺序进行绑定，值拷贝
 	print("{} {} {}\n", x1, x2, x3);
 
@@ -695,24 +695,11 @@ int main() {
 	auto [f1, f2] = f();
 	print("{} {}\n", f1, f2);
 
-	std::map<int, std::string>Map{ {1,"*"},{2,"?"} };
+	std::map<int, std::string>Map{ {1,"*"},{2,"😘"} };
 	for (const auto& [m_a, m_b] : Map) {// 对 pair 进行绑定
 		print("{} {}\n", m_a, m_b);
 	}
 }
-```
-
-运行结果：
-
-```
-1 2 3 4 5
-10
-* a b &
-10 3.14 ?
-1 5.2 ?
-1 2
-1 *
-2 ?
 ```
 
 注意，由于结构化绑定使用自动类型推导，所以类型声明必须使用 `auto`,且使用的变量名在该作用域内唯一，同时保证标识符列表内的标识符（即[a, b, c] 中的变量a,b,c）个数**等于**所指代对象的子元素个数
@@ -796,7 +783,7 @@ template<class...Ts>
 X(Ts...ts) -> X<std::common_type_t<Ts...>>;
 
 int main() {
-	X x("10","?"s);
+	X x("10","🤣"s);
 	print("{}\n", x.v);
 }
 ```
@@ -825,7 +812,7 @@ int main() {
 	int* p{};
 	f(p);
 	f(1);
-	show(5,314, "?", '*');
+	show(5,314, "🤣", '*');
 	print("\n");
 }
 ```
@@ -865,11 +852,11 @@ int main() {
 	std::erase_if(list, [](int i) {return i % 2 == 0; });
 	print(list);
 
-	std::map<int, std::string> map{ {1,"?"},{2,"?"},{3,"?"},{4,"?"} };
+	std::map<int, std::string> map{ {1,"🤣"},{2,"🥵"},{3,"🐴"},{4,"🐭"} };
 	print(map);
 	std::erase_if(map, [](auto& i) {
 		const auto& [k, v] = i;
-		return v == "?";
+		return v == "🥵";
 	});
 	print(map);
 }
@@ -1017,11 +1004,11 @@ void printm(const std::map<int, X>& map) {
 
 int main() {
 	std::map<int, X>map{};
-	map[1] = "?";//两个构造的开销，有参和默认
+	map[1] = "🐴";//两个构造的开销，有参和默认
 	print("\n");
 	//直接转发，只有一个有参构造的开销,这里使用try_emplace和emplace效果完全一样
-	map.emplace(2,"?");
-	map.emplace(3, "?");
+	map.emplace(2,"🥵");
+	map.emplace(3, "🤣");
 	printm(map);
 	print("\n");
 
@@ -1052,7 +1039,7 @@ bool node_swap(M& m, K k1, K k2) {
 
 int main() {
 	std::map<uint32_t, std::string>maps{
-		{1,"?"},{2,"?"},{3,"?"},{4,"?"},{5,"?"}
+		{1,"🐴"},{2,"🥵"},{3,"🤣"},{4,"🐭"},{5,"😘"}
 	};
 	print(maps);
 	::node_swap(maps, 3, 5);
@@ -1096,7 +1083,7 @@ inline void print(const std::unordered_map<T, T2>& map) {
 	print("\n");
 }
 int main() {
-	std::unordered_map<Coord, std::string>map{ {{1,1},"?"},{{0,0},"?"} };
+	std::unordered_map<Coord, std::string>map{ {{1,1},"😘"},{{0,0},"🤣"} };
 	print(map);
 }
 ```
@@ -1311,10 +1298,10 @@ int main() {
 
 int main() {
 	std::multimap<int, std::string>todo{
-		{1,"?"},
-		{2,"?"},
-		{3,"?"},
-		{4,"?"}
+		{1,"🤣"},
+		{2,"🥵"},
+		{3,"🐴"},
+		{4,"😘"}
 	};
 	rprint(todo);
 }
@@ -2289,7 +2276,7 @@ int main() {
 	std::partition(v.begin(), v.end(), [](int i) {return i > 5; });
 	printc_(v);
 
-	std::vector<things>vthings{ {"?",1},{"?",2},{"?",3},{"?",4},{"?",5} };
+	std::vector<things>vthings{ {"🐴",1},{"😘",2},{"🤣",3},{"🥵",4},{"🤡",5} };
 	std::sort(vthings.begin(), vthings.end(),
 		[](const things& lhs, const things& rhs) {
 			return lhs.i_ > rhs.i_;
