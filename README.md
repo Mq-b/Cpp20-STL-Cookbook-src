@@ -726,33 +726,43 @@ assert(l() == 42);
 
 <br>
 
-### [2.4`if`&`switch`中的初始化](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+### [2.4`if`&`switch`中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+
 ```cpp
-#include"print.h"
 #include<mutex>
 #include<thread>
+#include<format>
 
-std::mutex m;
+template < typename... Args>
+void print(const std::string_view fmt_str, Args&&... args) {
+	auto fmt_args{ std::make_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+std::mutex mtx;
 bool flag = true;
 
+void ifFunc(int n) {
+	if (auto flag = [n]() {return n; }(); flag % 2 == 0) {// C++17起，允许if语句内声明表达式，它可以是这里的lambda表达式
+		print("This is a even Number: {}\n", n);
+	}
+}
+
 void f(int n) {
-	if (std::lock_guard lg{ m }; flag) {
-		print("乐\t");
-		print("🤣🤣🤣\n");
+	if (std::lock_guard lg{ mtx }; flag) {
+		print("if_start\t");
+		print("{}\t", n);
+		print("end\n");
 	}
 }
 
-void t() {
-	if (auto flag = [](int n) {return n * n; }(10); flag != 0) {
-		print("🐴🐴🐴\n");
-	}
-}
 
-void t2() {
-	switch (char c = getchar();c)
+void switchFunc() {
+	switch (char c = getchar(); c)// C++17起，允许switch语句内声明表达式，它可以是一条语句
 	{
 	case 'a':
-		print("a\n"); 
+		print("a\n");
 		break;
 	case 'b':
 		print("b\n");
@@ -760,24 +770,44 @@ void t2() {
 	case 'c':
 		print("c\n");
 		break;
-	case 'd':
-		print("d\n");
-		break;
 	default:
-		print("error\n");
+		print("input not a b c\n");
 		break;
 	}
 }
 
 int main() {
-	for (int i = 0; i < 10; i++) {
-		std::jthread t{ f,0 };
-		std::jthread t2{ f,0 };
+	for (int i = 0; i < 5; i++) {
+		std::jthread t{ f,i };
+		std::jthread t2{ f,i };
 	}
-	t();
-	t2();
+	ifFunc(3);
+	switchFunc();
 }
 ```
+
+输入：a
+
+可能的运行结果：
+
+```
+if_start        0       end
+if_start        0       end
+if_start        1       end
+if_start        1       end
+if_start        2       end
+if_start        2       end
+if_start        3       end
+if_start        3       end
+if_start        4       end
+if_start        4       end
+a
+a
+```
+
+初始化语句可以是任意**一条**语句，如上面代码中的`lambda语句`，也可以是一条简单声明`int a = 3, b = 3;` 或者是一条结构化绑定的声明，C++23起将支持[`别名声明(C++11起)`](https://zh.cppreference.com/w/cpp/language/type_alias)
+
+通过`if & switcht 初始化语句`限制了变量的作用域，避免了与其他变量名发生冲突，并且会自动调用对应的析构函数，确保内存被安全释放（比如上面代码中的[std::lock_guard](https://zh.cppreference.com/w/cpp/thread/lock_guard)）
 
 ### [2.5模板参数推导](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
 ```cpp
