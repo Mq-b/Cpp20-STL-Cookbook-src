@@ -719,7 +719,7 @@ int main() {
 
 [Lambda表达式(C++11 起) ](https://zh.cppreference.com/w/cpp/language/lambda)在C++17起才允许捕获结构化绑定的变量
 
-```
+```cpp
 struct S { int p{6}, q{7}; };
 const auto& [b, d] = S{};
 auto l = [b, d] { return b * d; }; // C++17 起合法
