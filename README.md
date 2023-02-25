@@ -646,7 +646,8 @@ private:
 
 <br>
 
-### [2.3结构化绑定](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
+### [2.3结构化绑定](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.3%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A.cpp)
+
 ```cpp
 #include<iostream>
 #include<format>
@@ -663,41 +664,66 @@ void print(const std::string_view fmt_str, Args&&... args) {
 
 struct X { int a; double b; std::string str; };
 
-auto f()->std::tuple<int,int> {
+auto f() -> std::tuple<int, int> {
 	return { 1,2 };
 }
 
 int main() {
 	int array[]{ 1,2,3,4,5 };
-	auto& [a, b, c, d, e] = array;
+	std::cout << (*(&array[1])) << std::endl;
+	auto& [a, b, c, d, e] = array;// a 是 array[0] 的引用, b 是 array[1] 的引用 ...
 	print("{} {} {} {} {}\n", a, b, c, d, e);
 	a = 10;
 	print("{}\n", array[0]);
 
 	std::array arr{ '*','a','b','&' };
-	auto [a_, b_, c_, d_] = arr;
+	auto [a_, b_, c_, d_] = arr;// a_ 是 arr.at(0) 的值拷贝, b_ 是 arr.at(1) 的值拷贝 ...
 	print("{} {} {} {}\n", a_, b_, c_, d_);
 
 	std::tuple<int, double, std::string>tu{ 10,3.14,"?" };
-	auto [t1, t2, t3] = tu;
+	auto [t1, t2, t3] = tu;// 对 tuple 成员进行绑定，值拷贝
 	print("{} {} {}\n", t1, t2, t3);
 
 	X x{ 1,5.2,"?" };
-	auto [x1, x2, x3] = x;
+	auto [x1, x2, x3] = x;// 对 结构体 数据成员进行绑定，值拷贝
 	print("{} {} {}\n", x1, x2, x3);
 
 	const std::array arr2{ 1,2 };
-	//auto& [c_arr1, c_arr2] = arr2;
-	//c_arr1 = 10;//error
+	auto& [c_arr1, c_arr2] = arr2;
+	//c_arr1 = 10;//error 常量引用不允许修改
 
 	auto [f1, f2] = f();
 	print("{} {}\n", f1, f2);
 
 	std::map<int, std::string>Map{ {1,"*"},{2,"?"} };
-	for (const auto& [m_a, m_b] : Map) {
+	for (const auto& [m_a, m_b] : Map) {// 对 pair 进行绑定
 		print("{} {}\n", m_a, m_b);
 	}
 }
+```
+
+运行结果：
+
+```
+1 2 3 4 5
+10
+* a b &
+10 3.14 ?
+1 5.2 ?
+1 2
+1 *
+2 ?
+```
+
+注意，由于结构化绑定使用自动类型推导，所以类型声明必须使用 `auto`,且使用的变量名在该作用域内唯一，同时保证标识符列表内的标识符（即[a, b, c] 中的变量a,b,c）个数**等于**所指代对象的子元素个数
+
+[Lambda表达式(C++11 起) ](https://zh.cppreference.com/w/cpp/language/lambda)在C++17起才允许捕获结构化绑定的变量
+
+```
+struct S { int p{6}, q{7}; };
+const auto& [b, d] = S{};
+auto l = [b, d] { return b * d; }; // C++17 起合法
+assert(l() == 42);
 ```
 
 ### [2.4`if`&`switch`中的初始化](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
