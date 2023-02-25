@@ -738,13 +738,13 @@ bool flag = true;
 void f(int n) {
 	if (std::lock_guard lg{ m }; flag) {
 		print("乐\t");
-		print("???\n");
+		print("🤣🤣🤣\n");
 	}
 }
 
 void t() {
 	if (auto flag = [](int n) {return n * n; }(10); flag != 0) {
-		print("???\n");
+		print("🐴🐴🐴\n");
 	}
 }
 
