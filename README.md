@@ -837,44 +837,6 @@ int main() {
 
 ---
 ## 第三章 STL容器
-
-
-### [3.1使用`set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
-```cpp
-#include"print.h"
-#include<set>
-#include<string>
-#include<ranges>
-
-int main() {
-	std::set<std::string> sets;//set 容器用于存储键适用于索引关键字
-
-	std::copy(std::istream_iterator<std::string>{std::cin}, {},
-		std::inserter(sets, sets.end()));
-		
-	print(sets);
-}
-```
-[**``std::copy``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  用于将数据拷贝到对应容器中
-- 参数1 `_First` 需要拷贝的起始迭代器(这里使用``istream``的迭代器来读取输入流字符串)   
-- 参数2 `_Last`  拷贝的截止迭代器 (这里使用 `{}` 占位 即拷贝所有输入流中的字符)   
-- 参数2 `_Dest`  如何拷贝(这里使用``std::inserter``进行插入)   
- 
-[**``std::inserter``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  将每一组输入的字符串作为 `key` 插入到容器中
-- 参数1 `_Cont`	 需要插入数据的容器(这里是sets)   
-- 参数2 `_Where` 需要插入的位置(这里始终插入到`sets`的尾部)   
-
-**运行结果**
-
-		输入:  1 12 3 3 3 3 3 ^Z
-		输出:  size: 3 [ 1 12 3 ]
- 
-`set` 容器的 `key` 是不可重复的,如果需要运行重复 `key` 的 `set` 可以使用 `std::multiset`   
-
-`set` 容器内部通过一颗 `R&B树(红黑树)`来存储数据,其对字符串的排序方式是按照 [**字典序**](https://baike.baidu.com/item/%E5%AD%97%E5%85%B8%E5%BA%8F#:~:text=%E5%9C%A8%E6%95%B0%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AD%97%E5%85%B8%E6%88%96,%E9%A1%BA%E5%BA%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82)故输出时 `12` 出现在 `3` 之前
-
-<br>
-
 ### [3.3使用擦除函数从容器中擦除项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.3%E4%BD%BF%E7%94%A8%E6%93%A6%E9%99%A4%E5%87%BD%E6%95%B0%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%93%A6%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
@@ -1139,7 +1101,7 @@ int main() {
 }
 ```
 
-### [3.10使用`std::set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
+### [3.10使用`set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
 #include"print.h"
 #include<set>
@@ -1147,12 +1109,34 @@ int main() {
 #include<ranges>
 
 int main() {
-	std::set<std::string>sets;
-	std::copy(std::istream_iterator<std::string>{std::cin}, {}, 
+	std::set<std::string> sets;//set 容器用于存储键适用于索引关键字
+
+	std::copy(std::istream_iterator<std::string>{std::cin}, {},
 		std::inserter(sets, sets.end()));
+		
 	print(sets);
 }
 ```
+[**``std::copy``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  用于将数据拷贝到对应容器中
+- 参数1 `_First` 需要拷贝的起始迭代器(这里使用``istream``的迭代器来读取输入流字符串)   
+- 参数2 `_Last`  拷贝的截止迭代器 (这里使用 `{}` 占位 即拷贝所有输入流中的字符)   
+- 参数2 `_Dest`  如何拷贝(这里使用``std::inserter``进行插入)   
+ 
+[**``std::inserter``**](https://zh.cppreference.com/w/cpp/algorithm/copy)  将每一组输入的字符串作为 `key` 插入到容器中
+- 参数1 `_Cont`	 需要插入数据的容器(这里是sets)   
+- 参数2 `_Where` 需要插入的位置(这里始终插入到`sets`的尾部)   
+
+**运行结果**
+
+		输入:  1 12 3 3 3 3 3 ^Z
+		输出:  size: 3 [ 1 12 3 ]
+ 
+`set` 容器的 `key` 是不可重复的,如果需要运行重复 `key` 的 `set` 可以使用 `std::multiset`   
+
+`set` 容器内部通过一颗 `R&B树(红黑树)`来存储数据,其对字符串的排序方式是按照 [**字典序**](https://baike.baidu.com/item/%E5%AD%97%E5%85%B8%E5%BA%8F#:~:text=%E5%9C%A8%E6%95%B0%E5%AD%A6%E4%B8%AD%EF%BC%8C%E5%AD%97%E5%85%B8%E6%88%96,%E9%A1%BA%E5%BA%8F%E6%8E%92%E5%88%97%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82)故输出时 `12` 出现在 `3` 之前
+
+<br>
+
 
 ### [3.11实现简单的RPN计算器与`deque`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.11%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84RPN%E8%AE%A1%E7%AE%97%E5%99%A8%E4%B8%8Edeque.cpp)
 ```cpp
