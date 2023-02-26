@@ -802,14 +802,14 @@ if_start        3       end
 if_start        4       end
 if_start        4       end
 a
-a
 ```
 
 初始化语句可以是任意**一条**语句，如上面代码中的`lambda语句`，也可以是一条简单声明`int a = 3, b = 3;` 或者是一条结构化绑定的声明，C++23起将支持[`别名声明(C++11起)`](https://zh.cppreference.com/w/cpp/language/type_alias)
 
 通过`if & switcht 初始化语句`限制了变量的作用域，避免了与其他变量名发生冲突，并且会自动调用对应的析构函数，确保内存被安全释放（比如上面代码中的[std::lock_guard](https://zh.cppreference.com/w/cpp/thread/lock_guard)）
 
-### [2.5模板参数推导](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+### [2.5模板参数推导（CTAD）](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+
 ```cpp
 #include"print.h"
 
@@ -819,16 +819,38 @@ template<class T>
 struct X {
 	T v{};
 	template<class...Args>
-	X(Args&&...args) :v{ (args + ...) } {}
+	X(Args&&...args) : v{ (args + ...) } {}
 };
 
 template<class...Ts>
-X(Ts...ts) -> X<std::common_type_t<Ts...>>;
+X(Ts...ts) -> X<std::common_type_t<Ts...>>;//确定所有类型Ts...都能隐式转换到的类型
 
 int main() {
-	X x("10","🤣"s);
+	X x("Hello ", "World🤣"s);
 	print("{}\n", x.v);
 }
+```
+
+运行结果：
+
+```cpp
+Hello World🤣
+```
+
+在C++17,当我们给定类模板实参时，编译器会对其进行自动类型推导，如上面代码代码中的实例化对象`x`,  而之前为了实现`x对象的实例化，我们可能需要这样写：
+
+```cpp
+X<const char*, std::string> x("Hello", "World"s);
+```
+
+虽然有了`类模板实参推导`,但该类模板只接收一种类型，所以需要使用[`std::common_type_t`](https://zh.cppreference.com/w/cpp/types/common_type)来对类模板实参进行一个都可隐式转换的类型的提取
+
+因此，当我们初始化STL容器时，可以省略类型的书写：
+
+```cpp
+std::pair p{ 2, 3.14 };// 省略容器元素的类型
+std:vector vec{ 1, 2, 3, 4 };
+std::sort(vec.begin(), vec.end(), std::greater<>());//省略比较器的类型
 ```
 
 ### [2.6编译期`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
