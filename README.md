@@ -914,7 +914,6 @@ not pointer
 
 template<typename Tc,typename Tv>
 void remove_value(Tc& c, const Tv& v) {//C++20之前的做法
-	//std::remove将和传入元素相同的元素移动放到末尾，并返回迭代器位置，还有一个std::remove_if的版本
 	auto remove_it = std::remove(c.begin(), c.end(), v);//remove_it是首个需要被删除元素的位置
 	c.erase(remove_it, c.end());//删除remove_it到end()这个范围的元素
 }
@@ -957,18 +956,30 @@ int main() {
 
 **解析**
 
+[**`std::remove`**](https://zh.cppreference.com/w/cpp/io/c/remove)
+- 功能: 该函数用于将迭代器中与值匹配的元素移动到末尾,并返回操作完毕后首个与参数值匹配的元素位置   
+- 参数 `_First` 需要进行操作的容器的起始位置
+- 参数 `_Last`  需要进行操作的容器的截止位置
+- 参数 `_Val`	需要操作的值   
+- Ps: `std::remove` 提供了可自定义操作规则的 [**`std::remove_if`**](https://zh.cppreference.com/w/cpp/algorithm/remove)
+
+<br>
+
 [**`std::erase`**](https://zh.cppreference.com/w/cpp/container/vector/erase2)
+- 功能: 删除给定容器中与 `_Value` 匹配的元素
 - 参数 `_Cont` 需要被擦除元素的容器
 - 参数 `_Value` 需要被擦除的值   
-
 - Ps: 该函数从 `C++20` 起,功能同 remove_value()
 
+<br>
 
 [**`std::erase_if`**](https://zh.cppreference.com/w/cpp/container/vector/erase2)
+- 功能: `std::erase` 的自定义删除规则版本
 - 参数 `_Cont` 需要被擦除元素的容器   
-
-- 参数 `_Pred` 当该参数为 `true` 时,擦除对应元素。该参数必须是一个可转换为 `bool` 类型的表达式(此处使用一个l `lambda 表达式` 来判断是否擦除)
+- 参数 `_Pred` 当该参数为 `true` 时,擦除对应元素。该参数必须是一个可转换为 `bool` 类型的表达式(此处使用一个`lambda 表达式` 来判断是否擦除)
 - Ps: 该函数是 `std::erase` 的改进版本,相较于旧版本只能单一匹配值来进行删除,`std::erase_if`可以实现类似示例中的自定义删除规则
+
+**注意**: `std::erase` 与 `std::erase_if` 会使序列容器迭代器失效
 
 <br>
 
