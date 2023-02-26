@@ -726,33 +726,43 @@ assert(l() == 42);
 
 <br>
 
-### [2.4`if`&`switch`中的初始化](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+### [2.4`if`&`switch`中的初始化](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.4if%26switch%E4%B8%AD%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96.cpp)
+
 ```cpp
-#include"print.h"
 #include<mutex>
 #include<thread>
+#include<format>
 
-std::mutex m;
+template < typename... Args>
+void print(const std::string_view fmt_str, Args&&... args) {
+	auto fmt_args{ std::make_format_args(args...) };
+	std::string outstr{ std::vformat(fmt_str, fmt_args) };
+	fputs(outstr.c_str(), stdout);
+}
+
+std::mutex mtx;
 bool flag = true;
 
+void ifFunc(int n) {
+	if (auto flag = [n]() {return n; }(); flag % 2 == 0) {// C++17起，允许if语句内声明表达式，它可以是这里的lambda表达式
+		print("This is a even Number: {}\n", n);
+	}
+}
+
 void f(int n) {
-	if (std::lock_guard lg{ m }; flag) {
-		print("乐\t");
-		print("🤣🤣🤣\n");
+	if (std::lock_guard lg{ mtx }; flag) {
+		print("if_start\t");
+		print("{}\t", n);
+		print("end\n");
 	}
 }
 
-void t() {
-	if (auto flag = [](int n) {return n * n; }(10); flag != 0) {
-		print("🐴🐴🐴\n");
-	}
-}
 
-void t2() {
-	switch (char c = getchar();c)
+void switchFunc() {
+	switch (char c = getchar(); c)// C++17起，允许switch语句内声明表达式，它可以是一条语句
 	{
 	case 'a':
-		print("a\n"); 
+		print("a\n");
 		break;
 	case 'b':
 		print("b\n");
@@ -760,26 +770,46 @@ void t2() {
 	case 'c':
 		print("c\n");
 		break;
-	case 'd':
-		print("d\n");
-		break;
 	default:
-		print("error\n");
+		print("input not a b c\n");
 		break;
 	}
 }
 
 int main() {
-	for (int i = 0; i < 10; i++) {
-		std::jthread t{ f,0 };
-		std::jthread t2{ f,0 };
+	for (int i = 0; i < 5; i++) {
+		std::jthread t{ f,i };
+		std::jthread t2{ f,i };
 	}
-	t();
-	t2();
+	ifFunc(3);
+	switchFunc();
 }
 ```
 
-### [2.5模板参数推导](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+输入：a
+
+可能的运行结果：
+
+```
+if_start        0       end
+if_start        0       end
+if_start        1       end
+if_start        1       end
+if_start        2       end
+if_start        2       end
+if_start        3       end
+if_start        3       end
+if_start        4       end
+if_start        4       end
+a
+```
+
+初始化语句可以是任意**一条**语句，如上面代码中的`lambda语句`，也可以是一条简单声明`int a = 3, b = 3;` 或者是一条结构化绑定的声明，C++23起将支持[`别名声明(C++11起)`](https://zh.cppreference.com/w/cpp/language/type_alias)
+
+通过`if & switcht 初始化语句`限制了变量的作用域，避免了与其他变量名发生冲突，并且会自动调用对应的析构函数，确保内存被安全释放（比如上面代码中的[std::lock_guard](https://zh.cppreference.com/w/cpp/thread/lock_guard)）
+
+### [2.5模板参数推导（CTAD）](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.5%E6%A8%A1%E6%9D%BF%E5%8F%82%E6%95%B0%E6%8E%A8%E5%AF%BC.cpp)
+
 ```cpp
 #include"print.h"
 
@@ -789,28 +819,51 @@ template<class T>
 struct X {
 	T v{};
 	template<class...Args>
-	X(Args&&...args) :v{ (args + ...) } {}
+	X(Args&&...args) : v{ (args + ...) } {}
 };
 
 template<class...Ts>
-X(Ts...ts) -> X<std::common_type_t<Ts...>>;
+X(Ts...ts) -> X<std::common_type_t<Ts...>>;//确定所有类型Ts...都能隐式转换到的类型
 
 int main() {
-	X x("10","🤣"s);
+	X x("Hello ", "World🤣"s);
 	print("{}\n", x.v);
 }
 ```
 
-### [2.6编译期`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+运行结果：
+
+```cpp
+Hello World🤣
+```
+
+在C++17,当我们给定类模板实参时，编译器会对其进行自动类型推导，如上面代码代码中的实例化对象`x`,  而之前为了实现`x对象的实例化，我们可能需要这样写：
+
+```cpp
+X<const char*, std::string> x("Hello", "World"s);
+```
+
+虽然有了`类模板实参推导`,但该类模板只接收一种类型，所以需要使用[`std::common_type_t`](https://zh.cppreference.com/w/cpp/types/common_type)来对类模板实参进行一个都可隐式转换的类型的提取
+
+因此，当我们初始化STL容器时，可以省略类型的书写：
+
+```cpp
+std::pair p{ 2, 3.14 };// 省略容器元素的类型
+std:vector vec{ 1, 2, 3, 4 };
+std::sort(vec.begin(), vec.end(), std::greater<>());//省略比较器的类型
+```
+
+### [2.6编译期`if`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+
 ```cpp
 #include"print.h"
 
 template<class T>
 auto f(const T& v) {
 	if constexpr (std::is_pointer_v<T>)
-		print("pointer\n");
+		print("is pointer\n");
 	else
-		print("no pointer\n");
+		print("not pointer\n");
 }
 
 template<class T,class...Args>
@@ -829,10 +882,26 @@ int main() {
 	print("\n");
 }
 ```
+
+运行结果：
+
+```
+is pointer
+not pointer
+5       314     🤣   *
+```
+
+[`std::is_pointer`](https://zh.cppreference.com/w/cpp/types/is_pointer)用于编译器判断参数类型T是否为对象/函数指针
+
+以 [`if constexpr`](https://zh.cppreference.com/w/cpp/language/if) 开始的语句被称为 *constexpr if 语句*, 在 *constexpr if* 语句中, 若表达式的值可转换到bool类型的常量表达式，如果值为`true`，舍弃`false`分支（如果存在），反之亦然
+
+被舍弃的分支中的`return 语句`**不参与**函数的返回值类型推导，且可以使用**未定义**的变量（大概是因为他不会被执行到，所以无关紧要）
+
+`sizeof...`在编译期求出参数包的大小，值为0时，被决为`false`
+
 ### 第二章总结
 第二章内容总体比较简单，并没有什么困难的，重在运用，最好这些demo都自己抄或者写一遍。
 加深理解
-
 <br>
 
 ---
