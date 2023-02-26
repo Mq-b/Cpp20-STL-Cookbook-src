@@ -2777,3 +2777,60 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 <br>
 
 ### [7.3轻量字符串对象`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
+```cpp
+#include"print.h"
+#include<string>
+using namespace std::literals;
+
+std::string_view sv() {
+	const char text[]{ "hello" };
+	std::string_view greeting{ text };
+	return greeting;
+}
+
+void f(const std::string& str) {
+
+}
+void f2(std::string_view str) {
+
+}
+
+int main() {
+	char str[10]{ "hello" };
+	std::string str2{ str };
+	print("{}\n", str2);
+	str[0] = 'a';
+	print("{}\n", str2);
+
+	std::string_view sview{ str };
+	print("{}\n", sview);
+	str[0] = 'b';
+	print("{}\n", sview);
+
+	auto t = sv();
+	print("{}\n", t);
+
+	print("{}\n", "hello"sv.substr(1,4));
+
+	constexpr std::string_view str3{ "哈哈" };
+	//constexpr std::string str4{ "哈哈" };//error
+
+	print("{}\n", str3);
+
+	std::string str4{ "1" };
+	const std::string str5{ "1" };
+	f(str4);
+	f(str5);
+	f("1");//开销大，需要构造临时的std::string对象
+
+	f2("1");
+	f2(str4);
+	f2(str5);
+}
+```
+
+[**`std::string_view`**](https://zh.cppreference.com/w/cpp/string/basic_string_view)是C++17添加的一个字符串视图类，它的构成和原理也十分简单
+
+它的构造函数只是把自己的数据成员`const pointer`以及`size`初始化而已，这是通常的实现，也就是自己不存储任何数据，副本，只是**视图**，依靠指针进行一切访问操作，不提供修改操作
+
+<br>
