@@ -853,16 +853,17 @@ std:vector vec{ 1, 2, 3, 4 };
 std::sort(vec.begin(), vec.end(), std::greater<>());//省略比较器的类型
 ```
 
-### [2.6编译期`if`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+### [2.6编译期`if`](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/2.6%E7%BC%96%E8%AF%91%E6%9C%9Fif.cpp)
+
 ```cpp
 #include"print.h"
 
 template<class T>
 auto f(const T& v) {
 	if constexpr (std::is_pointer_v<T>)
-		print("pointer\n");
+		print("is pointer\n");
 	else
-		print("no pointer\n");
+		print("not pointer\n");
 }
 
 template<class T,class...Args>
@@ -881,10 +882,26 @@ int main() {
 	print("\n");
 }
 ```
+
+运行结果：
+
+```
+is pointer
+not pointer
+5       314     🤣   *
+```
+
+[`std::is_pointer`](https://zh.cppreference.com/w/cpp/types/is_pointer)用于编译器判断参数类型T是否为对象/函数指针
+
+以 [`if constexpr`](https://zh.cppreference.com/w/cpp/language/if) 开始的语句被称为 *constexpr if 语句*, 在 *constexpr if* 语句中, 若表达式的值可转换到bool类型的常量表达式，如果值为`true`，舍弃`false`分支（如果存在），反之亦然
+
+被舍弃的分支中的`return 语句`**不参与**函数的返回值类型推导，且可以使用**未定义**的变量（大概是因为他不会被执行到，所以无关紧要）
+
+`sizeof...`在编译期求出参数包的大小，值为0时，被决为`false`
+
 ### 第二章总结
 第二章内容总体比较简单，并没有什么困难的，重在运用，最好这些demo都自己抄或者写一遍。
 加深理解
-
 <br>
 
 ---
