@@ -924,9 +924,9 @@ int main() {
 	print(v);
 	::remove_value(v, 1);
 	print(v);
-	std::erase(v,5);//C++20起，功能和remove_value()相同
+	std::erase(v,5);
 	print(v);
-	std::erase_if(v, [](int i) {return i % 2 != 0; });//第二个版本
+	std::erase_if(v, [](int i) {return i % 2 != 0; });
 	print(v);
 
 	std::list list{ 1,2,3,4,5,6,7,8,9,10 };
@@ -943,6 +943,34 @@ int main() {
 	print(map);
 }
 ```
+**运行结果**   
+
+		size: 5  [ 1 2 3 4 5 ]
+		size: 4  [ 2 3 4 5 ]
+		size: 3  [ 2 3 4 ]
+		size: 2  [ 2 4 ]
+		size: 4  [ 1 3 7 9 ]
+		size: 4 [ 1:🤣 2:🥵 3:🐴 4:🐭 ]
+		size: 3 [ 1:🤣 3:🐴 4:🐭 ]
+
+<br>
+
+**解析**
+
+[**`std::erase`**](https://zh.cppreference.com/w/cpp/container/vector/erase2)
+- 参数 `_Cont` 需要被擦除元素的容器
+- 参数 `_Value` 需要被擦除的值   
+
+- Ps: 该函数从 `C++20` 起,功能同 remove_value()
+
+
+[**`std::erase_if`**](https://zh.cppreference.com/w/cpp/container/vector/erase2)
+- 参数 `_Cont` 需要被擦除元素的容器   
+
+- 参数 `_Pred` 当该参数为 `true` 时,擦除对应元素。该参数必须是一个可转换为 `bool` 类型的表达式(此处使用一个l `lambda 表达式` 来判断是否擦除)
+- Ps: 该函数是 `std::erase` 的改进版本,相较于旧版本只能单一匹配值来进行删除,`std::erase_if`可以实现类似示例中的自定义删除规则
+
+<br>
 
 ### [3.4常数时间内从未排序的向量中删除项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.4%E5%B8%B8%E6%95%B0%E6%97%B6%E9%97%B4%E5%86%85%E4%BB%8E%E6%9C%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E5%90%91%E9%87%8F%E4%B8%AD%E5%88%A0%E9%99%A4%E9%A1%B9.cpp)
 ```cpp
