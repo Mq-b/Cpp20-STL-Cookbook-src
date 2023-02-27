@@ -342,7 +342,25 @@ int main() {
 
 当然，你也可以到[`库特性测试宏 (C++20)`](https://zh.cppreference.com/w/cpp/utility/feature_test)来进行查看
 
-通常，我们使用条件宏来解决多平台下的问题
+通常，我们使用条件宏增强不同平台下的兼容性：
+```cpp
+#if defined(__APPLE__)
+#define PI 3.14159265358979323846
+#elif defined(__linux__)
+#define PI 3.141592653589793
+#elif defined(_WIN32)
+#define PI 3.1415926535897932384626433832795
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
+#define sleep_ms(x) Sleep(x)
+#else
+#include <chrono>
+#include <thread>
+#define sleep_ms(x) std::this_thread::sleep_for(std::chrono::milliseconds(x))
+#endif
+```
 
 [`条件宏`](https://zh.cppreference.com/w/cpp/preprocessor/conditional)至C++23已经有了8种,分别是：
 
