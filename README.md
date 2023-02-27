@@ -303,7 +303,7 @@ int main() {
 202207
 ```
 
-除此外，这里我跳转到MSVC上的`version`库，我们还可以看到更多的版本宏
+除此外，这里我跳转到MSVC上的[`version`](https://en.cppreference.com/w/cpp/header/version)库，我们还可以看到更多的版本宏
 
 ```cpp
 #define __cpp_lib_jthread                 201911L
