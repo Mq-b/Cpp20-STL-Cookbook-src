@@ -265,8 +265,8 @@ int main()
 ```
 
 <br>
+### [1.6查找特性测试宏](https://github.com/13870517674/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 
-### [1.6查找特性测试宏](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.6%E6%9F%A5%E6%89%BE%E7%89%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E5%AE%8F.cpp)
 ``` cpp
 #include<iostream>
 #include<version>
@@ -294,6 +294,67 @@ int main() {
 
 //库功能性测试宏: https://zh.cppreference.com/w/cpp/utility/feature_test
 //诊断指令: https://zh.cppreference.com/w/cpp/preprocessor/error
+```
+
+运行结果：
+
+```
+201907
+202207
+```
+
+除此外，这里我跳转到MSVC上的`version`库，我们还可以看到更多的版本宏
+
+```cpp
+#define __cpp_lib_jthread                 201911L
+#define __cpp_lib_latch                   201907L
+#define __cpp_lib_list_remove_return_type 201806L
+#define __cpp_lib_math_constants          201907L
+
+#ifdef __cpp_lib_concepts
+#define __cpp_lib_move_iterator_concept 202207L
+#endif // __cpp_lib_concepts
+
+#define __cpp_lib_polymorphic_allocator   201902L
+#define __cpp_lib_remove_cvref            201711L
+#define __cpp_lib_semaphore               201907L
+#define __cpp_lib_smart_ptr_for_overwrite 202002L
+
+#ifdef __cpp_consteval
+#define __cpp_lib_source_location 201907L
+#endif // __cpp_consteval
+
+#define __cpp_lib_span             202002L
+#define __cpp_lib_ssize            201902L
+#define __cpp_lib_starts_ends_with 201711L
+#define __cpp_lib_syncbuf          201803L
+
+#ifdef __cpp_lib_concepts
+#define __cpp_lib_three_way_comparison 201907L
+#endif // __cpp_lib_concepts
+
+#define __cpp_lib_to_address    201711L
+#define __cpp_lib_to_array      201907L
+#define __cpp_lib_type_identity 201806L
+#define __cpp_lib_unwrap_ref    201811L
+#endif // _HAS_CXX20
+```
+
+当然，你也可以到[`库特性测试宏 (C++20)`](https://zh.cppreference.com/w/cpp/utility/feature_test)来进行查看
+
+通常，我们使用条件宏来解决多平台下的问题
+
+[`条件宏`](https://zh.cppreference.com/w/cpp/preprocessor/conditional)至C++23已经有了8种,分别是：
+
+```cpp
+#if
+#ifdef
+#ifndef
+#elif
+#elifdef  // C++23起
+#elifndef // C++23起
+#else
+#endif
 ```
 
 <br>
