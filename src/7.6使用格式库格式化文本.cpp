@@ -78,7 +78,7 @@ int main() {
 
 	Frac<long>n{ 3,5 };
 	print("{}\n", n);
-	//print("{:ox}\n", n);//error，因为我们的特化过于简单
+	//print("{:0x}\n", n);//error，因为我们的特化过于简单
 	Frac2<long>n2{ 10,5 };
 	print("{:0x}\n", n2);
 
