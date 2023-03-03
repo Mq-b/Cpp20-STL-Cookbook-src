@@ -2925,3 +2925,134 @@ int main() {
 它的构造函数只是把自己的数据成员`const pointer`以及`size`初始化而已，这是通常的实现，也就是自己不存储任何数据，副本，只是**视图**，依靠指针进行一切访问操作，不提供修改操作
 
 <br>
+
+### [7.4连接字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.4%E8%BF%9E%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+
+### [7.5转换字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.5%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+
+### [7.6使用格式库格式化文本](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.6%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F%E5%BA%93%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%87%E6%9C%AC.cpp)
+```cpp
+#include"print.h"
+#include<numbers>
+#include<vector>
+
+template<typename T>
+struct Frac {
+	T n;
+	T d;
+};
+template<typename T>
+struct std::formatter<Frac<T>> {
+	template<typename ParseContext>
+	constexpr auto parse(ParseContext& ctx) {
+		return ctx.begin();
+	}
+	template<typename FormatContext>
+	auto format(const Frac<T>& f, FormatContext& ctx) {
+		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.n, f.d);
+	}
+};
+
+int main() {
+	const int a{ 47 };
+	const char* human{ "earthlings" };
+	const std::string_view alien{ "vulacans" };
+	const double df_pi{ std::numbers::pi };
+	const int inta{ 47 };
+
+	print("Hex: {0:x} Octal: {0:o} Decunak {0:d}\n", a);
+	print("Hello {1} we are {0}\n", human, alien);
+
+	print("π is {}\n", df_pi);
+	print("π is {:.5}\n", df_pi);
+
+	print("inta is [{:10}]\n", inta);
+	print("inta is [{:<10}]\n", inta);
+	print("inta is [{:>10}]\n", inta);
+
+	print("inta is [{:*<10}]\n", inta);
+	print("inta is [{:0>10}]\n", inta);
+
+	print("inta is [{:^10}]\n", inta);
+	print("inta is [{:_^10}]\n", inta);
+
+	print("{:>8}: [{:04x}]\n", "Hex", inta);
+	print("{:>8}: [{:4o}]\n", "Octal", inta);
+	print("{:>8}: [{:4d}]\n", "Decimal", inta);
+
+	Frac<long>n{ 3,5 };
+	print("{}\n", n);
+
+	int array[] = { 1,2,3,4,5,6 };
+	std::vector v = { 122, 1222, 1222 };
+	print("{:0x}\n", v);
+	print("{:0x}\n", array);
+}
+```
+
+运行结果:
+
+	Hex: 2f Octal: 57 Decunak 47
+	Hello vulacans we are earthlings
+	π is 3.141592653589793
+	π is 3.1416
+	inta is [        47]
+	inta is [47        ]
+	inta is [        47]
+	inta is [47********]
+	inta is [0000000047]
+	inta is [    47    ]
+	inta is [____47____]
+	     Hex: [002f]
+	   Octal: [  57]
+	 Decimal: [  47]
+	3/5
+	[7a, 4c6, 4c6]
+	[1, 2, 3, 4, 5, 6]
+
+我相信你也注意到了，这一块的内容不少是在`1.2`讲过，书上唯一重新弄的也就是这个特化，不再是普通类类型，而是**模板类**，这是一个偏特化，但是如果只是这样，那也就不值得讲什么了。我们修改了[**`print.h`**](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/print.h)头文件，往里面添加了一个偏特化
+```cpp
+template <typename Container>
+concept ContainerChecker = requires (const Container & c) {//与std::ranges::range等价
+	std::ranges::begin(c);
+	std::ranges::end(c);
+};
+
+template <ContainerChecker Ranges, typename CharT>
+struct std::formatter<Ranges, CharT> {
+	constexpr auto format(const Ranges& rg, auto& format_context) {
+		auto iter = std::format_to(format_context.out(), "{}", '[');//相当于先往format_context插入一个'['，使用的{}格式化的方式，并且会返回末尾迭代器，后面都将操作它
+		auto begin = std::ranges::begin(rg);
+		auto end = std::ranges::end(rg);
+		std::basic_string_view<CharT> fmt(m_fmt, m_fmt + m_buffer_len);//使用数据成员字符数组来构造一个string_view，使其拥有和字符数组一样的数据
+		for (auto vec_iter = begin; vec_iter != end; ++vec_iter) {
+			if (vec_iter != begin) {//第一次是==begin的，不会执行，后面会执行
+				iter = ',', iter = ' ';//看似是给iter重复赋值，实际上它会自己往后增加，相当于往插入迭代器插入了','和' '
+			}
+			iter = std::vformat_to(format_context.out(), fmt, std::make_format_args(*vec_iter));//将一个元素插入到format_context，返回末尾迭代器
+		}
+		iter = ']';//相当于再插入了一个']'
+		return iter;
+	}
+	constexpr auto parse(auto& context) {//将会先调用parse成员函数，得到正确的格式化字符串再由format使用
+		m_fmt[m_buffer_len++] = '{';//先放入一个'{'
+		auto iter = context.begin();
+		if (iter == context.end() || *iter == '}') {
+			m_fmt[m_buffer_len++] = '}';
+			return iter;
+		}
+		m_fmt[m_buffer_len++] = ':';//如果上一步没return 退出，也就是不是单纯的{}，那么就需要给一个:，在这里相当于已经插入了{:
+		for (; iter != context.end() && *iter != '}'; ++iter) {
+			m_fmt[m_buffer_len++] = *iter;
+		}
+		m_fmt[m_buffer_len++] = '}';//最后放入'}'
+		return iter;
+	}
+private:
+	CharT m_fmt[16]{};  //存储格式化字符串的缓冲区
+	size_t m_buffer_len = 0;
+};
+```
+
+<br>
+### [7.7删除字符串的空白](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.7%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%A9%BA%E7%99%BD.cpp)
