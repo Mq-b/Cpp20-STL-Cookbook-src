@@ -2941,16 +2941,46 @@ struct Frac {
 	T n;
 	T d;
 };
-template<typename T>
+template<typename T>//十分简略，不支持很多操作
 struct std::formatter<Frac<T>> {
 	template<typename ParseContext>
 	constexpr auto parse(ParseContext& ctx) {
 		return ctx.begin();
 	}
 	template<typename FormatContext>
-	auto format(const Frac<T>& f, FormatContext& ctx) {
+	constexpr auto format(const Frac<T>& f, FormatContext& ctx) {
 		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.n, f.d);
 	}
+};
+
+template<typename T>
+struct Frac2 {
+	T n;
+	T d;
+};
+template<typename T>
+struct std::formatter<Frac2<T>> {
+	constexpr auto parse(auto& ctx) {
+		m_fmt[m_buffer_len++] = '{';
+		auto iter = ctx.begin();
+		if (iter == ctx.end() || *iter == '}') {
+			return iter;
+		}
+		m_fmt[m_buffer_len++] = ':';
+		for (; iter != ctx.end() && *iter != '}'; ++iter)
+			m_fmt[m_buffer_len++] = *iter;
+		m_fmt[m_buffer_len++] = '}';
+		return iter;
+	}
+	constexpr auto format(const Frac2<T>& f, auto& ctx) {
+		std::string fmt{};
+		fmt += m_fmt, fmt += "/", fmt += m_fmt;
+		auto iter = std::vformat_to(ctx.out(), fmt, std::make_format_args(f.n,f.d));
+		return iter;
+	}
+private:
+	char m_fmt[16]{};
+	size_t m_buffer_len = 0;
 };
 
 int main() {
@@ -2982,6 +3012,9 @@ int main() {
 
 	Frac<long>n{ 3,5 };
 	print("{}\n", n);
+	//print("{:ox}\n", n);//error，因为我们的特化过于简单
+	Frac2<long>n2{ 10,5 };
+	print("{:0x}\n", n2);
 
 	int array[] = { 1,2,3,4,5,6 };
 	std::vector v = { 122, 1222, 1222 };
@@ -3007,10 +3040,13 @@ int main() {
 	   Octal: [  57]
 	 Decimal: [  47]
 	3/5
+	a/5
 	[7a, 4c6, 4c6]
 	[1, 2, 3, 4, 5, 6]
 
-我相信你也注意到了，这一块的内容不少是在`1.2`讲过，书上唯一重新弄的也就是这个特化，不再是普通类类型，而是**模板类**，这是一个偏特化，但是如果只是这样，那也就不值得讲什么了。我们修改了[**`print.h`**](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/print.h)头文件，往里面添加了一个偏特化
+我相信你也注意到了，这一块的内容不少是在`1.2`讲过，书上唯一重新弄的也就是这个特化，不再是普通类类型，而是**模板类**，这是一个偏特化，但是如果只是这样，那也就不值得讲什么了。
+
+我们修改了[**`print.h`**](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/print.h)头文件，往里面添加了一个偏特化，并且我们写了一个`Frac2`的对`std::formatter`的特化，这个特化就不是第一个能比的了，它能够使用正常的格式化，写法也更加标准，你可以先阅读那个，再阅读我们下面这个给范围特化的：
 ```cpp
 template <typename Container>
 concept ContainerChecker = requires (const Container & c) {//与std::ranges::range等价
