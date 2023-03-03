@@ -5,14 +5,6 @@
 #include<vector>
 #include<sstream>
 
-inline void printc(const std::ranges::range auto& v,std::string_view s="") {
-	if (s.size())print("{}: ", s);
-	print("size: {}  ", v.size());
-	print("[ ");
-	for (const auto& i : v)print("{} ", i);
-	print("]\n");
-}
-
 int main() {
 	std::deque<int>d1{ 1,2,3,4,5 };
 	std::deque<int>d2(d1.size());

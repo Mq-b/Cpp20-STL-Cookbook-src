@@ -1,5 +1,6 @@
 #include"print.h"
 #include<numbers>
+#include<vector>
 
 template<typename T>
 struct Frac {
@@ -47,4 +48,9 @@ int main() {
 
 	Frac<long>n{ 3,5 };
 	print("{}\n", n);
+
+	int array[] = { 1,2,3,4,5,6 };
+	std::vector v = { 122, 1222, 1222 };
+	print("{:0x}\n", v);
+	print("{:0x}\n", array);
 }
