@@ -30,6 +30,7 @@ struct std::formatter<Frac2<T>> {
 		m_fmt[m_buffer_len++] = '{';
 		auto iter = ctx.begin();
 		if (iter == ctx.end() || *iter == '}') {
+			m_fmt[m_buffer_len++] = '}';
 			return iter;
 		}
 		m_fmt[m_buffer_len++] = ':';

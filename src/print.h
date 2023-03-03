@@ -52,6 +52,40 @@ private:
 	size_t m_buffer_len = 0;
 };
 
+template<typename T>
+concept Tuple = requires (T v) {
+	[] <typename... T2>(const std::tuple<T2...>&tup) {}(v);
+};
+
+template<Tuple T, typename CharT>
+struct std::formatter<T, CharT> {
+	constexpr auto parse(auto& ctx) {
+		m_fmt[m_buffer_len++] = '{';
+		auto iter = ctx.begin();
+		if (iter == ctx.end() || *iter == '}') {
+			m_fmt[m_buffer_len++] = '}';
+			return iter;
+		}
+		m_fmt[m_buffer_len++] = ':';
+		for (; iter != ctx.end() && *iter != '}'; ++iter)
+			m_fmt[m_buffer_len++] = *iter;
+		m_fmt[m_buffer_len++] = '}';
+		return iter;
+	}
+	constexpr auto format(Tuple auto& rg, auto& ctx) {
+		auto iter = std::format_to(ctx.out(), "{}", '[');
+		std::basic_string_view<CharT>fmt(m_fmt, m_fmt + m_buffer_len);
+		[&] <Tuple TupleType, size_t... I>(const TupleType & rg, std::index_sequence<I...>) {
+			(..., (iter = std::vformat_to(ctx.out(), fmt, std::make_format_args(std::get<I>(rg))), iter = ' '));
+		}(rg, std::make_index_sequence< std::tuple_size_v<std::remove_reference_t<decltype(rg)>>>());
+		iter = ']';
+		return iter;
+	}
+private:
+	CharT m_fmt[16]{};
+	size_t m_buffer_len = 0;
+};
+
 void print(std::ranges::range auto v){
 	print("size: {}  ", v.size());
 	print("[ ");
