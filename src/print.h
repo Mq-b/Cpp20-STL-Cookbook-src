@@ -70,9 +70,8 @@ struct std::formatter<T, CharT> {
 			auto viewt = std::vector<std::basic_string_view<CharT>>{ "{:", {ictx, rbra}, "}" } | std::views::join;
 			m_fmt.push_back(fmt_str_t(std::begin(viewt), std::end(viewt))); // wish for std::ranges::to
 			if (rbra != ectx && *rbra != '}') ictx = rbra + 1;
-			else { ictx = rbra;  break; }
+			else { return rbra; }
 		}
-		return ictx;
 	}
 	constexpr auto format(Tuple auto& rg, auto& ctx) const {
 		constexpr int N = std::tuple_size_v<std::remove_reference_t<decltype(rg)>>;
