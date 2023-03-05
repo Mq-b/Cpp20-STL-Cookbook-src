@@ -3315,3 +3315,5 @@ int main() {
 	[ten-thumbed input]
 
 <br>
+
+### [7.8从用户输入中读取字符串]()
