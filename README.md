@@ -9,6 +9,78 @@
 
 <br>
 
+- [《C++20 STL Cookbook》2023](#c20-stl-cookbook2023)
+		- [环境](#环境)
+		- [B站视频讲解](#b站视频讲解)
+	- [第一章 C++20的新特性](#第一章-c20的新特性)
+		- [1.2格式化文本](#12格式化文本)
+		- [1.3使用编译时constexpr `std::vector`和`std::string`](#13使用编译时constexpr-stdvector和stdstring)
+		- [1.4安全比较不同类型的整数`cmp_less`](#14安全比较不同类型的整数cmp_less)
+		- [1.5三路比较运算符](#15三路比较运算符)
+		- [1.6查找特性测试宏](#16查找特性测试宏)
+		- [1.7概念(`concept`)和约束(`constraint`)-创建更安全的模板](#17概念concept和约束constraint-创建更安全的模板)
+		- [1.8模块](#18模块)
+		- [1.9视图](#19视图)
+		- [第一章总结](#第一章总结)
+	- [第二章 STL的泛型特性](#第二章-stl的泛型特性)
+		- [2.2span类](#22span类)
+		- [2.3结构化绑定](#23结构化绑定)
+		- [2.4`if`\&`switch`中的初始化](#24ifswitch中的初始化)
+		- [2.5模板参数推导（CTAD）](#25模板参数推导ctad)
+		- [2.6编译期`if`](#26编译期if)
+		- [第二章总结](#第二章总结)
+	- [第三章 STL容器](#第三章-stl容器)
+		- [3.3使用擦除函数从容器中擦除项](#33使用擦除函数从容器中擦除项)
+		- [3.4常数时间内从未排序的向量中删除项](#34常数时间内从未排序的向量中删除项)
+		- [3.5安全的访问`std::vector`元素](#35安全的访问stdvector元素)
+		- [3.6保持`std::vector`元素的顺序](#36保持stdvector元素的顺序)
+		- [3.7高效的将元素插入到`std::map`中](#37高效的将元素插入到stdmap中)
+		- [3.8高效的修改`std::map`项的键值](#38高效的修改stdmap项的键值)
+		- [3.9自定义键值的`std::unordered_map`](#39自定义键值的stdunordered_map)
+		- [3.10使用`set`进行输入和筛选](#310使用set进行输入和筛选)
+		- [3.11实现简单的RPN计算器与`deque`](#311实现简单的rpn计算器与deque)
+		- [3.12使用`std::map`的词频计数器](#312使用stdmap的词频计数器)
+		- [3.13找出含有相应长句的`std::vector`](#313找出含有相应长句的stdvector)
+		- [3.14使用`std::multimap`制作待办事项](#314使用stdmultimap制作待办事项)
+		- [第三章总结](#第三章总结)
+	- [第四章 兼容迭代器](#第四章-兼容迭代器)
+		- [4.3创建可迭代范围](#43创建可迭代范围)
+		- [4.4使迭代器与STL迭代器特性兼容](#44使迭代器与stl迭代器特性兼容)
+		- [4.5使用迭代器适配器填充STL容器](#45使用迭代器适配器填充stl容器)
+		- [4.6创建一个迭代器生成器](#46创建一个迭代器生成器)
+		- [4.7反向迭代器的反向适配器](#47反向迭代器的反向适配器)
+		- [4.8用哨兵迭代未知长度的对象](#48用哨兵迭代未知长度的对象)
+		- [4.9构建zip迭代器适配器](#49构建zip迭代器适配器)
+		- [4.10创建随机访问迭代器](#410创建随机访问迭代器)
+		- [第四章总结](#第四章总结)
+	- [第五章 lambda表达式](#第五章-lambda表达式)
+		- [5.3用于作用域可重用代码](#53用于作用域可重用代码)
+		- [5.4算法库中作为谓词](#54算法库中作为谓词)
+		- [5.5与`std::function`一起作为多态包装器](#55与stdfunction一起作为多态包装器)
+		- [5.6用递归连接lambda](#56用递归连接lambda)
+		- [5.7将谓词与逻辑连接词连接起来](#57将谓词与逻辑连接词连接起来)
+		- [5.8用相同的输入调用多个lambda](#58用相同的输入调用多个lambda)
+		- [5.9对跳转表使用映射lambda](#59对跳转表使用映射lambda)
+		- [第五章总结](#第五章总结)
+	- [第六章 STL算法](#第六章-stl算法)
+		- [6.2基于迭代器的复制](#62基于迭代器的复制)
+		- [6.3将容器元素连接到以供字符串当中](#63将容器元素连接到以供字符串当中)
+		- [6.4`std::sort`排序容器元素](#64stdsort排序容器元素)
+		- [6.5`std::transform`修改容器内容](#65stdtransform修改容器内容)
+		- [6.6查找特定项](#66查找特定项)
+		- [6.7将容器元素限制在`std::clamp`范围内](#67将容器元素限制在stdclamp范围内)
+		- [6.8`std::sample`采集样本数据集](#68stdsample采集样本数据集)
+		- [6.9生成有序数据序列](#69生成有序数据序列)
+		- [6.10合并已排序容器](#610合并已排序容器)
+		- [第六章总结](#第六章总结)
+	- [第七章 字符串、流和格式化](#第七章-字符串流和格式化)
+		- [7.3轻量字符串对象`string_view`](#73轻量字符串对象string_view)
+		- [7.4连接字符串](#74连接字符串)
+		- [7.5转换字符串](#75转换字符串)
+		- [7.6使用格式库格式化文本](#76使用格式库格式化文本)
+		- [7.7删除字符串的空白](#77删除字符串的空白)
+
+
 ## 第一章 C++20的新特性
 ### [1.2格式化文本](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/1.2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E5%8C%96formatter.cpp)
 
@@ -3199,91 +3271,187 @@ int main() {
 
 我相信你也注意到了，这一块的内容不少是在`1.2`讲过，书上唯一重新弄的也就是这个特化，不再是普通类类型，而是**模板类**，这是一个偏特化，但是如果只是这样，那也就不值得讲什么了。
 
-我们修改了[**`print.h`**](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/print.h)头文件，往里面添加了一个偏特化，并且我们写了一个`Frac2`的对`std::formatter`的特化，这个特化就不是第一个能比的了，它能够使用正常的格式化，写法也更加标准，你可以先阅读那个，再阅读我们下面这个给范围特化的：
+我们修改了[**`print.h`**](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/print.h)头文件，往里面添加了一个偏特化，并且我们写了一个`Frac2`的对`std::formatter`的特化，这个特化就不是第一个能比的了，它能够使用正常的格式化，写法也更加标准。
+
+在阅读完这个特化的实现后，你可以进一步参考下面这个为任意`ranges`提供的特化：
 ```cpp
-template <typename Container>
-concept ContainerChecker = requires (const Container & c) {//与std::ranges::range等价
-	std::ranges::begin(c);
-	std::ranges::end(c);
-};
+#include <ranges>
+#include <format>
+#include <string>
+#include <string_view>
+#include <array>
+#include <iostream>
 
-template <ContainerChecker Ranges, typename CharT>
+// 一个range里面一般都是在表达上相同的元素。
+// 因此，我们这里可以这样设计：
+// 用户只需提供一个格式化占位符{}，对range的所有元素均如此格式化
+
+template <std::ranges::range Ranges, typename CharT> //使用STL提供的range具名要求限制参数
 struct std::formatter<Ranges, CharT> {
-	constexpr auto format(const Ranges& rg, auto& format_context) {
-		auto iter = std::format_to(format_context.out(), "{}", '[');//相当于先往format_context插入一个'['，使用的{}格式化的方式，并且会返回末尾迭代器，后面都将操作它
-		auto begin = std::ranges::begin(rg);
-		auto end = std::ranges::end(rg);
-		std::basic_string_view<CharT> fmt(m_fmt, m_fmt + m_buffer_len);//使用数据成员字符数组来构造一个string_view，使其拥有和字符数组一样的数据
-		for (auto vec_iter = begin; vec_iter != end; ++vec_iter) {
-			if (vec_iter != begin) {//第一次是==begin的，不会执行，后面会执行
-				iter = ',', iter = ' ';//看似是给iter重复赋值，实际上它会自己往后增加，相当于往插入迭代器插入了','和' '
-			}
-			iter = std::vformat_to(format_context.out(), fmt, std::make_format_args(*vec_iter));//将一个元素插入到format_context，返回末尾迭代器
-		}
-		iter = ']';//相当于再插入了一个']'
-		return iter;
-	}
-	constexpr auto parse(auto& context) {//将会先调用parse成员函数，得到正确的格式化字符串再由format使用
-		m_fmt[m_buffer_len++] = '{';//先放入一个'{'
-		auto iter = context.begin();
-		if (iter == context.end() || *iter == '}') {
-			m_fmt[m_buffer_len++] = '}';
-			return iter;
-		}
-		m_fmt[m_buffer_len++] = ':';//如果上一步没return 退出，也就是不是单纯的{}，那么就需要给一个:，在这里相当于已经插入了{:
-		for (; iter != context.end() && *iter != '}'; ++iter) {
-			m_fmt[m_buffer_len++] = *iter;
-		}
-		m_fmt[m_buffer_len++] = '}';//最后放入'}'
-		return iter;
-	}
 private:
-	CharT m_fmt[16]{};  //存储格式化字符串的缓冲区
-	size_t m_buffer_len = 0;
+    using fmt_str_t = std::basic_string<CharT>; //对应CharT的字符串类型
+    using fmt_str_v_t = std::basic_string_view<CharT>; //对应CharT的字符串视图类型
+    fmt_str_t m_fmt; // 用一个string来保存占位符
+public:
+    constexpr auto parse(auto& context) {
+        // format执行中，会先使用parse来分析格式化字符串，也即format的第一个参数
+        // 一般而言，context可以看作一个字符串
+        // context的开始位置是对应于当前格式化占位符的"{N:"的下一个位置
+
+        // 找到右大括号的位置
+        // 这可能找到个end(context)，但是并不需要做特殊判断，在下一步就可以看到原因
+        auto rbra = std::find_if(
+            std::begin(context), 
+            std::end(context), 
+            [](auto v) {return v == '}'; });
+
+        // 我们需要把格式化占位符中间的东西放到"{:"和"}"中间去
+        // 所以构造了三个string_view，中间那个就是format的参数提供给我们的东西
+        // 如果rbra是end(context)，则刚好得到最后一段的字符串视图
+        // 使用std::views::join把这三个string_view拼成一个连续的视图
+        auto fmt_view = std::array<fmt_str_v_t, 3>{ "{:", { std::begin(context), rbra }, "}" } 
+            | std::views::join;
+
+        // 用上述的视图构造一个字符串，并替换掉原来的m_fmt
+        m_fmt = fmt_str_t(std::begin(fmt_view), std::end(fmt_view));
+        // 在C++23有std::ranges::to，就可以把上面两行直接合并在一起，省去了声明fmt_view
+
+        // rbra正好可以作为parse的返回值
+        return rbra;
+    }
+
+    constexpr auto format(const Ranges& rg, auto& context) const {
+        // 按照某种“数组”的惯例，这里先输出一个'['，
+        // 主要的目的是得到这个输出迭代器，方便后面的操作
+        auto iter = std::format_to(context.out(), "{}", '[');
+
+        bool is_first = true;
+
+        // 这里用ranges::for_each来遍历range，你当然可以选择std::for_each，或者range-base-for
+        std::ranges::for_each(rg, [&](const auto& v) {
+            // 除了第一个元素，先写好分隔符，这里是", "
+            if (is_first) { is_first = false; }
+            else { iter = ',', iter = ' '; }
+
+            // 用vformat_to，按照我们准备好的占位符来输出
+            iter = std::vformat_to(context.out(), m_fmt, std::make_format_args(v));
+        });
+
+        // 输出“数组”结尾的']'
+        iter = ']';
+
+        // 返回结尾
+        return iter;
+    }
 };
 
-//对元组的std::formatter特化
+int main() {
+    std::cout << std::format("{1:+06d}\n{1: >+8d}\n{0:}",
+        std::views::iota(0) | std::views::take(5),
+        std::views::iota(10) | std::views::take(5) | std::views::transform([](auto v) {return v * v; }));
+}
+```
+
+运行结果:
+```
+[+00100, +00121, +00144, +00169, +00196]
+[    +100,     +121,     +144,     +169,     +196]
+[0, 1, 2, 3, 4]
+```
+
+后文是一个针对元组的std::formatter特化
+```cpp
+#include <ranges>
+#include <format>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <vector>
+#include <array>
+#include <iostream>
+
+// 设计一个用于限制模板参数的概念
 template<typename T>
 concept Tuple = requires (T v) {
-	[] <typename... T2>(const std::tuple<T2...>&tup) {}(v);
+    [] <typename... T2>(const std::tuple<T2...>&tup) {}(v);
 };
 
-template<Tuple T, typename CharT>
-struct std::formatter<T, CharT> {
-	using fmt_str_t = std::basic_string<CharT>;
-
-	constexpr auto parse(auto& ctx) {
-		auto ictx = std::begin(ctx);//值得注意的是ctx并不包含前面的{或:之类的，直接就是格式字符，这也是下面用于构造string_view的原因
-		auto ectx = std::end(ctx);
-		while (true) {
-			auto rbra = std::find_if(ictx, ectx, [](auto v) {return v == '}' | v == '|'; });
-			auto viewt = std::vector<std::basic_string_view<CharT>>{ "{:", {ictx, rbra}, "}" } | std::views::join;
-			m_fmt.push_back(fmt_str_t(std::begin(viewt), std::end(viewt))); // wish for std::ranges::to
-			if (rbra != ectx && *rbra != '}') ictx = rbra + 1;
-			else { return rbra; }
-		}
-	}
-	constexpr auto format(Tuple auto& rg, auto& ctx) const {
-		constexpr int N = std::tuple_size_v<std::remove_reference_t<decltype(rg)>>;
-		auto iter = std::format_to(ctx.out(), "{}", '[');
-		auto fmt_iter = std::begin(m_fmt);
-		auto fmt_end = std::end(m_fmt);
-		const auto empty = std::string{ "{}" };
-		[&] <Tuple TupleType>(const TupleType & rg) {
-			[&] <size_t... I>(std::index_sequence<I...>) {
-				(..., (
-					iter = std::vformat_to(ctx.out(),
-						fmt_iter != fmt_end ? *(fmt_iter++) : empty, // if there is more tuple elements than fmt args, use "{}" for those missing fmt
-						std::make_format_args(std::get<I>(rg))
-					), I + 1 != N ? iter = ' ' : iter = ']'));
-			}(std::make_index_sequence<N>());
-		}(rg);
-		return iter;
-	}
+// tuple里会有数个差异很大的元素，用户可能会对各个元素有不同的格式化想法
+// 因此这里可以提供不同的占位符，这些占位符使用format标准占位符（但是没有左右的{}）
+// 这些占位符互相之间使用逗号','分隔
+// 用户也可以不为某个元素提供占位符，或者提供空的占位符，这时会如同使用了'{}'作为format占位符一般
+template<Tuple TupleType, typename CharT>
+struct std::formatter<TupleType, CharT> {
 private:
-	std::vector<fmt_str_t> m_fmt;
+    using fmt_str_t = std::basic_string<CharT>; //对应CharT的字符串类型
+    using fmt_str_v_t = std::basic_string_view<CharT>; //对应CharT的字符串视图类型
+    std::vector<fmt_str_t> m_fmt; // 用多个string来保存占位符
+public:
+    constexpr auto parse(auto& context) {
+        const auto separator = ',';
+        // 与前面的ranges特化相同，不过这次有很多个占位符了，就得进行一些分割处理
+        auto ictx = std::begin(context);
+        auto ectx = std::end(context);
+        while (true) {
+            //找到下一个'}'或者','，其他方面与上面相同
+            auto rbra = std::find_if(ictx, ectx, [](auto v) {return v == '}' || v == separator; });
+            auto viewt = std::vector<fmt_str_v_t>{ "{:", {ictx, rbra}, "}" } | std::views::join;
+            m_fmt.push_back(fmt_str_t(std::begin(viewt), std::end(viewt)));
+
+            // 如果找到的是逗号，则需要继续找。注意不能对end(context)解引用。
+            if (rbra != ectx && *rbra == separator) ictx = rbra + 1;
+            else return rbra;
+        }
+    }
+    constexpr auto format(const TupleType& rg, auto& ctx) const {
+        // 按照某种“元组”的习惯，输出一个'<'作为元组的开始
+        auto iter = std::format_to(ctx.out(), "{}", '<');
+        auto fmt_iter = std::begin(m_fmt);
+        auto fmt_end = std::end(m_fmt);
+        const auto empty = std::string{ "{}" };
+
+        [&] <size_t... I, size_t sz = sizeof...(I)>(std::index_sequence<I...>) {
+            // 使用index_sequence和decoy数组来展开元组
+            // index_sequence和decoy数组在编译结果里会被很容易地优化掉
+
+            // decoy数组是一种对参数包应用函数的惯例方法，下面是一个示例：
+            // int decoy[]{[]{ /* 执行调用 */ return 0;}(Pack)...};
+            // 也可以把这里的lambda改成逗号表达式，像这样
+            // int decoy[]{(/* 执行调用 */, 0)...};
+
+            // 在C++23里提供的deducing this可以实现lambda表达式的递归
+            // 如此可以用lambda递归来解包，无需专门声明函数来递归
+            // 这样就不会有index_sequence和decoy这样仿佛没穿内裤的冒险体验
+            int decoy[]{ ([&](auto) {
+                iter = std::vformat_to(ctx.out(),
+                    // 对于超出格式化占位符的部分，使用"{}"
+                    {I < m_fmt.size() ? m_fmt[I] : empty}, 
+                    std::make_format_args(std::get<I>(rg)));
+                // 除了最后一个元素，在后面添加分隔符
+                if constexpr (I < sz - 1) { iter = ',', iter = ' '; }
+            return 0; }(I)) ... };
+        }(std::make_index_sequence<std::tuple_size_v<TupleType>>());
+
+        // 加上元组结尾
+        iter = '>';
+        return iter;
+    }
 };
+
+int main() {
+    std::cout << std::format("{1:}\n{0:,,.5f}\n{0:06d,,}",
+        std::make_tuple(1, "test", 3.14f, "hello world"),
+        std::make_tuple(1, 3.14));
+}
 ```
+
+运行结果:
+```
+<1, 3.14>
+<1, test, 3.14000, hello world>
+<000001, test, 3.14, hello world>
+```
+
 
 <br>
 
