@@ -3316,4 +3316,84 @@ int main() {
 
 <br>
 
-### [7.8从用户输入中读取字符串]()
+### [7.8从用户输入中读取字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.8%E4%BB%8E%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E4%B8%AD%E8%AF%BB%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+```cpp
+#include"print.h"
+#include<sstream>
+
+bool prompt(std::string_view s, std::string_view s2 = "") {
+	if (s2.size())std::cout<<format("{} ({}): ", s, s2);
+	else std::cout<<format("{}: ", s);
+	std::cout.flush();
+	return true;
+}
+void clearistream() {
+	std::string s{};
+	std::cin.clear();
+	std::getline(std::cin, s);
+}
+std::string trimstr(const std::string& s) {
+	constexpr const char* whitespace{ " \t\r\n\v\f" };
+	if (s.empty())return s;
+	const auto first{ s.find_first_not_of(whitespace) };
+	if (first == std::string::npos)return{};
+	const auto last{ s.find_last_not_of(whitespace) };
+	return s.substr(first, (last - first + 1));
+}
+
+int main() {
+	constexpr size_t MAXLINE{ 1024 };
+	char s[MAXLINE]{};
+	std::string line{};
+	std::string word{};
+	const char* pl{ "Words here" };
+	const char* pla{ "More words here" };
+	const char* p2{ "Please enter two numbers" };
+	const char* p3{ "Comma=separated words" };
+
+	prompt(pl);
+	std::cin.getline(s, MAXLINE, '\n');
+	std::cout << s << '\n';
+
+	prompt(pla, "pla");
+	std::getline(std::cin, line, '\n');
+	std::cout << line << '\n';
+
+	double a{};
+	double b{};
+	for (prompt(p2); !(std::cin >> a >> b); prompt(p2)) {
+		std::cout << "not numeric\n";
+		clearistream();
+	}
+	std::cout << std::format("You netered {} and {}\n", a, b);
+	std::cin.get();
+
+	line.clear();
+	prompt(p3);
+	while (line.empty())std::getline(std::cin, line);
+	std::stringstream ss(line);
+	while (std::getline(ss, word, ',')) {
+		if (word.empty())continue;
+		std::cout << std::format("word: [{}]\n", trimstr(word));
+	}
+}
+```
+
+运行结果:
+
+	Words here: 1
+	1
+	More words here (pla): 2
+	2
+	Please enter two numbers: a b
+	not numeric
+	Please enter two numbers: 4 5
+	You netered 4 and 5
+	Comma=separated words:
+
+	this, that, other
+	word: [this]
+	word: [that]
+	word: [other]
+
+<br>
