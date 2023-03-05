@@ -14,8 +14,8 @@ void timer(auto(f)()->std::string) {
 	print("duration: {} ms\n", ms.count());
 }
 
-std::string append_string() {
-	print("append_string\n");
+std::string concat_string() {
+	print("concat_string\n");
 	std::string a{ "a" };
 	std::string b{ "b" };
 	long n{};
@@ -27,8 +27,8 @@ std::string append_string() {
 	return "error\n";
 }
 
-std::string concat_string() {
-	print("concat_string\n");
+std::string append_string() {
+	print("append_string\n");
 	std::string a{ "a" };
 	std::string b{ "b" };
 	long n{};

@@ -2927,8 +2927,160 @@ int main() {
 <br>
 
 ### [7.4连接字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.4%E8%BF%9E%E6%8E%A5%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+```cpp
+#include"print.h"
+#include<sstream>
+#include<ostream>
+#include<chrono>
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+
+void timer(auto(f)()->std::string) {
+	auto t1 = high_resolution_clock::now();
+	std::string s{ f() };
+	auto t2 = high_resolution_clock::now();
+	duration<double, std::milli>ms = t2 - t1;
+	print("{}", s);
+	print("duration: {} ms\n", ms.count());
+}
+
+std::string concat_string() {
+	print("concat_string\n");
+	std::string a{ "a" };
+	std::string b{ "b" };
+	long n{};
+	while (++n) {
+		std::string x{};
+		x += a + ", " + b + "\n";
+		if (n >= 10000000)return x;
+	}
+	return "error\n";
+}
+
+std::string append_string() {
+	print("append_string\n");
+	std::string a{ "a" };
+	std::string b{ "b" };
+	long n{};
+	while (++n) {
+		std::string x{};
+		x.append(a);
+		x.append(", ");
+		x.append(b);
+		x.append("\n");
+		if (n >= 10000000)return x;
+	}
+	return "error\n";
+}
+
+std::string concat_ostringstream() {
+	print("ostringstream\n");
+	std::string a{ "a" };
+	std::string b{ "b" };
+	long n{};
+	while (++n) {
+		std::stringstream x{};
+		x << a << ", " << b << "\n";
+		if (n >= 10000000)return x.str();
+	}
+	return "error\n";
+}
+
+std::string concat_format() {
+	print("append_format\n");
+	std::string a{ "a" };
+	std::string b{ "b" };
+	long n{};
+	while (++n) {
+		std::string x{};
+		x += std::format("{}, {}\n", a, b);
+		if (n >= 10000000)return x;
+	}
+	return "error\n";
+}
+
+int main() {
+	timer(append_string);
+	timer(concat_string);
+	timer(concat_ostringstream);
+	timer(concat_format);
+}
+```
+
+运行结果:
+
+	append_string
+	a, b
+	duration: 5285.7537 ms
+	concat_string
+	a, b
+	duration: 19286.9228 ms
+	ostringstream
+	a, b
+	duration: 21790.0884 ms
+	append_format
+	a, b
+	duration: 29601.7629 ms
+
+<br>
 
 ### [7.5转换字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.5%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+```cpp
+#include"print.h"
+
+char char_upper(const char& c) {
+	return static_cast<char>(std::toupper(c));
+}
+char char_lower(const char& c) {
+	return static_cast<char>(std::tolower(c));
+}
+char rot13(const char& x) {
+	auto rot13a = [](char x, char a)->char {
+		return a + (x - a + 13) % 26;
+	};
+	if (x >= 'A' && x <= 'Z')return rot13a(x, 'A');
+	if (x >= 'a' && x <= 'z')return rot13a(x, 'a');
+	return x;
+}
+std::string title_case(std::string& s) {
+	auto begin{ s.begin() };
+	auto end{ s.end() };
+	*begin++ = char_upper(*begin);
+	bool space_flag{ false };
+	for (auto it{ begin }; it != end; ++it) {
+		if (*it == ' ')space_flag = true;
+		else {
+			if (space_flag)*it = char_upper(*it);
+			space_flag = false;
+		}
+	}
+	return s;
+}
+
+int main() {
+	std::string s{ "hello jimi\n" };
+	print("{}", s);
+	std::transform(s.begin(), s.end(), s.begin(), char_upper);
+	print("{}", s);
+	for (auto& c : s)c = rot13(c);
+	print("{}", s);
+	for (auto& c : s)c = rot13(char_lower(c));
+	print("{}", s);
+
+	title_case(s);
+	print("{}", s);
+}
+```
+
+运行结果:
+
+	hello jimi
+	HELLO JIMI
+	URYYB WVZV
+	hello jimi
+	Hello Jimi
+
+<br>
 
 ### [7.6使用格式库格式化文本](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.6%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F%E5%BA%93%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%87%E6%9C%AC.cpp)
 ```cpp
@@ -2964,6 +3116,7 @@ struct std::formatter<Frac2<T>> {
 		m_fmt[m_buffer_len++] = '{';
 		auto iter = ctx.begin();
 		if (iter == ctx.end() || *iter == '}') {
+			m_fmt[m_buffer_len++] = '}';
 			return iter;
 		}
 		m_fmt[m_buffer_len++] = ':';
@@ -3012,7 +3165,7 @@ int main() {
 
 	Frac<long>n{ 3,5 };
 	print("{}\n", n);
-	//print("{:ox}\n", n);//error，因为我们的特化过于简单
+	//print("{:0x}\n", n);//error，因为我们的特化过于简单
 	Frac2<long>n2{ 10,5 };
 	print("{:0x}\n", n2);
 
@@ -3088,7 +3241,77 @@ private:
 	CharT m_fmt[16]{};  //存储格式化字符串的缓冲区
 	size_t m_buffer_len = 0;
 };
+
+//对元组的std::formatter特化
+template<typename T>
+concept Tuple = requires (T v) {
+	[] <typename... T2>(const std::tuple<T2...>&tup) {}(v);
+};
+
+template<Tuple T, typename CharT>
+struct std::formatter<T, CharT> {
+	using fmt_str_t = std::basic_string<CharT>;
+
+	constexpr auto parse(auto& ctx) {
+		auto ictx = std::begin(ctx);//值得注意的是ctx并不包含前面的{或:之类的，直接就是格式字符，这也是下面用于构造string_view的原因
+		auto ectx = std::end(ctx);
+		while (true) {
+			auto rbra = std::find_if(ictx, ectx, [](auto v) {return v == '}' | v == '|'; });
+			auto viewt = std::vector<std::basic_string_view<CharT>>{ "{:", {ictx, rbra}, "}" } | std::views::join;
+			m_fmt.push_back(fmt_str_t(std::begin(viewt), std::end(viewt))); // wish for std::ranges::to
+			if (rbra != ectx && *rbra != '}') ictx = rbra + 1;
+			else { return rbra; }
+		}
+	}
+	constexpr auto format(Tuple auto& rg, auto& ctx) const {
+		constexpr int N = std::tuple_size_v<std::remove_reference_t<decltype(rg)>>;
+		auto iter = std::format_to(ctx.out(), "{}", '[');
+		auto fmt_iter = std::begin(m_fmt);
+		auto fmt_end = std::end(m_fmt);
+		const auto empty = std::string{ "{}" };
+		[&] <Tuple TupleType>(const TupleType & rg) {
+			[&] <size_t... I>(std::index_sequence<I...>) {
+				(..., (
+					iter = std::vformat_to(ctx.out(),
+						fmt_iter != fmt_end ? *(fmt_iter++) : empty, // if there is more tuple elements than fmt args, use "{}" for those missing fmt
+						std::make_format_args(std::get<I>(rg))
+					), I + 1 != N ? iter = ' ' : iter = ']'));
+			}(std::make_index_sequence<N>());
+		}(rg);
+		return iter;
+	}
+private:
+	std::vector<fmt_str_t> m_fmt;
+};
 ```
 
 <br>
+
 ### [7.7删除字符串的空白](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.7%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%A9%BA%E7%99%BD.cpp)
+```cpp
+#include"print.h"
+#include<ranges>
+
+std::string trimstr(const std::string& s) {
+	constexpr const char* whitespace{ " \t\r\n\v\f" };
+	if (s.empty())return s;
+	const auto first{ s.find_first_not_of(whitespace) };
+	if (first == std::string::npos)return{};
+	const auto last{ s.find_last_not_of(whitespace) };
+	return s.substr(first, (last - first + 1));
+}
+
+int main() {
+	std::string s{ " \t ten-thumbed input \t  \n \t" };
+	print("[{}]\n", s);
+	print("[{}]\n", trimstr(s));
+}
+```
+
+运行结果:
+
+	[        ten-thumbed input
+	        ]
+	[ten-thumbed input]
+
+<br>

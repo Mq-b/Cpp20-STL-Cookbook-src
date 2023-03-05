@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD 23)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (Test1 "src/7.6使用格式库格式化文本.cpp" )
+add_executable (Test1 "src/7.7删除字符串的空白.cpp" )
