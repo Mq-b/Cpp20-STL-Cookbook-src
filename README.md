@@ -3563,3 +3563,32 @@ int main() {
 	word: [other]
 
 <br>
+
+### [7.9统计文件中的单词数](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.9%E7%BB%9F%E8%AE%A1%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D%E6%95%B0.cpp)
+```cpp
+#include"print.h"
+#include<fstream>
+#include<filesystem>
+
+size_t wordcount(auto& is) {
+	using it_t = std::istream_iterator<std::string>;
+	return std::distance(it_t{ is }, {});
+}
+
+int main() {
+	const char* fn{ "E:/自制视频教程/《C++20 STL Cookbook》2023/src/src/the-raven.txt" };
+	std::ifstream infile{ fn,std::ios_base::in };
+	size_t wc{ wordcount(infile) };
+	print("There are {} words in the file.\n", wc);
+	print("size: {}\n", std::filesystem::file_size(fn));
+}
+```
+
+运行结果:
+
+	There are 1068 words in the file.
+	size: 6710
+
+这段代码简直太简单了，十分简短，[**`std::istream_iterator`**](https://zh.cppreference.com/w/cpp/iterator/istream_iterator)流对象可以使用[**`std::distance`**](https://zh.cppreference.com/w/cpp/iterator/distance)获得两个迭代器的距离，后面的`{}`就不再强调了，介绍过很多次了，使用`std::ifstream`进行构造，巧妙的获得元素个数，实际上这是指空格+1，也就是单词数，因为一个空格就算作分隔。
+
+<br>
