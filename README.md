@@ -3395,7 +3395,7 @@ public:
         while (true) {
             //找到下一个'}'或者','，其他方面与上面相同
             auto rbra = std::find_if(ictx, ectx, [](auto v) {return v == '}' || v == separator; });
-            auto viewt = std::vector<fmt_str_v_t>{ "{:", {ictx, rbra}, "}" } | std::views::join;
+            auto viewt = std::array<fmt_str_v_t,3>{ "{:", {ictx, rbra}, "}" } | std::views::join;
             m_fmt.push_back(fmt_str_t(std::begin(viewt), std::end(viewt)));
 
             // 如果找到的是逗号，则需要继续找。注意不能对end(context)解引用。
@@ -3406,8 +3406,6 @@ public:
     constexpr auto format(const TupleType& rg, auto& ctx) const {
         // 按照某种“元组”的习惯，输出一个'<'作为元组的开始
         auto iter = std::format_to(ctx.out(), "{}", '<');
-        auto fmt_iter = std::begin(m_fmt);
-        auto fmt_end = std::end(m_fmt);
         const auto empty = std::string{ "{}" };
 
         [&] <size_t... I, size_t sz = sizeof...(I)>(std::index_sequence<I...>) {
@@ -3415,14 +3413,14 @@ public:
             // index_sequence和decoy数组在编译结果里会被很容易地优化掉
 
             // decoy数组是一种对参数包应用函数的惯例方法，下面是一个示例：
-            // int decoy[]{[]{ /* 执行调用 */ return 0;}(Pack)...};
+            // auto decoy = {[]{ /* 执行调用 */ return 0;}(Pack)...};
             // 也可以把这里的lambda改成逗号表达式，像这样
-            // int decoy[]{(/* 执行调用 */, 0)...};
+            // auto decoy = {(/* 执行调用 */, 0)...};
 
             // 在C++23里提供的deducing this可以实现lambda表达式的递归
             // 如此可以用lambda递归来解包，无需专门声明函数来递归
             // 这样就不会有index_sequence和decoy这样仿佛没穿内裤的冒险体验
-            int decoy[]{ ([&](auto) {
+            auto decoy = { ([&](auto) {
                 iter = std::vformat_to(ctx.out(),
                     // 对于超出格式化占位符的部分，使用"{}"
                     {I < m_fmt.size() ? m_fmt[I] : empty}, 
