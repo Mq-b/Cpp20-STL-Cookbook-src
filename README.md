@@ -1189,7 +1189,7 @@ void test1() {
 
 void test2()try {
 	std::vector v{ 1,2,3,4,5 };
-	auto& i = v.at(5);
+	auto& i = v.at(5);// at会进行越界检查，保证了程序的安全
 	print("{}\n", i);
 }
 catch (std::exception& e) {
@@ -1610,13 +1610,23 @@ int main() {
 int main() {
 	std::multimap<int, std::string>todo{
 		{1,"🤣"},
-		{2,"🥵"},
+		{1,"🥵"},
 		{3,"🐴"},
-		{4,"😘"}
+		{4,"c"}
 	};
 	rprint(todo);
 }
 ```
+运行结果：
+```
+😘
+🐴
+🥵
+🤣
+```
+
+`std::multimap`允许存在多个同名的键，默认对键值进行升序排列，你也可以自己指定排序的方式，同时，它还支持迭代，所以，在大多数场景下，`std::multimap`有着`priority_queue`更灵活的特性。而且，因为其支持迭代且有序，所以你也可以使用`lower_bound` 和`upper_bound`来对键值进行查找
+
 ### 第三章总结
 第三章内容较多，需要对STL容器有一定的了解，建议每一个demo都自己写完理解意义后再往下阅读。
 
