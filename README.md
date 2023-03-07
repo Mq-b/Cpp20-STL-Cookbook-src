@@ -1190,7 +1190,7 @@ void test1() {
 
 void test2()try {
 	std::vector v{ 1,2,3,4,5 };
-	auto& i = v.at(5);
+	auto& i = v.at(5);// at会进行越界检查，保证了程序的安全
 	print("{}\n", i);
 }
 catch (std::exception& e) {
@@ -1332,6 +1332,7 @@ int main() {
 ```
 
 ### [3.9自定义键值的`std::unordered_map`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+
 ```cpp
 #include"print.h"
 #include<string>
@@ -1341,12 +1342,12 @@ struct Coord {
 	int x{};
 	int y{};
 };
-auto operator==(const Coord& a, const Coord& b) {
+auto operator==(const Coord& a, const Coord& b) {//键值需要能比较相等，即equal_to<_KeyTpey>
 	return a.x == b.x && a.y == b.y;
 }
 namespace std {
 	template<>
-	struct hash<Coord> {
+	struct hash<Coord> {//特化哈希类
 		size_t operator()(const Coord&a)const {
 			return static_cast<size_t>(a.x) + static_cast<size_t>(a.y);
 		}
@@ -1359,10 +1360,45 @@ inline void print(const std::unordered_map<T, T2>& map) {
 	print("\n");
 }
 int main() {
-	std::unordered_map<Coord, std::string>map{ {{1,1},"😘"},{{0,0},"🤣"} };
+	std::unordered_map<Coord, std::string, std::hash<Coord>>map{ {{1,1},"😘"},{{0,0},"🤣"} };
 	print(map);
 }
 ```
+
+运行结果:
+
+```
+size: 2 {1 1}:😘 {0, 0}:🤣
+```
+
+[unordered_map](https://zh.cppreference.com/w/cpp/container/unordered_map)和`map`一样都是关联式容器,唯一不同的是`unordered_mp`内部不以任何顺序进行排列，而是直接存进桶里面，所以在不需要排序的场景下，`unordered_mp`会比`map`高效一些。
+
+`unordered_map`的定义
+```cpp
+template<
+    class Key,
+    class T,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = std::allocator< std::pair<const Key, T> >
+> class unordered_map;
+```
+
+`equal_to`在MSVC上的实现
+```cpp
+_EXPORT_STD template <class _Ty = void>
+struct equal_to {
+    using _FIRST_ARGUMENT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS  = _Ty;
+    using _SECOND_ARGUMENT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS = _Ty;
+    using _RESULT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS          = bool;
+
+    _NODISCARD constexpr bool operator()(const _Ty& _Left, const _Ty& _Right) const
+        noexcept(noexcept(_Fake_copy_init<bool>(_Left == _Right))) /* strengthened */ {
+        return _Left == _Right;
+    }
+};
+```
+~~同样的，你也可以重载`!=`然后指定`KeyEqual = std::not_equal_to<Key>`~~
 
 ### [3.10使用`set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
@@ -1575,13 +1611,23 @@ int main() {
 int main() {
 	std::multimap<int, std::string>todo{
 		{1,"🤣"},
-		{2,"🥵"},
+		{1,"🥵"},
 		{3,"🐴"},
-		{4,"😘"}
+		{4,"c"}
 	};
 	rprint(todo);
 }
 ```
+运行结果：
+```
+😘
+🐴
+🥵
+🤣
+```
+
+`std::multimap`允许存在多个同名的键，默认对键值进行升序排列，你也可以自己指定排序的方式，同时，它还支持迭代，所以，在大多数场景下，`std::multimap`有着`priority_queue`更灵活的特性。而且，因为其支持迭代且有序，所以你也可以使用`lower_bound` 和`upper_bound`来对键值进行查找
+
 ### 第三章总结
 第三章内容较多，需要对STL容器有一定的了解，建议每一个demo都自己写完理解意义后再往下阅读。
 
