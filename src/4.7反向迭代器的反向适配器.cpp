@@ -2,15 +2,6 @@
 #include<string>
 #include<vector>
 
-void printr(const auto& r, std::string_view s = "") {
-	auto rbegin = std::rbegin(r);
-	auto rend = std::rend(r);
-	for (auto it = rbegin; it != rend; ++it) {
-		print("{} ", *it);
-	}
-	print("\n");
-}
-
 int main() {
 	int array[]{ 1,2,3,4,5 };
 	printc(array, "c-array");
