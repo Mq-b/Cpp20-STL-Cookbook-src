@@ -81,6 +81,7 @@
 		- [7.7删除字符串的空白](#77删除字符串的空白)
 		- [7.8从用户输入中读取字符串](#78从用户输入中读取字符串)
 		- [7.9统计文件中的单词数](#79统计文件中的单词数)
+		- [7.10使用文件输入初始化复杂结构体](#710使用文件输入初始化复杂结构体)
 
 
 ## 第一章 C++20的新特性
@@ -2974,19 +2975,6 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 
 <br>
 
-- [轻量级字符串对象——`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
-- [连接字符串]()
-- [转换字符串]()
-- [使用格式库格式化文本]()
-- [删除字符串中的空白]()
-- [从用户输入中读取字符串]()
-- [统计文件中的单词数]()
-- [使用文件输入初始化复杂结构体]()
-- [使用 `char_traits` 定义一个字符串类]()
-- [用正则表达式解析字符串]()
-
-<br>
-
 ### [7.3轻量字符串对象`string_view`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.3%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1string_view.cpp)
 ```cpp
 #include"print.h"
@@ -3640,3 +3628,53 @@ int main() {
 这段代码简直太简单了，十分简短，[**`std::istream_iterator`**](https://zh.cppreference.com/w/cpp/iterator/istream_iterator)流对象可以使用[**`std::distance`**](https://zh.cppreference.com/w/cpp/iterator/distance)获得两个迭代器的距离，后面的`{}`就不再强调了，介绍过很多次了，使用`std::ifstream`进行构造，巧妙的获得元素个数，实际上这是指空格+1，也就是单词数，因为一个空格就算作分隔。
 
 <br>
+
+### [7.10使用文件输入初始化复杂结构体]()
+```cpp
+#include"print.h"
+#include<fstream>
+
+struct City {
+	std::string name;
+	unsigned long population;
+	double latitude;
+	double longitude;
+};
+
+std::istream& operator>>(std::istream& in, City& c) {
+	in >> std::ws;
+	std::getline(in, c.name);
+	in >> c.population >> c.latitude >> c.longitude;
+	return in;
+}
+std::string make_commas(const unsigned long num) {//把数字串中间添加逗号，三位一个逗号分隔
+	std::string s{ std::to_string(num) };
+	for (int l = s.length() - 3; l > 0; l -= 3)
+		s.insert(l, ",");
+	return s;
+}
+
+int main() {
+	constexpr const char* fn{ "E:/自制视频教程/《C++20 STL Cookbook》2023/src/src/cities.txt" };
+	std::vector<City>cities;
+	std::ifstream infile(fn, std::ios_base::in);
+	if (!infile.is_open()) {
+		print("failed to open file {}\n", fn);
+		return 1;
+	}
+	for (City c{}; infile >> c;)cities.emplace_back(c);
+
+	for (const auto& [name, pop, lat, lon] : cities) {
+		print("{:.<15} pop {:<15} coords {}, {}\n", name, make_commas(pop), lat, lon);
+	}
+}
+```
+
+运行结果:
+
+	Las Vegas...... pop 661,903         coords 36.1699, -115.1398
+	New York City.. pop 8,850,000       coords 40.7128, -74.006
+	Berlin......... pop 3,571,000       coords 52.52, 13.405
+	Mexico City.... pop 21,900,000      coords 19.4326, -99.1332
+	Sydney......... pop 5,312,000       coords -33.8688, 151.2093
+
