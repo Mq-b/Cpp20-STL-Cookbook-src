@@ -1372,6 +1372,17 @@ size: 2 {1 1}:😘 {0, 0}:🤣
 
 [unordered_map](https://zh.cppreference.com/w/cpp/container/unordered_map)和`map`一样都是关联式容器,唯一不同的是`unordered_mp`内部不以任何顺序进行排列，而是直接存进桶里面，所以在不需要排序的场景下，`unordered_mp`会比`map`高效一些。
 
+`unordered_map`的定义
+```cpp
+template<
+    class Key,
+    class T,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = std::allocator< std::pair<const Key, T> >
+> class unordered_map;
+```
+
 `equal_to`在MSVC上的实现
 ```cpp
 _EXPORT_STD template <class _Ty = void>
@@ -1386,6 +1397,7 @@ struct equal_to {
     }
 };
 ```
+~~同样的，你也可以重载`!=`然后指定`KeyEqual = std::not_equal_to<Key>`~~
 
 ### [3.10使用`set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
 ```cpp
