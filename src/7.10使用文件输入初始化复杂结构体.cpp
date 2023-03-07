@@ -1,5 +1,6 @@
 #include"print.h"
 #include<fstream>
+#include <string>
 
 struct City {
 	std::string name;
