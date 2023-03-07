@@ -4,6 +4,7 @@
 #include<ranges>
 #include<map>
 #include<vector>
+#include <algorithm>
 
 template < typename... Args>
 void print(const std::string_view fmt_str, Args&&... args) {

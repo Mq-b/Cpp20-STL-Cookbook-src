@@ -1,4 +1,5 @@
 #include"print.h"
+#include <string>
 
 const char prompt(const char* p) {
     std::string r;

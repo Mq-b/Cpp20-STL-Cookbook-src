@@ -23,8 +23,8 @@ int main() {
 	printm(map);
 	print("\n");
 
-	map.emplace(1, "乐");//添加一个具有重复键的元素
-	map.try_emplace(1, "乐");
+	map.emplace(1, "乐 ");//添加一个具有重复键的元素
+	map.try_emplace(1, "乐 ");
 	printm(map);
 }
 //重复键元素的问题参见 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=92300

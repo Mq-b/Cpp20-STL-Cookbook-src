@@ -42,6 +42,7 @@ public:
 	}
 };
 
+/*
 template<class T>
 requires std::forward_iterator<typename T::iterator>
 void printc(const T& r) {
@@ -49,7 +50,7 @@ void printc(const T& r) {
 		print("{} ", i);
 	}
 	print("\n");
-}
+}*/
 
 int main() {
 	Seq<int>r{ 100,110 };

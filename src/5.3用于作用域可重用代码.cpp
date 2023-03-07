@@ -8,7 +8,7 @@ int main() {
 	auto p = [](auto f) {//泛型lambda，C++20之前只能使用这种方式
 		print("{}\n", f()); 
 	};
-	p([] {return "乐"; });
+	p([] {return "乐 "; });
 
 	auto p2 = []<typename T>(T&& f) { print("{}\n", f()); };
 	p2(one);
