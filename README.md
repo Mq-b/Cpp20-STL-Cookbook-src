@@ -1331,6 +1331,7 @@ int main() {
 ```
 
 ### [3.9自定义键值的`std::unordered_map`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.9%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%AE%E5%80%BC%E7%9A%84unordered_map.cpp)
+
 ```cpp
 #include"print.h"
 #include<string>
@@ -1340,12 +1341,12 @@ struct Coord {
 	int x{};
 	int y{};
 };
-auto operator==(const Coord& a, const Coord& b) {
+auto operator==(const Coord& a, const Coord& b) {//键值需要能比较相等，即equal_to<_KeyTpey>
 	return a.x == b.x && a.y == b.y;
 }
 namespace std {
 	template<>
-	struct hash<Coord> {
+	struct hash<Coord> {//特化哈希类
 		size_t operator()(const Coord&a)const {
 			return static_cast<size_t>(a.x) + static_cast<size_t>(a.y);
 		}
@@ -1358,9 +1359,32 @@ inline void print(const std::unordered_map<T, T2>& map) {
 	print("\n");
 }
 int main() {
-	std::unordered_map<Coord, std::string>map{ {{1,1},"😘"},{{0,0},"🤣"} };
+	std::unordered_map<Coord, std::string, std::hash<Coord>>map{ {{1,1},"😘"},{{0,0},"🤣"} };
 	print(map);
 }
+```
+
+运行结果:
+
+```
+size: 2 {1 1}:😘 {0, 0}:🤣
+```
+
+[unordered_map](https://zh.cppreference.com/w/cpp/container/unordered_map)和`map`一样都是关联式容器,唯一不同的是`unordered_mp`内部不以任何顺序进行排列，而是直接存进桶里面，所以在不需要排序的场景下，`unordered_mp`会比`map`高效一些。
+
+`equal_to`在MSVC上的实现
+```cpp
+_EXPORT_STD template <class _Ty = void>
+struct equal_to {
+    using _FIRST_ARGUMENT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS  = _Ty;
+    using _SECOND_ARGUMENT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS = _Ty;
+    using _RESULT_TYPE_NAME _CXX17_DEPRECATE_ADAPTOR_TYPEDEFS          = bool;
+
+    _NODISCARD constexpr bool operator()(const _Ty& _Left, const _Ty& _Right) const
+        noexcept(noexcept(_Fake_copy_init<bool>(_Left == _Right))) /* strengthened */ {
+        return _Left == _Right;
+    }
+};
 ```
 
 ### [3.10使用`set`进行输入和筛选](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.10%E4%BD%BF%E7%94%A8set%E8%BF%9B%E8%A1%8C%E8%BE%93%E5%85%A5%E5%92%8C%E7%AD%9B%E9%80%89.cpp)
