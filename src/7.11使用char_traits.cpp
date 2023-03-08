@@ -32,19 +32,27 @@ public:
 
 using ci_string = std::basic_string<char, ci_traits>;
 
-template<>
-struct std::formatter<ci_string> {
-	constexpr auto format(const ci_string& rg, auto& format_context) {
-		return std::format_to(format_context.out(), "{}", rg.c_str());
-	}
-	constexpr auto parse(auto& context) {
-		context.begin();
-	}
-};
-
 std::ostream& operator<<(std::ostream& os, const ci_string& str) {
 	return os << str.c_str();
 }
+
+class lc_traits : public std::char_traits<char> {
+public:
+	static constexpr void assign(char_type& r, const char_type& a)noexcept {
+		r = char_lower(a);
+	}
+	static constexpr char_type* assign(char_type* p, std::size_t count, char_type a) {
+		for (size_t i{ 0 }; i < count; ++i)p[i] = char_lower(a);
+		return p;
+	}
+	static constexpr char_type* copy(char_type* dest, const char_type* src, size_t count) {
+		for (size_t i{ 0 }; i < count; ++i) {
+			dest[i] = char_lower(src[i]);
+		}
+		return dest;
+	}
+};
+using lc_string = std::basic_string<char, lc_traits>;
 
 int main() {
 	std::string s{ "🤣🤣" };
@@ -54,8 +62,11 @@ int main() {
 	ci_string compare1{"CompArE StRiNg"};
 	ci_string compare2{ "compare string" };
 	if (compare1 == compare2) {
-		printf("Match! %s == %s\n", compare1.data(), compare2.data());
+		printf("Match! %s == %s\n", compare1.data(), compare2.data());//这里本来是要用format的，还是那句话，预览版的bug没消除
 	}else {
 		printf("no match %s != %s\n", compare1.data(), compare2.data());
 	}
+
+	lc_string lc_s{ "Foo Bar Baz" };
+	std::cout << "lc_string: " << lc_s.c_str() << '\n';//直到2022年3月8日，预览版的bug，依旧没有消除
 }
