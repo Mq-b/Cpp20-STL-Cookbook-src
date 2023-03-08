@@ -3757,8 +3757,9 @@ int main() {
 运行结果:
 
 	🤣🤣
-	🐴🐴
+	🐴🐴B
 	Match! CompArE StRiNg == compare string
+	found: pos 8 char B
 	lc_string: Foo Bar Baz
 
 最后一行，如果实在gcc或者clang下会打印`lc_string: foo bar baz`这样想小写，也理应如此，这是vs的bug

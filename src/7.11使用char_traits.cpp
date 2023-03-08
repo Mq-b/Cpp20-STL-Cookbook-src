@@ -56,7 +56,7 @@ using lc_string = std::basic_string<char, lc_traits>;
 
 int main() {
 	std::string s{ "🤣🤣" };
-	ci_string ci_s{ "🐴🐴" };
+	ci_string ci_s{ "🐴🐴B" };
 	std::cout << s << '\n' << ci_s << '\n';
 
 	ci_string compare1{"CompArE StRiNg"};
@@ -66,6 +66,9 @@ int main() {
 	}else {
 		printf("no match %s != %s\n", compare1.data(), compare2.data());
 	}
+
+	size_t found = ci_s.find('b');
+	std::cout << std::format("found: pos {} char {}\n", found, ci_s[found]);
 
 	lc_string lc_s{ "Foo Bar Baz" };
 	std::cout << "lc_string: " << lc_s.c_str() << '\n';//直到2022年3月8日，预览版的bug，依旧没有消除
