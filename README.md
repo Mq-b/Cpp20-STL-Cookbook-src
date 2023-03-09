@@ -86,6 +86,8 @@
 		- [7.12用正则表达式解析字符串](#712用正则表达式解析字符串)
 		- [第七章总结](#第七章总结)
 	- [第八章 实用工具类](#第八章-实用工具类) 
+    	- [8.2optional管理可选值](#82-stdoptional-管理可选值)
+    	- [8.3any保证类型安全](#83any保证类型安全) 
 
 
 ## 第一章 C++20的新特性
@@ -3924,3 +3926,74 @@ int main() {
 	42
 	42
 	42 + 73 = 115
+
+<br>
+
+### [8.3any保证类型安全](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.3any%E4%BF%9D%E8%AF%81%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8.cpp)
+```cpp
+#include"print.h"
+#include<any>
+#include<list>
+using namespace std::string_literals;
+
+void p_any(const std::any& a) {
+	if (!a.has_value()) {
+		print("None.\n");
+	}
+	else if (a.type() == typeid(int)) {
+		print("int: {}\n", std::any_cast<int>(a));
+	}
+	else if (a.type() == typeid(std::string)) {
+		print("string: \"{}\"\n", std::any_cast<const std::string&>(a));
+	}
+	else if (a.type() == typeid(std::list<int>)) {
+		print("list<int>: ");
+		for (auto& i : std::any_cast<const std::list<int>&>(a)) {
+			print("{} ", i);
+		}
+		print("\n");
+	}
+	else {
+		print("something else: {}\n", a.type().name());
+	}
+}
+
+int main() {
+	std::any x{};
+	if (x.has_value())print("have value\n");
+	else print("no value\n");
+
+	x = 42;
+	if (x.has_value()) {
+		print("x has type :{}\n", x.type().name());
+		print("x has value: {}\n", std::any_cast<int>(x));
+	}
+	else {
+		print("no value\n");
+	}
+
+	x = "abc"s;
+	print("x is type {} with value {}\n", x.type().name(), std::any_cast<std::string>(x));
+
+	p_any( {} );
+	p_any(47);
+	p_any("abc"s);
+	p_any(std::list{ 1,2,3 });
+	p_any(std::vector{ 1,2,3 });
+	x.reset();
+	p_any(x);
+}
+```
+
+运行结果:
+
+	no value
+	x has type :int
+	x has value: 42
+	x is type class std::basic_string<char,struct std::char_traits<char>,class 	std::allocator<char> > with value abc
+	None.
+	int: 47
+	string: "abc"
+	list<int>: 1 2 3
+	something else: class std::vector<int,class std::allocator<int> >
+	None.
