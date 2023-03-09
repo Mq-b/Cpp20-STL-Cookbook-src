@@ -82,6 +82,10 @@
 		- [7.8从用户输入中读取字符串](#78从用户输入中读取字符串)
 		- [7.9统计文件中的单词数](#79统计文件中的单词数)
 		- [7.10使用文件输入初始化复杂结构体](#710使用文件输入初始化复杂结构体)
+		- [7.11使用char_traits](#711使用char_traits)
+		- [7.12用正则表达式解析字符串](#712用正则表达式解析字符串)
+		- [第七章总结](#第七章总结)
+	-[第八章 实用工具类](#第八章-实用工具类) 
 
 
 ## 第一章 C++20的新特性
@@ -3678,6 +3682,8 @@ int main() {
 	Mexico City.... pop 21,900,000      coords 19.4326, -99.1332
 	Sydney......... pop 5,312,000       coords -33.8688, 151.2093
 
+<br>
+
 ### [7.11使用`char_traits`](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.11%E4%BD%BF%E7%94%A8char_traits.cpp)
 ```cpp
 #include"print.h"
@@ -3765,3 +3771,146 @@ int main() {
 最后一行，如果实在gcc或者clang下会打印`lc_string: foo bar baz`这样想小写，也理应如此，这是vs的bug
 
 <br>
+
+### [7.12用正则表达式解析字符串](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/7.12%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%A7%A3%E6%9E%90%E5%AD%97%E7%AC%A6%E4%B8%B2.cpp)
+```cpp
+#include"print.h"
+#include<regex>
+#include<fstream>
+
+template<typename It>
+void get_links(It it) {
+	for (It end_it{}; it != end_it;) {
+		const std::string link{ *it++ };
+		if (it == end_it)break;
+		const std::string desc{ *it++ };
+		print("{:.<24} {}\n", link, desc);
+	}
+}
+
+int main() {
+	const char* fn{ R"(E:\自制视频教程\《C++20 STL Cookbook》2023\src\src\the-end.html)" };
+	const std::regex link_re{ "<a href=\"([^\"]*)\"[^<]*>([^<]*)</a>" };
+	std::string in{};
+	std::ifstream infile{ fn,std::ios_base::in };
+	for (std::string line{}; std::getline(infile, line);)in += line;
+
+	std::sregex_token_iterator it{ in.begin(),in.end(),link_re,{1,2} };
+	get_links(it);
+}
+```
+
+运行结果:
+
+	https://bw.org/......... Bill Weinman
+	https://bw.org/courses/. courses
+	https://bw.org/music/... music
+	https://packt.com/...... books
+	https://duckduckgo.com/. back to the internet
+
+<br>
+
+### 第七章总结
+
+其实第七章还是有点意思的，这些demo，最好都自己写写，至于正则那快，c++正则库提供了很多正则的使用方式，这里不过是其中一种了属于是，不过万变不离其宗，看兴趣了解即可
+
+---
+
+<br>
+
+## 第八章 实用工具类
+
+C++标准库包括为特定任务设计的各种**工具类**。有些是常见的，读者们可能在这本书的其他示 例中见过很多这样的类。
+本章在以下主题中介绍了一些通用的工具，包括时间测量、泛型类型、智能指针等:
+
+• [**`std::optional`**](https://zh.cppreference.com/w/cpp/utility/optional) 管理可选值
+• [**`std::any`**](https://zh.cppreference.com/w/cpp/utility/any) 保证类型安全 
+• [**`std::variant`**](https://zh.cppreference.com/w/cpp/utility/variant) 存储不同的类型 
+• [**`std::chrono`**](https://zh.cppreference.com/w/cpp/header/chrono) 的时间事件 
+• 对可变元组使用折叠表达式
+• [**`std::unique_ptr`**](https://zh.cppreference.com/w/cpp/memory/unique_ptr) 管理已分配的内存 
+• [**`std::shared_ptr`**](https://zh.cppreference.com/w/cpp/memory/shared_ptr) 的共享对象 
+• 对共享对象使用弱指针 
+• 共享管理对象的成员 
+• 比较随机数引擎
+• 比较随机数分布发生器
+
+<br>
+
+### [8.2optional管理可选值](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.2optional%E7%AE%A1%E7%90%86%E5%8F%AF%E9%80%89%E5%80%BC.cpp)
+```cpp
+#include"print.h"
+#include<optional>
+
+#if 0
+factor_t factor(long n) {
+	struct factor_t {
+		bool is_prime;
+		long factor;
+	};
+	factor_t r{};
+	for (long i = 2; i <= n / 2; ++i) {
+		if (n % i == 0) {
+			r.is_prime = false;
+			r.factor = i;
+			return r;
+		}
+	}
+	r.is_prime = true;
+}
+#endif
+
+std::optional<long>factor(long n) {
+	for (long i = 2; i <= n / 2; ++i) {
+		if (n % i == 0)return { i };
+	}
+	return {};
+}
+
+std::optional<int> operator+(const std::optional<int>& a, const std::optional<int>& b) {
+	if (a && b)return *a + *b;
+	else return {};
+}
+
+std::optional<int> operator+(const std::optional<int>& a, const int b) {
+	if (a)return *a + b;
+	else return {};
+}
+
+int main() {
+	long a{ 42 };
+	long b{ 73 };
+	auto x = factor(a);
+	auto y = factor(b);
+	if (x)print("lowest factor of {} is {} \n", a, *x);
+	else print("{} is prime\n", a);
+	if (y)print("lowest factor of {} is {} \n", a, *y);
+	else print("{} is prime\n", b);
+
+	std::optional<int>a2{ 42 };
+	print("{}\n", *a2);
+	if (a2)print("{}\n", *a2);
+	else print("no value\n");
+
+	{
+		std::optional<int> a{ 42 };
+		std::optional<int> b{ 73 };
+		auto sum{ a + b };
+		if (sum)print("{} + {} = {}\n", *a, *b, *sum);
+		else print("NAN\n");
+	}
+
+	(void)a2.has_value();//判断是否有值
+	(void)a2.value();//和*作用一样，取值
+	a2.reset();//销毁值，重置可选对象状态
+
+}
+```
+
+运行结果:
+
+	lowest factor of 42 is 2
+	73 is prime
+	42
+	42
+	42 + 73 = 115
