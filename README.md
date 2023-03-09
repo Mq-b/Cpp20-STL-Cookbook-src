@@ -3847,7 +3847,7 @@ C++标准库包括为特定任务设计的各种**工具类**。有些是常见�
 
 <br>
 
-### [8.2optional管理可选值](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.2optional%E7%AE%A1%E7%90%86%E5%8F%AF%E9%80%89%E5%80%BC.cpp)
+### [8.2 **`std::optional`** 管理可选值](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.2optional%E7%AE%A1%E7%90%86%E5%8F%AF%E9%80%89%E5%80%BC.cpp)
 ```cpp
 #include"print.h"
 #include<optional>
