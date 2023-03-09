@@ -1700,6 +1700,9 @@ int main() {
 	}
 }
 ```
+欲让类支持[range-for ](https://zh.cppreference.com/w/cpp/language/range-for)循环，需是定义了 `begin` 和 `end` 成员函数或自由函数(也就是非成员函数)的对象，在`Seq`类中，我们已经定义了`begin`和`end`函数，他们都返回一个`iterator`类。当然，这样是不够的，如普通的循环一般，`iterator`对象需支持`++`和`!=` ，才能正确的被循环使用（迭代器循环：`for(T::iterator it{obj.begin()}; it != obj.end(); it ++)`）
+
+而`X`类里面所迭代的对象是指针，指针本身是支持判等和自增操作的，所以不需要再去实现。
 
 ### [4.4使迭代器与STL迭代器特性兼容](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
 ```cpp
