@@ -1608,7 +1608,9 @@ int main() {
 	print("\n");
 }
 ```
+[std::ranges::sort](https://zh.cppreference.com/w/cpp/algorithm/ranges/sort)和`std::sort`类似，只是我们可以省略排序的范围了
 
+[strchr](https://zh.cppreference.com/w/c/string/byte/strchr)函数是C库下的函数，在标头 `<string.h>` 中定义为：`char *strchr( const char *str, int ch )`，用于从str中查找ch字符首次出现的位置，若未找到则返回`NULL`
 ### [3.14使用`std::multimap`制作待办事项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
