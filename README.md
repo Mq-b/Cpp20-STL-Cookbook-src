@@ -23,7 +23,7 @@
 		- [1.9视图](#19视图)
 		- [第一章总结](#第一章总结)
 	- [第二章 STL的泛型特性](#第二章-stl的泛型特性)
-		- [2.2span类](#22span类)
+		- [2.2`std::span`类](#22span类)
 		- [2.3结构化绑定](#23结构化绑定)
 		- [2.4`if`\&`switch`中的初始化](#24ifswitch中的初始化)
 		- [2.5模板参数推导（CTAD）](#25模板参数推导ctad)
@@ -37,8 +37,8 @@
 		- [3.7高效的将元素插入到`std::map`中](#37高效的将元素插入到stdmap中)
 		- [3.8高效的修改`std::map`项的键值](#38高效的修改stdmap项的键值)
 		- [3.9自定义键值的`std::unordered_map`](#39自定义键值的stdunordered_map)
-		- [3.10使用`set`进行输入和筛选](#310使用set进行输入和筛选)
-		- [3.11实现简单的RPN计算器与`deque`](#311实现简单的rpn计算器与deque)
+		- [3.10使用`std::set`进行输入和筛选](#310使用set进行输入和筛选)
+		- [3.11实现简单的RPN计算器与`std::deque`](#311实现简单的rpn计算器与deque)
 		- [3.12使用`std::map`的词频计数器](#312使用stdmap的词频计数器)
 		- [3.13找出含有相应长句的`std::vector`](#313找出含有相应长句的stdvector)
 		- [3.14使用`std::multimap`制作待办事项](#314使用stdmultimap制作待办事项)
@@ -74,7 +74,7 @@
 		- [6.10合并已排序容器](#610合并已排序容器)
 		- [第六章总结](#第六章总结)
 	- [第七章 字符串、流和格式化](#第七章-字符串流和格式化)
-		- [7.3轻量字符串对象`string_view`](#73轻量字符串对象string_view)
+		- [7.3轻量字符串对象`std::string_view`](#73轻量字符串对象string_view)
 		- [7.4连接字符串](#74连接字符串)
 		- [7.5转换字符串](#75转换字符串)
 		- [7.6使用格式库格式化文本](#76使用格式库格式化文本)
@@ -82,13 +82,15 @@
 		- [7.8从用户输入中读取字符串](#78从用户输入中读取字符串)
 		- [7.9统计文件中的单词数](#79统计文件中的单词数)
 		- [7.10使用文件输入初始化复杂结构体](#710使用文件输入初始化复杂结构体)
-		- [7.11使用char_traits](#711使用char_traits)
+		- [7.11使用`char_traits`](#711使用char_traits)
 		- [7.12用正则表达式解析字符串](#712用正则表达式解析字符串)
 		- [第七章总结](#第七章总结)
 	- [第八章 实用工具类](#第八章-实用工具类) 
-    	- [8.2optional管理可选值](#82-stdoptional-管理可选值)
-    	- [8.3any保证类型安全](#83any保证类型安全) 
-    	- [8.4variant存储不同的类型](#84-stdvariant-存储不同的类型)
+    	- [8.2`std::optional`管理可选值](#82-stdoptional-管理可选值)
+    	- [8.3`std::any`保证类型安全](#83any保证类型安全) 
+    	- [8.4`std::variant`存储不同的类型](#84-stdvariant-存储不同的类型)
+    	- [8.5`std::chrono`的时间事件](#85chrono的时间事件)
+    	- [8.6对元组使用折叠表达式](#86对元组使用折叠表达式)
 
 
 ## 第一章 C++20的新特性
@@ -4093,5 +4095,115 @@ int main() {
 	Max says meow
 	Chewie says grrraarrgghh!
 	there are 2 cat(s)，1 dog(s)，and 1 wookie(s)
+
+<br>
+
+### [8.5chrono的时间事件]()
+```cpp
+#include"print.h"
+#include<chrono>
+#include<iomanip>
+
+using std::chrono::system_clock;
+using std::chrono::steady_clock;
+using std::chrono::high_resolution_clock;
+using std::chrono::duration;
+using seconds = duration<double>;
+using milliseconds = duration<double, std::milli>;
+using microseconds = duration<double, std::micro>;
+using fps24 = duration<unsigned long, std::ratio<1, 24>>;
+
+constexpr uint64_t MAX_PRIME{ 0x1FFFF };
+uint64_t count_primes() {
+	constexpr auto is_prime = [](const uint64_t n) {
+		for (uint64_t i{ 2 }; i < n / 2; ++i) {
+			if (n % i == 0)return false;
+		}
+		return true;
+	};
+	uint64_t count{ 0 };
+	uint64_t start{ 2 };
+	uint64_t end{ MAX_PRIME };
+	for (auto i{ start }; i < end; ++i) {
+		if (is_prime(i))++count;
+	}
+	return count;
+}
+
+seconds timer(uint64_t(f)()) {
+	auto t1{ steady_clock::now() };
+	uint64_t count{ f() };
+	auto t2{ steady_clock::now() };
+	seconds secs{ t2 - t1 };
+	print("there are {} primes in range\n", count);
+	return secs;
+}
+
+int main() {
+	auto t{ system_clock::now() };
+	print("system_clock::now is {:%F %T}\n", t);
+	std::time_t now_t = system_clock::to_time_t(t);
+	std::cout << "system_lock::now is " << std::put_time(localtime(&now_t), "%F %H:%M:%S") << '\n';
+
+	auto secs{ timer(count_primes) };
+	print("time elapsed: {:.3f} seconds\n", secs.count());
+
+	using fps24 = duration<unsigned long, std::ratio<1, 24>>;
+	print("time elapsed: {:.3f} sec\n", secs.count());
+	print("time elapsed: {:.3f} ms\n", milliseconds(secs).count());
+	print("time elapsed: {:.3e} us\n", microseconds(secs).count());
+	print("time elapsed: {} frames at 24 fps\n", floor<fps24>(secs).count());//其实差不多相当于前面sec的1/24，去除小数的
+}
+```
+
+运行结果:
+
+	system_clock::now is 2023-03-10 07:12:11.1783184
+	system_lock::now is 2023-03-10 15:12:11
+	there are 12251 primes in range
+	time elapsed: 3.408 seconds
+	time elapsed: 3.408 sec
+	time elapsed: 3408.062 ms
+	time elapsed: 3.408e+06 us
+	time elapsed: 81 frames at 24 fps
+
+<br>
+
+### [8.6对元组使用折叠表达式]()
+```cpp
+#include"print.h"
+#include<tuple>
+#include<chrono>
+
+template<typename...T,size_t N = sizeof...(T)>
+constexpr void print_t(const std::tuple<T...>& tup) {
+	std::cout << "[";
+	[&] <size_t...I>(std::index_sequence<I...>) {
+		(..., print((I != N - 1 ? "{}, " : "{}]"), std::get<I>(tup)));
+	}(std::make_index_sequence<N>());
+	endl(std::cout);
+}
+
+template<typename... T>
+constexpr int sum_t(const std::tuple<T...>& tup)requires (std::integral<T>&&...){
+	int accum{};
+	[&] <size_t...I>(std::index_sequence<I...>) {
+		(..., (accum += std::get<I>(tup)));
+	}(std::make_index_sequence<sizeof...(T)>());
+	return accum;
+}
+
+int main() {
+	std::tuple t{ 123,1.234,"🥵" };
+	print_t(t);
+	std::tuple t2{ 1,2,3,4,'a' };
+	print("sum: {}\n", sum_t(t2));
+}
+```
+
+运行结果:
+
+	[123, 1.234, 🥵]
+	sum: 107
 
 <br>
