@@ -1609,7 +1609,9 @@ int main() {
 	print("\n");
 }
 ```
+[std::ranges::sort](https://zh.cppreference.com/w/cpp/algorithm/ranges/sort)和`std::sort`类似，只是我们可以省略排序的范围了
 
+[strchr](https://zh.cppreference.com/w/c/string/byte/strchr)函数是C库下的函数，在标头 `<string.h>` 中定义为：`char *strchr( const char *str, int ch )`，用于从str中查找ch字符首次出现的位置，若未找到则返回`NULL`
 ### [3.14使用`std::multimap`制作待办事项](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/3.14%E4%BD%BF%E7%94%A8multimap%E5%88%B6%E4%BD%9C%E5%BE%85%E5%8A%9E%E4%BA%8B%E9%A1%B9.cpp)
 ```cpp
 #include"print.h"
@@ -1699,6 +1701,9 @@ int main() {
 	}
 }
 ```
+欲让类支持[range-for ](https://zh.cppreference.com/w/cpp/language/range-for)循环，需是定义了 `begin` 和 `end` 成员函数或自由函数(也就是非成员函数)的对象，在`Seq`类中，我们已经定义了`begin`和`end`函数，他们都返回一个`iterator`类。当然，这样是不够的，如普通的循环一般，`iterator`对象需支持`++`和`!=` ，才能正确的被循环使用（迭代器循环：`for(T::iterator it{obj.begin()}; it != obj.end(); it ++)`）
+
+而`X`类里面所迭代的对象是指针，指针本身是支持判等和自增操作的，所以不需要再去实现。
 
 ### [4.4使迭代器与STL迭代器特性兼容](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/4.4%E4%BD%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8ESTL%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%89%B9%E6%80%A7%E5%85%BC%E5%AE%B9.cpp)
 ```cpp
