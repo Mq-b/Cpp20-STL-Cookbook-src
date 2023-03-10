@@ -41,7 +41,7 @@ int main() {
 	auto t{ system_clock::now() };
 	print("system_clock::now is {:%F %T}\n", t);
 	std::time_t now_t = system_clock::to_time_t(t);
-	std::cout << "system_lock::now is " << std::put_time(localtime(&now_t), "%F %T") << '\n';
+	std::cout << "system_lock::now is " << std::put_time(localtime(&now_t), "%F %H:%M:%S") << '\n';
 
 	auto secs{ timer(count_primes) };
 	print("time elapsed: {:.3f} seconds\n", secs.count());
