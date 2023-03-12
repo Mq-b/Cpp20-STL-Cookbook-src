@@ -4098,7 +4098,7 @@ int main() {
 
 <br>
 
-### [8.5chrono的时间事件]()
+### [8.5`chrono`的时间事件](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.5chrono%E7%9A%84%E6%97%B6%E9%97%B4%E4%BA%8B%E4%BB%B6.cpp)
 ```cpp
 #include"print.h"
 #include<chrono>
@@ -4169,7 +4169,7 @@ int main() {
 
 <br>
 
-### [8.6对元组使用折叠表达式]()
+### [8.6对元组使用折叠表达式](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.6%E5%AF%B9%E5%85%83%E7%BB%84%E4%BD%BF%E7%94%A8%E6%8A%98%E5%8F%A0%E8%A1%A8%E8%BE%BE%E5%BC%8F.cpp)
 ```cpp
 #include"print.h"
 #include<tuple>
@@ -4205,5 +4205,69 @@ int main() {
 
 	[123, 1.234, 🥵]
 	sum: 107
+
+<br>
+
+### [8.7 **`std::unique_ptr`** 管理已分配内存](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.7unique_ptr%E7%AE%A1%E7%90%86%E5%B7%B2%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98.cpp)
+```cpp
+#include"print.h"
+#include<memory>
+
+struct Thing {
+	std::string thname{ "unk" };
+	Thing() { print("default ctor:{}\n", thname); }
+	Thing(std::string n):thname(n) { print("param ctor:{}\n", thname); }
+	~Thing() { print("dtor :{}\n", thname); }
+};
+
+void process_thing(const std::unique_ptr<Thing>&p) {
+	if (p)print("processing: {}\n", p->thname);
+	else print("invalid pointer\n");
+}
+
+struct Delete {
+	void operator()(Thing* p) {
+		print("自定义删除函数被调用\n");
+		delete p;
+	}
+};
+
+int main() {
+	//std::unique_ptr<Thing>pl{new Thing};
+
+	auto pl1 = std::make_unique<Thing>("Thing 1");
+	process_thing(pl1);
+	process_thing(std::make_unique<Thing>("Thing 2"));
+
+	//auto p2 = std::move(pl1);
+	process_thing(pl1);
+	pl1.reset();
+	process_thing(pl1);
+	pl1.reset(new Thing("Thing 3"));
+	process_thing(pl1);
+
+	std::unique_ptr<Thing, Delete>p2{ new Thing("🤣🤣"),Delete{} };
+
+	print("end of main()\n");
+}
+```
+
+运行结果:
+
+	param ctor:Thing 1
+	processing: Thing 1
+	param ctor:Thing 2
+	processing: Thing 2
+	dtor :Thing 2
+	processing: Thing 1
+	dtor :Thing 1
+	invalid pointer
+	param ctor:Thing 3
+	processing: Thing 3
+	param ctor:🤣🤣
+	end of main()
+	自定义删除函数被调用
+	dtor :🤣🤣
+	dtor :Thing 3
 
 <br>
