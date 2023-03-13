@@ -92,6 +92,7 @@
     	- [8.5`std::chrono`的时间事件](#85chrono的时间事件)
     	- [8.6对元组使用折叠表达式](#86对元组使用折叠表达式)
     	- [8.7`std::unique_ptr`管理已分配内存](#87-stdunique_ptr-管理已分配内存)
+    	- [8.8`std::shared_ptr`的共享对象](#88-stdshared_ptr-的共享对象)
 
 
 ## 第一章 C++20的新特性
@@ -4270,5 +4271,81 @@ int main() {
 	自定义删除函数被调用
 	dtor :🤣🤣
 	dtor :Thing 3
+
+<br>
+
+### [8.8 **`std::shared_ptr`** 的共享对象](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.8shared_ptr%E7%9A%84%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1.cpp)
+```cpp
+#include"print.h"
+#include<memory>
+
+struct Thing {
+	std::string thname{ "unk" };
+	Thing() { print("default ctor:{}\n", thname); }
+	Thing(std::string n) :thname(n) { print("param ctor:{}\n", thname); }
+	~Thing() { print("dtor :{}\n", thname); }
+};
+
+void check_thing_ptr(const std::shared_ptr<Thing>& p) {
+	if (p)print("{} use count: {}\n", p->thname, p.use_count());
+	else print("invalid pointer\n");
+}
+
+int main() {
+	std::shared_ptr<Thing>p1{ new Thing("Thing 1") };
+	auto p2 = std::make_shared<Thing>("Thing 2");
+	check_thing_ptr(p1);
+	check_thing_ptr(p2);
+	{
+		auto pa = p1;
+		auto pb = p1;
+		auto pc = p1;
+		auto pd = p1;
+		check_thing_ptr(p1);
+		check_thing_ptr(pa);
+		check_thing_ptr(pb);
+		check_thing_ptr(pc);
+		check_thing_ptr(pd);
+	}
+	check_thing_ptr(p1);
+
+	auto p3 = p1;
+	check_thing_ptr(p1);
+	p3.reset();
+	check_thing_ptr(p1);
+	p1.reset(new Thing{ "🥵" }, [](Thing* p) {
+		puts("自定义删除器被调用"); 
+		delete p; 
+	});
+
+	std::shared_ptr<Thing>p4{ new Thing("Thing 4"),[](Thing* p) {
+		puts("自定义删除器被调用!!!🤡🤡");
+		delete p;
+	} };
+}
+```
+
+运行结果:
+
+	param ctor:Thing 1
+	param ctor:Thing 2
+	Thing 1 use count: 1
+	Thing 2 use count: 1
+	Thing 1 use count: 5
+	Thing 1 use count: 5
+	Thing 1 use count: 5
+	Thing 1 use count: 5
+	Thing 1 use count: 5
+	Thing 1 use count: 1
+	Thing 1 use count: 2
+	Thing 1 use count: 1
+	param ctor:🥵
+	dtor :Thing 1
+	param ctor:Thing 4
+	自定义删除器被调用!!!🤡🤡
+	dtor :Thing 4
+	dtor :Thing 2
+	自定义删除器被调用
+	dtor :🥵
 
 <br>
