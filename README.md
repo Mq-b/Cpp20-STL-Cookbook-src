@@ -4351,7 +4351,7 @@ int main() {
 
 <br>
 
-### [8.9对共享对象使用弱指针]()
+### [8.9对共享对象使用弱指针](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.9%E5%AF%B9%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8%E5%BC%B1%E6%8C%87%E9%92%88.cpp)
 ```cpp
 #include"print.h"
 #include<memory>
@@ -4416,5 +4416,43 @@ int main() {
 	no shared object
 	dtor A
 	dtor B
+
+<br>
+
+### [8.10共享管理对象的成员](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.10%E5%85%B1%E4%BA%AB%E7%AE%A1%E7%90%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%88%90%E5%91%98.cpp)
+```cpp
+#include"print.h"
+#include<memory>
+#include<string>
+
+struct animal {
+	std::string name{};
+	std::string sound{};
+	animal(const std::string& n, const std::string& a) :name{ n }, sound{ a } {
+		print("ctor: {}\n", name);
+	}
+	~animal() { print("dtor: {}\n", name); }
+};
+auto make_animal(const std::string& n, const std::string& s) {
+	auto ap = std::make_shared<animal>(n, s);
+	auto np = std::shared_ptr<std::string>(ap, &ap->name);//这可以在不共享整个对象的情况下共享托管对象的一个 成员，并且在仍然使用该成员时不允许删除对象
+	auto sp = std::shared_ptr<std::string>(ap, &ap->sound);//并不会因为作用域结束就销毁
+	print("Use count: name {}, sound {}\n", np.use_count(), sp.use_count());//3 3
+	return std::tuple(np, sp);//因为别名指针 可以防止使用计数达到零，所以不会删除
+}
+int main() {
+	auto [name,sound] = make_animal("Velociraptor", "Grrrr!");
+	print("The {} says {}\n", *name, *sound);
+	print("Use count: name {}, sound {}\n", name.use_count(), sound.use_count());//2 2，那个函数里面的shared_ptr肯定还是销毁了的
+}
+```
+
+运行结果:
+
+	ctor: Velociraptor
+	Use count: name 3, sound 3
+	The Velociraptor says Grrrr!
+	Use count: name 2, sound 2
+	dtor: Velociraptor
 
 <br>

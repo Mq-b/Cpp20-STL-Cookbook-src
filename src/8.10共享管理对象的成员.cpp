@@ -12,8 +12,8 @@ struct animal {
 };
 auto make_animal(const std::string& n, const std::string& s) {
 	auto ap = std::make_shared<animal>(n, s);
-	auto np = std::shared_ptr<std::string>(ap, &ap->name);
-	auto sp = std::shared_ptr<std::string>(ap, &ap->sound);
+	auto np = std::shared_ptr<std::string>(ap, &ap->name);//这可以在不共享整个对象的情况下共享托管对象的一个 成员，并且在仍然使用该成员时不允许删除对象
+	auto sp = std::shared_ptr<std::string>(ap, &ap->sound);//并不会因为作用域结束就销毁
 	print("Use count: name {}, sound {}\n", np.use_count(), sp.use_count());//3 3
 	return std::tuple(np, sp);//因为别名指针 可以防止使用计数达到零，所以不会删除
 }
