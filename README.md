@@ -4459,7 +4459,7 @@ int main() {
 
 <br>
 
-### [8.11比较随机数引擎]()
+### [8.11比较随机数引擎](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.11%E6%AF%94%E8%BE%83%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%BC%95%E6%93%8E.cpp)
 ```cpp
 #include"print.h"
 #include<random>
@@ -4656,3 +4656,247 @@ int main() {
 显式直方图，虽然这里看着多，但是说白了，就是为了做一个比例。`max_e1`是`v`中最大的元素迭代器，然后后面的`r_ratio`的值是`*max_e1 / n_max`因为要保证直方图最大值不能大于`50`，所以要除一下。如果小于`50`，那么就赋值`1`。
 
 打印传入的字符串。`for`循环遍历打印，这里面发`format`其实有点麻烦，是一个嵌套，我们需要分开来看`"{:02}:{:*<{}}\n"`，传入`i+1`，对应的第一个`{:02}`表示直方图的索引，` ' '`实际对应的是`{:*<{}}`，但是注意，是外面的这个`{}`，里面的`{}`传的是`v[i]/v_ratio`，其实就是按照最大值的一个比例而已，它的值表示的是实际是强制域对齐到可用空间起始用`*`填充要填充多少位。
+
+<br>
+
+### [8.12比较随机数分布发生器](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/8.12%E6%AF%94%E8%BE%83%E9%9A%8F%E6%9C%BA%E6%95%B0%E5%88%86%E5%B8%83%E5%8F%91%E7%94%9F%E5%99%A8.cpp)
+```cpp
+#include"print.h"
+#include<random> 
+#include<map>
+
+constexpr size_t n_samples{ 10000 };
+constexpr size_t n_max{ 50 };
+
+void dist_histogram(auto distor, const std::string_view& dist_name) {
+	std::random_device seeds;
+	std::default_random_engine rng(seeds());//随机数引擎
+	std::map<long, size_t>m;
+
+	//创建直方图
+	for (size_t i{}; i < n_samples; ++i) {
+		++m[(long)distor(rng)];
+	}
+	//打印直方图
+	auto max_elm_it = std::max_element(m.begin(), m.end(), [](const auto& a, const auto& b) {
+		return a.second < b.second;
+	});
+	size_t max_elm = max_elm_it->second;
+	size_t max_div = std::max(max_elm / n_max, size_t(1));//设置比例50
+	std::cout << std::format("{}:\n", dist_name);
+	for (const auto [randval, count] : m) {
+		if (count < max_div)continue;
+		std::cout << std::format("{:3}:{:*<{}}\n", randval, ' ', count / max_div);
+	}
+}
+
+int main() {
+    dist_histogram(std::uniform_int_distribution<int>{0, 9}, "uniform_int_distribution");
+    dist_histogram(std::normal_distribution<double>{0.0, 2.0}, "normal_distribution");
+
+    std::initializer_list<double> intervals{ 0, 5, 10, 30 };
+    std::initializer_list<double> weights{ 0.2, 0.3, 0.5 };
+    dist_histogram(std::piecewise_constant_distribution<double>{begin(intervals), end(intervals), begin(weights)}, "piecewise_constant_distribution");
+    std::initializer_list<double> weights2{ 0, 1, 1, 0 };
+    dist_histogram(std::piecewise_linear_distribution<double>{begin(intervals), end(intervals), begin(weights2)}, "piecewise_linear_distribution");
+
+    dist_histogram(std::bernoulli_distribution{ 0.75 }, "bernoulli_distribution");
+    dist_histogram(std::discrete_distribution<int>{ {1, 2, 4, 8}}, "discrete_distribution");
+    dist_histogram(std::binomial_distribution<int>{10, 0.3}, "binomial_distribution");
+    dist_histogram(std::negative_binomial_distribution<int>{10, 0.8}, "negative_binomial_distribution");
+    dist_histogram(std::geometric_distribution<int>{0.4}, "geometric_distribution");
+    dist_histogram(std::exponential_distribution<double>{0.4}, "exponential_distribution");
+    dist_histogram(std::gamma_distribution<double>{1.5, 1.0}, "gamma_distribution");
+    dist_histogram(std::weibull_distribution<double>{1.5, 1.0}, "weibull_distribution");
+    dist_histogram(std::extreme_value_distribution<double>{0.0, 1.0}, "extreme_value_distribution");
+    dist_histogram(std::lognormal_distribution<double>{0.5, 0.5}, "lognormal_distribution");
+    dist_histogram(std::chi_squared_distribution<double>{1.0}, "chi_squared_distribution");
+    dist_histogram(std::cauchy_distribution<double>{0.0, 0.1}, "cauchy_distribution");
+    dist_histogram(std::fisher_f_distribution<double>{1.0, 1.0}, "fisher_f_distribution");
+    dist_histogram(std::student_t_distribution<double>{1.0}, "student_t_distribution");
+}
+```
+
+运行结果:
+
+	uniform_int_distribution:
+	  0: **************************************************
+	  1: **********************************************
+	  2: ************************************************
+	  3: ***************************************************
+	  4: **************************************************
+	  5: ************************************************
+	  6: ************************************************
+	  7: ***********************************************
+	  8: *************************************************
+	  9: ************************************************
+	normal_distribution:
+	 -4: *
+	 -3: ****
+	 -2: ***********
+	 -1: ******************
+	  0: *************************************************
+	  1: *******************
+	  2: ***********
+	  3: ****
+	  4: *
+	piecewise_constant_distribution:
+	  0: *********************************
+	  1: **********************************
+	  2: *******************************
+	  3: *******************************
+	  4: *******************************
+	  5: ************************************************
+	  6: ************************************************
+	  7: ****************************************************
+	  8: ************************************************
+	  9: **************************************************
+	 10: *********************
+	 11: *****************
+	 12: ******************
+	 13: ******************
+	 14: *******************
+	 15: *******************
+	 16: ******************
+	 17: *******************
+	 18: ********************
+	 19: *******************
+	 20: *********************
+	 21: *********************
+	 22: ********************
+	 23: *********************
+	 24: ******************
+	 25: ******************
+	 26: ******************
+	 27: *******************
+	 28: ********************
+	 29: *******************
+	piecewise_linear_distribution:
+	  0: ***
+	  1: **************
+	  2: *********************
+	  3: *******************************
+	  4: *******************************************
+	  5: **********************************************
+	  6: ********************************************
+	  7: *********************************************
+	  8: *******************************************
+	  9: *************************************************
+	 10: ************************************************
+	 11: ******************************************
+	 12: *******************************************
+	 13: **************************************
+	 14: *********************************
+	 15: ***********************************
+	 16: *******************************
+	 17: ***************************
+	 18: **************************
+	 19: ***********************
+	 20: *********************
+	 21: *****************
+	 22: ***************
+	 23: ***************
+	 24: ************
+	 25: **********
+	 26: ********
+	 27: *****
+	 28: **
+	bernoulli_distribution:
+	  0: ****************
+	  1: *************************************************
+	discrete_distribution:
+	  0: *****
+	  1: ***********
+	  2: ************************
+	  3: *************************************************
+	binomial_distribution:
+	  0: ****
+	  1: *********************
+	  2: ******************************************
+	  3: *************************************************
+	  4: ************************************
+	  5: ******************
+	  6: *****
+	  7:
+	negative_binomial_distribution:
+	  0: **********************
+	  1: ***********************************************
+	  2: *************************************************
+	  3: ****************************************
+	  4: ************************
+	  5: *************
+	  6: ******
+	  7: **
+	  8:
+	geometric_distribution:
+	  0: *************************************************
+	  1: *****************************
+	  2: *****************
+	  3: **********
+	  4: *****
+	  5: **
+	  6: *
+	  7:
+	exponential_distribution:
+	  0: *************************************************
+	  1: **********************************
+	  2: **********************
+	  3: ***************
+	  4: *********
+	  5: *****
+	  6: ***
+	  7: **
+	  8: *
+	  9:
+	gamma_distribution:
+	  0: *************************************************
+	  1: ***********************************
+	  2: ***************
+	  3: ******
+	  4: **
+	  5:
+	weibull_distribution:
+	  0: *************************************************
+	  1: ***********************
+	  2: **
+	extreme_value_distribution:
+	 -1: ****
+	  0: *************************************************
+	  1: *************
+	  2: *****
+	  3: *
+	lognormal_distribution:
+	  0: ***************
+	  1: *************************************************
+	  2: ************************
+	  3: *******
+	  4: *
+	chi_squared_distribution:
+	  0: *************************************************
+	  1: **********
+	  2: ****
+	  3: *
+	  4:
+	cauchy_distribution:
+	  0: *************************************************
+	fisher_f_distribution:
+	  0: *************************************************
+	  1: *********
+	  2: *****
+	  3: **
+	  4: *
+	  5: *
+	  6:
+	  7:
+	  8:
+	student_t_distribution:
+	 -5:
+	 -4:
+	 -3: *
+	 -2: ***
+	 -1: *********
+	  0: *************************************************
+	  1: *********
+	  2: ***
+	  3: *
+	  4:
