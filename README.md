@@ -4905,6 +4905,35 @@ int main() {
 
 <br>
 
+### 第八章总结
+
+其实也没啥说的，这个工具库不少还是可以的，只是，随机数那一块的东西实在是太多了，随机数发生器，随机数引擎，稍微了解就好。智能指针还是很重要的，重在运用，多用就好，至于`c++17`的那些`variant`和`any`也是不错的东西，都可以多用。关于元组的遍历，那也是老生常谈的写法，我的视频起码展示过不下四次，在视频里。
+
+## 第九章 并发和并行
+
+并发性和并行性指的是在不同的执行线程中运行代码的能力。**并发性** 是在后台运行线程的能力，**并行性** 是在处理器的不同内核中同时运行线程的能力。 运行时库以及主机操作系统，将为给定硬件环境中的线程，在并发和并行执行模型之间进行选择。
+在现代多任务操作系统中，`main()` 函数已经代表了一个执行线程。当一个新线程启动时，可由 现有的线程派生。 C++ 标准库中，`std::thread` 类提供了线程执行的基本单元。其他类构建在线程之上，以提供锁、 互斥和其他并发模式。根据系统架构的不同，执行线程可以在一个处理器上并发运行，也可以在不 同的内核上并行运行。
+
+• 休眠一定的时间 
+
+• [**`std::thread`**](https://zh.cppreference.com/w/cpp/thread/thread)——实现并发 
+
+• [**`std::async`**](https://zh.cppreference.com/w/cpp/thread/async)——实现并发 
+
+• STL 算法与执行策略 
+
+• 互斥锁和锁——安全地共享数据 
+
+• [**`std::atomic`**](https://zh.cppreference.com/w/cpp/atomic/atomic)——共享标志和值 
+
+• [**`std::call_once`**](https://zh.cppreference.com/w/cpp/thread/call_once)——初始化线程 
+
+• [**`std::condition_variable`**](https://zh.cppreference.com/w/cpp/thread/condition_variable)——解决生产者-消费者问题
+
+• 实现多个生产者和消费者
+
+<br>
+
 ### [9.2休眠一定时间](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.2%E4%BC%91%E7%9C%A0%E4%B8%80%E5%AE%9A%E6%97%B6%E9%97%B4.cpp)
 ```cpp
 #include"print.h"
