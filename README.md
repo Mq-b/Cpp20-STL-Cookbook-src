@@ -97,7 +97,11 @@
     	- [8.10共享管理对象的成员](#810共享管理对象的成员)
     	- [8.11比较随机数引擎](#811比较随机数引擎)
     	- [8.12比较随机数分布发生器](#812比较随机数分布发生器)
-    	- [9.2休眠一定时间](#92休眠一定时间)
+    	- [第九章总结](#第九章-并发和并行)
+    - [第九章 并发和并行](#第九章-并发和并行)
+        - [9.2休眠一定时间](#92休眠一定时间)
+        - [9.3`std::thread`实现并发](#93-stdthread-实现并发)
+        - [9.4`std::async`实现并发](#94-stdasync-实现并发)
 
 
 ## 第一章 C++20的新特性
@@ -4957,3 +4961,155 @@ int main() {
 运行结果:
 
 	total durtaion: 3.3127s
+
+<br>
+
+### [9.3 **`std::thread`** 实现并发](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.3thread%E5%AE%9E%E7%8E%B0%E5%B9%B6%E5%8F%91.cpp)
+```cpp
+#include"print.h"
+#include<thread>
+#include<chrono>
+
+void sleepms(const unsigned ms) {
+	using std::chrono::milliseconds;
+	std::this_thread::sleep_for(milliseconds(ms));
+}
+void fthread(const int n) {
+	print("this is t{}\n", n);
+	for (size_t i{}; i < 5; ++i) {
+		sleepms(100 * n);
+		print("t{}: {}\n", n, i + 1);
+	}
+	print("Finishing t{}\n", n);
+}
+
+int main() {
+	std::thread t1(fthread, 1);
+	t1.join();
+
+	std::thread t2(fthread, 2);
+	t2.detach();
+	//sleepms(2000);//确保线程分离后的线程有足够的运行时间,这里其实写不写都行，因为它不是最后一行代码，如果不写，就可以看到它和t3的竞争了
+
+	std::jthread t3(fthread, 3);
+	print("end of main()\n");
+}
+```
+
+运行结果:
+
+	this is t1
+	t1: 1
+	t1: 2
+	t1: 3
+	t1: 4
+	t1: 5
+	Finishing t1
+	end of main()
+	this is t2
+	this is t3
+	t2: 1
+	t3: 1
+	t2: 2
+	t2: 3
+	t3: 2
+	t2: 4
+	t3: 3
+	t2: 5
+	Finishing t2
+	t3: 4
+	t3: 5
+	Finishing t3
+
+<br>
+
+### [9.4 **`std::async`** 实现并发]()
+```cpp
+#include"print.h"
+#include<chrono>
+#include<thread>
+#include<future>
+#include<list>
+
+using secs = std::chrono::duration<double>;
+
+struct prime_time {
+	secs dur{};//计算花的时间
+	uint64_t count{};//多少个质数
+};
+prime_time count_prime(const uint64_t& max) {
+	prime_time ret{};
+	constexpr auto isprime = [](const uint64_t& n) {
+		for (uint64_t i{ 2 }; i < n / 2; ++i) {
+			if (n % i == 0)return false;
+		}
+		return true;
+	};
+	uint64_t start{ 2 };
+	uint64_t end{ max };
+	auto t1 = std::chrono::steady_clock::now();
+	for (uint64_t i{ start }; i <= end; ++i) {
+		if (isprime(i))++ret.count;
+	}
+	ret.dur = std::chrono::steady_clock::now() - t1;
+	return ret;
+}
+
+void f(std::promise<int>value) {
+	print("this is f()\n");
+	value.set_value(47);
+}
+
+int main() {
+	constexpr uint64_t MAX_PRIME{ 0x1FFFF };
+	auto primes1 = std::async(count_prime, MAX_PRIME);
+	auto pt = primes1.get();
+	print("primes: {} {:.3}\n", pt.count, pt.dur);
+
+	std::list<std::future<prime_time>>swarm;
+	print("start parallel primes\n");
+	auto t1{ std::chrono::steady_clock::now() };
+	for (size_t i{}; i < 15; ++i) {
+		swarm.emplace_back(std::async(std::launch::async, count_prime, MAX_PRIME));
+	}
+	for (size_t i{}; auto& f : swarm) {
+		auto pt = f.get();
+		print("primes({:02}): {} {:.5}\n", ++i, pt.count, pt.dur);
+	}
+
+	secs dur_total{ std::chrono::steady_clock::now() - t1 };
+	print("total duration: {:.5}s\n", dur_total.count());
+
+	std::promise<int>value_promise;
+	std::future<int>value_future = value_promise.get_future();
+	std::thread t2(f, std::move(value_promise));//不可以复制，只能移动，其实改一下函数的参数为引用，然后std::ref也行
+	t2.detach();
+	print("value is {}\n", value_future.get());
+
+	print("end of main()\n");
+}
+```
+
+运行结果:
+
+	primes: 12252 3.31032s
+	start parallel primes
+	primes(01): 12252 6.26644s
+	primes(02): 12252 6.08378s
+	primes(03): 12252 6.45927s
+	primes(04): 12252 6.25811s
+	primes(05): 12252 6.18691s
+	primes(06): 12252 6.42776s
+	primes(07): 12252 6.44103s
+	primes(08): 12252 6.31147s
+	primes(09): 12252 6.42682s
+	primes(10): 12252 6.34848s
+	primes(11): 12252 6.43647s
+	primes(12): 12252 6.42391s
+	primes(13): 12252 6.33618s
+	primes(14): 12252 6.44245s
+	primes(15): 12252 6.35737s
+	total duration: 6.4651s
+	this is f()
+	value is 47
+	end of main()
