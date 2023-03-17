@@ -1,9 +1,11 @@
 # 《C++20 STL Cookbook》2023
 
-###  环境
+###  环配置
 **Visual Studio Enterprise 2022(64位) 版本 17.4.3**
 
 **CMake 3.8**
+
+**R7 5700U** 八核心十六线程
 
 ###  [B站视频讲解](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
 
@@ -5113,3 +5115,5 @@ int main() {
 	this is f()
 	value is 47
 	end of main()
+
+<br>
