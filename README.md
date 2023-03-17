@@ -105,6 +105,7 @@
         - [9.3`std::thread`实现并发](#93-stdthread-实现并发)
         - [9.4`std::async`实现并发](#94-stdasync-实现并发)
         - [9.5`STL`算法与执行策略](#95stl算法与执行策略)
+        - [9.6互斥锁和锁安全的共享数据](#96互斥锁和锁安全的共享数据)
 
 
 ## 第一章 C++20的新特性
@@ -5184,4 +5185,116 @@ int main() {
 
 <br>
 
-### [9.6互斥锁和锁安全的共享数据]()
+### [9.6互斥锁和锁安全的共享数据](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.6%E4%BA%92%E6%96%A5%E9%94%81%E5%92%8C%E9%94%81%E5%AE%89%E5%85%A8%E7%9A%84%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.cpp)
+```cpp
+#include"print.h"
+#include<mutex>
+#include<thread>
+#include<list>
+#include<optional>
+#include<future>
+
+std::mutex animal_mutex;
+
+class Animal {
+	using friend_t = std::list<Animal>;
+	std::string_view s_name{ "unk" };
+	friend_t l_friends{};
+public:
+	Animal() = delete;
+	Animal(const std::string_view n) :s_name{n}{}
+	bool operator==(const Animal& o)const {
+		return s_name.data() == o.s_name.data();
+	}
+
+	bool is_friend(const Animal& o)const {
+		for (const auto& a : l_friends) {
+			if (a == o)return true;
+		}
+		return false;
+	}
+	std::optional<friend_t::iterator>find_friend(const Animal& o)noexcept {
+		for (auto it{ l_friends.begin() }; it != l_friends.end(); ++it) {
+			if (*it == o)return it;
+		}
+		return {};
+	}
+	void print()const noexcept {
+		std::lock_guard l{ animal_mutex };
+		auto n_animals{ l_friends.size() };
+		::print("Animal: {}, friends: ", s_name);
+		if (!n_animals)::print("none");
+		else {
+			for (auto n : l_friends) {
+				std::cout << n.s_name;
+				if (--n_animals)std::cout << ", ";
+			}
+		}
+		endl(std::cout);
+	}
+	bool add_friend(Animal& o)noexcept {
+		std::lock_guard l(animal_mutex);
+		::print("add_friend {} -> {}\n", s_name, o.s_name);
+		if (*this == o)return false;
+		if (!is_friend(o))l_friends.emplace_back(o);//无重复则插入
+		if (!o.is_friend(*this))o.l_friends.emplace_back(*this);
+		return true;
+	}
+	bool delete_friend(Animal& o)noexcept {
+		std::lock_guard l{ animal_mutex };
+		::print("delete_friend {} -> {}\n", s_name, o.s_name);
+		if (*this == o)return false;
+		if (auto it = find_friend(o))l_friends.erase(it.value());
+		if (auto it = o.find_friend(*this))o.l_friends.erase(it.value());
+		return true;
+	}
+};
+
+int main() {
+	auto cat1 = std::make_unique<Animal>("Felix");
+	auto tiger1 = std::make_unique<Animal>("Hobbes");
+	auto dog1 = std::make_unique<Animal>("Astro");
+	auto rabbit1 = std::make_unique<Animal>("Bugs");
+	
+	auto a1 = std::async([&] {cat1->add_friend(*tiger1); });
+	auto a2 = std::async([&] {tiger1->add_friend(*rabbit1); });
+	auto a3 = std::async([&] {dog1->add_friend(*dog1); });
+	auto a4 = std::async([&] {rabbit1->add_friend(*cat1); });
+	a1.wait();
+	a2.wait();
+	a3.wait();
+	a4.wait();
+
+	auto p1 = std::async([&] {cat1->print(); });
+	auto p2 = std::async([&] {tiger1->print(); });
+	auto p3 = std::async([&] {dog1->print(); });
+	auto p4 = std::async([&] {rabbit1->print(); });
+	p1.wait();
+	p2.wait();
+	p3.wait();
+	p4.wait();
+
+	auto a5 = std::async([&] {cat1->delete_friend(*rabbit1); });
+	a5.wait();
+	auto p5 = std::async([&] {cat1->print(); });
+	auto p6 = std::async([&] {rabbit1->print(); });
+}
+```
+
+运行结果:
+
+	add_friend Felix -> Hobbes
+	add_friend Hobbes -> Bugs
+	add_friend Astro -> Astro
+	add_friend Bugs -> Felix
+	Animal: Felix, friends: Hobbes, Bugs
+	Animal: Hobbes, friends: Felix, Bugs
+	Animal: Astro, friends: none
+	Animal: Bugs, friends: Hobbes, Felix
+	delete_friend Felix -> Bugs
+	Animal: Felix, friends: Hobbes
+	Animal: Bugs, friends: Hobbes
+
+这个demo写的就是莫名其妙，你别太在意它类的代码，看看`std::async` 和结果就得了
+
+<br>
