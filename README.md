@@ -104,6 +104,7 @@
         - [9.2休眠一定时间](#92休眠一定时间)
         - [9.3`std::thread`实现并发](#93-stdthread-实现并发)
         - [9.4`std::async`实现并发](#94-stdasync-实现并发)
+        - [9.5`STL`算法与执行策略](#95stl算法与执行策略)
 
 
 ## 第一章 C++20的新特性
@@ -5115,5 +5116,70 @@ int main() {
 	this is f()
 	value is 47
 	end of main()
+
+<br>
+
+### [9.5STL算法与执行策略](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.5STL%E7%AE%97%E6%B3%95%E4%B8%8E%E6%89%A7%E8%A1%8C%E7%AD%96%E7%95%A5.cpp)
+```cpp
+#include"print.h"
+#include<algorithm>
+#include<execution>
+#include<vector>
+#include<chrono>
+#include <random>
+
+using dur_t = std::chrono::duration<double, std::milli>;
+int main() {
+	std::vector<unsigned>v(10 * 1000 * 1000);
+	std::random_device rng;
+	for (auto& i : v)i = rng() % 0xFFFF;
+	auto mul2 = [](int n) {return n * 2; };
+
+	auto t1 = std::chrono::steady_clock::now();
+	std::transform(v.begin(), v.end(), v.begin(), mul2);
+	dur_t dur1 = std::chrono::steady_clock::now() - t1;
+	print("no policy: {:.3}ms\n", dur1.count());
+
+	auto t2 = std::chrono::steady_clock::now();
+	std::transform(std::execution::seq, v.begin(), v.end(), v.begin(), mul2);
+	dur_t dur2 = std::chrono::steady_clock::now() - t2;
+	print("std::execution::seq: {:.3}ms\n", dur2.count());
+
+	auto t3 = std::chrono::steady_clock::now();
+	std::transform(std::execution::par, v.begin(), v.end(), v.begin(), mul2);
+	dur_t dur3 = std::chrono::steady_clock::now() - t3;
+	print("std::execution::par: {:.3}ms\n", dur3.count());
+
+	auto t4 = std::chrono::steady_clock::now();
+	std::transform(std::execution::par_unseq, v.begin(), v.end(), v.begin(), mul2);
+	dur_t dur4 = std::chrono::steady_clock::now() - t4;
+	print("std::execution::par_unseq: {:.3}ms\n", dur4.count());
+
+	auto t5 = std::chrono::steady_clock::now();
+	std::sort(v.begin(), v.end());
+	dur_t dur5 = std::chrono::steady_clock::now() - t5;
+	print("sort: {:.3}ms\n", dur5.count());
+
+	auto t6 = std::chrono::steady_clock::now();
+	std::sort(std::execution::par,v.begin(), v.end());
+	dur_t dur6 = std::chrono::steady_clock::now() - t6;
+	print("sort: {:.3}ms\n", dur6.count());
+
+	auto t7 = std::chrono::steady_clock::now();
+	std::sort(std::execution::par_unseq, v.begin(), v.end());
+	dur_t dur7 = std::chrono::steady_clock::now() - t7;
+	print("sort: {:.3}ms\n", dur7.count());
+}
+```
+
+运行结果:
+
+	no policy: 20.9ms
+	std::execution::seq: 22.3ms
+	std::execution::par: 14.7ms
+	std::execution::par_unseq: 6.05ms
+	sort: 3.23e+03ms
+	sort: 504ms
+	sort: 418ms
 
 <br>
