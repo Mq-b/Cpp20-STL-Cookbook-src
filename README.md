@@ -4665,7 +4665,7 @@ int main() {
 
 显式直方图，虽然这里看着多，但是说白了，就是为了做一个比例。`max_e1`是`v`中最大的元素迭代器，然后后面的`r_ratio`的值是`*max_e1 / n_max`因为要保证直方图最大值不能大于`50`，所以要除一下。如果小于`50`，那么就赋值`1`。
 
-打印传入的字符串。`for`循环遍历打印，这里面发`format`其实有点麻烦，是一个嵌套，我们需要分开来看`"{:02}:{:*<{}}\n"`，传入`i+1`，对应的第一个`{:02}`表示直方图的索引，` ' '`实际对应的是`{:*<{}}`，但是注意，是外面的这个`{}`，里面的`{}`传的是`v[i]/v_ratio`，其实就是按照最大值的一个比例而已，它的值表示的是实际是强制域对齐到可用空间起始用`*`填充要填充多少位。
+打印传入的字符串。`for`循环遍历打印，这里面发`format`其实有点麻烦，是一个嵌套，我们需要分开来看`"{:02}:{:*<{}}\n"`，传入`i+1`，对应的第一个`{:02}`表示直方图的索引，` ''`实际对应的是`{:*<{}}`，但是注意，是外面的这个`{}`，里面的`{}`传的是`v[i]/v_ratio`，其实就是按照最 大值的一个比例而已，它的值表示的是实际是强制域对齐到可用空间起始用`*`填充要填充多少位。
 
 <br>
 
@@ -5117,6 +5117,34 @@ int main() {
 	this is f()
 	value is 47
 	end of main()
+
+提一点书上没说的，就是关于`std::async`返回一个`std::future`，如果你既没有`get()`也没有`wait()`会怎么样？
+
+很多人可能认为它和`std::thread`对象调用`detach`一样，其实并不是的，在`std::future`对象析构的时候，如果任务没有执行完，会堵塞，直到任务执行完毕，才会析构。
+```cpp
+#include<iostream>
+#include<future>
+#include<thread>
+#include<chrono>
+#include"print.h"
+using namespace std::literals;
+struct X { ~X() { puts("析构函数"); } };
+int main() {
+	X x;//直到下面的析构完毕才会析构
+	auto t = std::async(std::launch::async, [] {std::this_thread::sleep_for(10s); puts("乐");  });//析构的时候会堵塞在这里
+	auto t2 =std::async(std::launch::async, [] {puts("666"); });
+	puts("main 结束");
+}
+```
+
+还是一个临时量的情况，其实和这个同理，也就是不接 [**`std::async`**](https://zh.cppreference.com/w/cpp/thread/async)的返回值。
+
+若从 `std::async` 获得的 `std::future` 未被移动或绑定到引用，则在完整表达式结尾， `std::future` 的析构函数将阻塞直至异步计算完成，实质上令如下代码同步：
+```cpp
+std::async(std::launch::async, []{ f(); }); // 临时量的析构函数等待 f()
+std::async(std::launch::async, []{ g(); }); // f() 完成前不开始
+```
+**（注意，以调用 std::async 以外的方式获得的 `std::future` 的析构函数决不阻塞）**
 
 <br>
 
