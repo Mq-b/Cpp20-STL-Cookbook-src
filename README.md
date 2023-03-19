@@ -106,6 +106,7 @@
         - [9.4`std::async`实现并发](#94-stdasync-实现并发)
         - [9.5`STL`算法与执行策略](#95stl算法与执行策略)
         - [9.6互斥锁和锁安全的共享数据](#96互斥锁和锁安全的共享数据)
+        - [9.7`std::atomic`共享标志和值](#97stdatomic共享标志和值)
 
 
 ## 第一章 C++20的新特性
@@ -5324,5 +5325,58 @@ int main() {
 	Animal: Bugs, friends: Hobbes
 
 这个demo写的就是莫名其妙，你别太在意它类的代码，看看`std::async` 和结果就得了
+
+<br>
+
+### [9.7`std::atomic`共享标志和值]()
+```cpp
+#include"print.h"
+#include<thread>
+#include<atomic>
+
+std::atomic<bool>ready{};
+std::atomic<uint64_t>g_count{};
+std::atomic_flag winner{};
+constexpr int max_count{ 1000 * 1000 };
+constexpr int max_threads{ 100 };
+
+struct Trivial {
+	int a;
+	int b;
+};
+std::atomic<Trivial>trival;
+
+void countem(int id) {
+	while (!ready)std::this_thread::yield();
+	for (int i{}; i < max_count; ++i)++g_count;
+	if (!winner.test_and_set()) {
+		std::cout << std::format("thread {:02} won!\n", id);
+	}
+}
+std::string make_commas(const uint64_t& num) {
+	std::string s{ std::to_string(num) };
+	for (long l = s.length() - 3; l > 0; l -= 3) {
+		s.insert(l, ",");
+	}
+	return s;
+}
+
+int main() {
+	std::vector<std::thread>swarm;
+	std::cout << std::format("spawn {} threads\n", max_threads);
+	for (int i{}; i < max_threads; i++) {
+		swarm.emplace_back(countem, i);
+	}
+	ready = true;//启动线程开始运行
+	for (auto& t : swarm)t.join();
+	std::cout << std::format("global count: {}\n", make_commas(g_count));
+
+	//std::cout << std::format("is g_count lock-free? {}\n", g_count.is_lock_free());
+}
+```
+`countem`函数中的`if (!winner.test_and_set())`
+
+原子地更改 `std::atomic_flag` 的状态为设置（ `true` ）并**返回它先前保有的值**,因为先前保有的是false，为了进入if，所以加了个`!`
+这段代码就是展示，每次是哪个线程先强到了时间片，运行到这里，后面线程运行的时候，返回先前的值，都是`true`，然后`!`就没办法进行`if`，进行打印
 
 <br>
