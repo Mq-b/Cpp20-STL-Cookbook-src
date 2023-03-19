@@ -44,17 +44,17 @@ public:
 		endl(std::cout);
 	}
 	bool add_friend(Animal& o)noexcept {
-		std::lock_guard l(animal_mutex);
 		::print("add_friend {} -> {}\n", s_name, o.s_name);
 		if (*this == o)return false;
+		std::lock_guard l(animal_mutex);
 		if (!is_friend(o))l_friends.emplace_back(o);//无重复则插入
 		if (!o.is_friend(*this))o.l_friends.emplace_back(*this);
 		return true;
 	}
 	bool delete_friend(Animal& o)noexcept {
-		std::lock_guard l{ animal_mutex };
 		::print("delete_friend {} -> {}\n", s_name, o.s_name);
 		if (*this == o)return false;
+		std::lock_guard l{ animal_mutex };
 		if (auto it = find_friend(o))l_friends.erase(it.value());
 		if (auto it = o.find_friend(*this))o.l_friends.erase(it.value());
 		return true;

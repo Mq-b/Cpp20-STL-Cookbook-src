@@ -5380,3 +5380,36 @@ int main() {
 这段代码就是展示，每次是哪个线程先强到了时间片，运行到这里，后面线程运行的时候，返回先前的值，都是`true`，然后`!`就没办法进行`if`，进行打印
 
 <br>
+
+### [9.8call_once初始化线程]()
+```cpp
+#include"print.h"
+#include<mutex>
+#include<thread>
+#include<list>
+
+constexpr size_t max_threads{ 25 };
+std::once_flag init_flag;
+void do_init(size_t id) {//只会被调用一次
+	print("do_init ({}):", id);
+}
+void do_print(size_t id) {
+	std::call_once(init_flag, do_init, id);
+	print("{} ", id);
+}
+
+int main() {
+	std::list<std::thread>spawn;
+	for (size_t id = 0; id < max_threads; id++){
+		spawn.emplace_back(do_print, id);
+	}
+	for (auto& t : spawn)t.join();
+	std::cout << '\n';
+}
+```
+
+运行结果:
+
+do_init (0):0 2 1 4 3 6 5 7 8 9 10 11 12 13 15 14 16 17 18 19 20 22 21 23 24
+
+<br>
