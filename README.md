@@ -107,6 +107,7 @@
         - [9.5`STL`算法与执行策略](#95stl算法与执行策略)
         - [9.6互斥锁和锁安全的共享数据](#96互斥锁和锁安全的共享数据)
         - [9.7`std::atomic`共享标志和值](#97stdatomic共享标志和值)
+        - [9.8`std::call_once`初始化线程](#98call_once初始化线程)
 
 
 ## 第一章 C++20的新特性
@@ -5262,17 +5263,17 @@ public:
 		endl(std::cout);
 	}
 	bool add_friend(Animal& o)noexcept {
-		std::lock_guard l(animal_mutex);
 		::print("add_friend {} -> {}\n", s_name, o.s_name);
 		if (*this == o)return false;
+		std::lock_guard l(animal_mutex);
 		if (!is_friend(o))l_friends.emplace_back(o);//无重复则插入
 		if (!o.is_friend(*this))o.l_friends.emplace_back(*this);
 		return true;
 	}
 	bool delete_friend(Animal& o)noexcept {
-		std::lock_guard l{ animal_mutex };
 		::print("delete_friend {} -> {}\n", s_name, o.s_name);
 		if (*this == o)return false;
+		std::lock_guard l{ animal_mutex };
 		if (auto it = find_friend(o))l_friends.erase(it.value());
 		if (auto it = o.find_friend(*this))o.l_friends.erase(it.value());
 		return true;
@@ -5324,11 +5325,13 @@ int main() {
 	Animal: Felix, friends: Hobbes
 	Animal: Bugs, friends: Hobbes
 
-这个demo写的就是莫名其妙，你别太在意它类的代码，看看`std::async` 和结果就得了
+我一开始其实是没看懂这个锁`std::lock_guard`为什么要这样放置，就是`add_friend()`和`delete_friend`这两个成员函数。他们的锁放在打印和if判断之后，我一开始不理解，后面就想通了。
+书上不是使用`print`打印信息的，而是使用`std::cout`，实际上`std::cout`调用一次`operator<<`是线程安全的，并且打印的是只读数据，没有任何问题，我们用的`print`内部是调用的`fputs`输出结果，`fputs`是线程安全的，所以我们也不需要担心。至于这个`if`判断，实际上，它调用的我们重载的`==`，比较的数据，是完全只读的，不会被修改，也就是`s_name`不会被修改，直接在这里不上锁进行判断也是无所谓的。
+那么为什么成员函数`print`需要在第一行上锁呢？因为它这个`l_friends`是可能产生变化的，如果不上锁，可能刚获取了它的`size`，别的线程就修改了它。
 
 <br>
 
-### [9.7`std::atomic`共享标志和值]()
+### [9.7`std::atomic`共享标志和值](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.7atomic%E5%85%B1%E4%BA%AB%E6%A0%87%E5%BF%97%E5%92%8C%E5%80%BC.cpp)
 ```cpp
 #include"print.h"
 #include<thread>
@@ -5371,9 +5374,17 @@ int main() {
 	for (auto& t : swarm)t.join();
 	std::cout << std::format("global count: {}\n", make_commas(g_count));
 
-	//std::cout << std::format("is g_count lock-free? {}\n", g_count.is_lock_free());
+	std::cout << std::format("is g_count lock-free? {}\n", g_count.is_lock_free());
 }
 ```
+
+运行结果:
+
+	spawn 100 threads
+	thread 18 won!
+	global count: 100,000,000
+	is g_count lock-free? true
+
 `countem`函数中的`if (!winner.test_and_set())`
 
 原子地更改 `std::atomic_flag` 的状态为设置（ `true` ）并**返回它先前保有的值**,因为先前保有的是false，为了进入if，所以加了个`!`
@@ -5381,7 +5392,7 @@ int main() {
 
 <br>
 
-### [9.8call_once初始化线程]()
+### [9.8`std::call_once`初始化线程](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.8call_once%E5%88%9D%E5%A7%8B%E5%8C%96%E7%BA%BF%E7%A8%8B.cpp)
 ```cpp
 #include"print.h"
 #include<mutex>
@@ -5410,6 +5421,6 @@ int main() {
 
 运行结果:
 
-do_init (0):0 2 1 4 3 6 5 7 8 9 10 11 12 13 15 14 16 17 18 19 20 22 21 23 24
+	do_init (0):0 2 1 4 3 6 5 7 8 9 10 11 12 13 15 14 16 17 18 19 20 22 21 23 24
 
 <br>
