@@ -107,7 +107,8 @@
         - [9.5`STL`算法与执行策略](#95stl算法与执行策略)
         - [9.6互斥锁和锁安全的共享数据](#96互斥锁和锁安全的共享数据)
         - [9.7`std::atomic`共享标志和值](#97stdatomic共享标志和值)
-        - [9.8`std::call_once`初始化线程](#98call_once初始化线程)
+        - [9.8`std::call_once`初始化线程](#98stdcall_once初始化线程)
+        - [9.9`std::condition_variable`解决生产者-消费者问题](#99stdcondition_variable解决生产者-消费者问题)
 
 
 ## 第一章 C++20的新特性
@@ -5422,5 +5423,95 @@ int main() {
 运行结果:
 
 	do_init (0):0 2 1 4 3 6 5 7 8 9 10 11 12 13 15 14 16 17 18 19 20 22 21 23 24
+
+<br>
+
+### [9.9`std::condition_variable`解决生产者-消费者问题]()
+```cpp
+#include"print.h"
+#include<mutex>
+#include<thread>
+#include<chrono>
+#include<deque>
+using namespace std::chrono_literals;
+
+constexpr size_t num_items{ 10 };
+constexpr auto delay_time{ 200ms };
+std::deque<size_t>q{};
+std::mutex mtx{};//共用这一个锁
+std::condition_variable cond{};
+bool finished{};
+
+void producer() {
+	for (size_t i{}; i < num_items; ++i) {
+		std::this_thread::sleep_for(delay_time);
+		std::lock_guard x{ mtx };
+		q.push_back(i);
+		cond.notify_all();
+	}
+	std::lock_guard x{ mtx };
+	finished = true;
+	cond.notify_all();
+}
+void consumer() {
+	while (!finished) {
+		std::unique_lock lck{ mtx };
+		cond.wait(lck, [] {return !q.empty() || finished; });
+		while (!q.empty()) {
+			std::cout << std::format("Got {} from the queue\n", q.front());
+			q.pop_front();
+		}
+	}
+}
+
+int main() {
+	std::thread t1{ producer };
+	std::thread t2{ consumer };
+	t1.join();
+	t2.join();
+	std::cout << "finished!\n";
+}
+```
+
+运行结果:
+
+	Got 0 from the queue
+	Got 1 from the queue
+	Got 2 from the queue
+	Got 3 from the queue
+	Got 4 from the queue
+	Got 5 from the queue
+	Got 6 from the queue
+	Got 7 from the queue
+	Got 8 from the queue
+	Got 9 from the queue
+	finished!
+
+
+```c++
+void wait( std::unique_lock<std::mutex>& lock );
+```
+(1)	(C++11 起)
+```c++
+template< class Predicate >
+void wait( std::unique_lock<std::mutex>& lock, Predicate pred );
+```
+(2)	(C++11 起)
+
+**`wait`** 导致当前线程阻塞直至条件变量被通知，或虚假唤醒发生，可选地循环直至满足某谓词。
+
+1) 原子地解锁 **`lock`** ，阻塞当前执行线程，并将它添加到于 `*this` 上等待的线程列表。线程将在执行 **`notify_all()`** 或 **`notify_one()`** 时被解除阻塞。解阻塞时，无关乎原因， `lock` 再次锁定且 `wait` 退出。
+2) 等价于
+```cpp
+while (!pred()) {
+    wait(lock);
+}
+```
+
+我们的demo是使用的是 **`cond.wait(lck, [] {return !q.empty() || finished; });`**，这句话表示的意思是如果第二个参数，lambda谓词的返回值是 **`false`** 那么就执行`wait()`。
+
+即原子的解锁`lock`，阻塞当前线程，直到有其他线程调用了 **`notify_all()`** 或 **`notify_one()`** 时被解除阻塞。解除阻塞的时候`lock` 再次锁定且 `wait` 退出。
+
+如果是 **`true`** 则直接返回，往下执行即可。
 
 <br>
