@@ -5635,3 +5635,65 @@ int main() {
 	cid 4: pid 2, qs 0, item 15
 	producers done.
 	cid 0: 1cid 2: 2cid 3: 3cid 1: 4consumbers done.
+
+<br>
+
+### [10.2为path类特化formatter]()
+```cpp
+#include"print.h"
+#include<filesystem>
+namespace fs = std::filesystem;
+
+template<>
+struct std::formatter<fs::path> {
+	template<typename ParseContext>
+	constexpr auto parse(ParseContext& ctx) {
+		return ctx.begin();
+	}
+	template<typename FormatContext>
+	auto format(const fs::path& p, FormatContext& ctx) {
+		return std::format_to(ctx.out(), "{}", p.string());
+	}
+};
+
+int main(const int argc,const char**argv) {
+	if (argc != 2) {
+		fs::path fn{ argv[0] };
+		print("usage: {} <path>\n", fn.filename());
+		return 0;
+	}
+	fs::path dir{ argv[1] };
+	if (!fs::exists(dir)) {
+		print("path: {} does not exist\n", dir);
+		return 1;
+	}
+	print("path: {}\n", dir);//普通的使用特化格式化打印
+	print("filename: {}\n", dir.filename());//文件名
+	print("cannonical: {}\n", fs::canonical(dir));//绝对路径
+	
+	fs::path p{ "~/include/bwprint.h" };
+	print("{}\n", p);//普通格式化打印
+	print("{}\n", p.stem());//返回通用格式路径所标识的文件名，剥去其扩展名
+	print("{}\n", p.extension());//返回文件扩展名
+	print("{}\n", p.filename());//返回文件名(包含后缀)
+	print("{}\n", p.parent_path());//返回到亲目录的路径。
+}
+```
+
+命令行输入和运行结果:
+
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\10.2> .\Test1.exe
+	usage: Test1.exe <path>
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\10.2> .\Test1.exe hello
+	path: hello does not exist
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\10.2> .\Test1.exe .\test.txt
+	path: .\test.txt
+	filename: test.txt
+	cannonical: E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\10.2\test.txt
+	~/include/bwprint.h
+	bwprint
+	.h
+	bwprint.h
+	~/include
+
+<br>
