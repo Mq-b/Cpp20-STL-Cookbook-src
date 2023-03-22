@@ -94,6 +94,19 @@ private:
 	std::vector<fmt_str_t> m_fmt;
 };
 
+namespace fs = std::filesystem;
+template<>
+struct std::formatter<fs::path> {
+	template<typename ParseContext>
+	constexpr auto parse(ParseContext& ctx) {
+		return ctx.begin();
+	}
+	template<typename FormatContext>
+	auto format(const fs::path& p, FormatContext& ctx) {
+		return std::format_to(ctx.out(), "{}", p.string());
+	}
+};
+
 void print(std::ranges::range auto v){
 	print("size: {}  ", v.size());
 	print("[ ");

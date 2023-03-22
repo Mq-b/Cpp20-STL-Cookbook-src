@@ -2,17 +2,17 @@
 #include<filesystem>
 namespace fs = std::filesystem;
 
-template<>
-struct std::formatter<fs::path> {
-	template<typename ParseContext>
-	constexpr auto parse(ParseContext& ctx) {
-		return ctx.begin();
-	}
-	template<typename FormatContext>
-	auto format(const fs::path& p, FormatContext& ctx) {
-		return std::format_to(ctx.out(), "{}", p.string());
-	}
-};
+//template<>
+//struct std::formatter<fs::path> {
+//	template<typename ParseContext>
+//	constexpr auto parse(ParseContext& ctx) {
+//		return ctx.begin();
+//	}
+//	template<typename FormatContext>
+//	auto format(const fs::path& p, FormatContext& ctx) {
+//		return std::format_to(ctx.out(), "{}", p.string());
+//	}
+//};//我们将其放入print.h中，以便后面使用
 
 int main(const int argc,const char**argv) {
 	if (argc != 2) {
@@ -28,7 +28,7 @@ int main(const int argc,const char**argv) {
 	print("path: {}\n", dir);//普通的使用特化格式化打印
 	print("filename: {}\n", dir.filename());//文件名
 	print("cannonical: {}\n", fs::canonical(dir));//绝对路径
-	//
+	
 	fs::path p{ "~/include/bwprint.h" };
 	print("{}\n", p);//普通格式化打印
 	print("{}\n", p.stem());//返回通用格式路径所标识的文件名，剥去其扩展名

@@ -5124,6 +5124,7 @@ int main() {
 提一点书上没说的，就是关于`std::async`返回一个`std::future`，如果你既没有`get()`也没有`wait()`会怎么样？
 
 很多人可能认为它和`std::thread`对象调用`detach`一样，其实并不是的，在`std::future`对象析构的时候，如果任务没有执行完，会堵塞，直到任务执行完毕，才会析构。
+
 ```cpp
 #include<iostream>
 #include<future>
@@ -5148,6 +5149,46 @@ std::async(std::launch::async, []{ f(); }); // 临时量的析构函数等待 f(
 std::async(std::launch::async, []{ g(); }); // f() 完成前不开始
 ```
 **（注意，以调用 std::async 以外的方式获得的 `std::future` 的析构函数决不阻塞）**
+
+**再说一个demo，主要表达的是被移动的future，对线程的所有权也会变，析构也就不会导致阻塞了**
+```cpp
+#include<iostream>
+#include<future>
+#include<future>
+#include<chrono>
+using namespace std::chrono_literals;
+
+std::future<void>wait_async() {
+	auto f = std::async(std::launch::async, []
+		{
+			std::this_thread::sleep_for(5s);
+			std::cout << "async\n";
+		});
+	return f;//return调用移动构造返回早于局部的析构，也就是说f在析构之前就已经移动了，析构就不会再导致阻塞了
+}
+int main() {
+	auto future = wait_async();//排除返回值优化的可能，其实这里有一个很有趣的事情
+	std::cout << "hello\n";
+
+	std::future<void>future2;
+	{
+		std::future<void>tmp = std::async(std::launch::async, [] 
+			{
+				std::this_thread::sleep_for(5s);
+				std::cout << "局部\n"; 
+			});
+		future2 = std::move(tmp);
+	}
+	std::cout << "main🤣🤣🤣🤣🤣\n";
+}
+```
+
+运行结果:
+
+	hello
+	main🤣🤣🤣🤣🤣
+	局部
+	async
 
 <br>
 
@@ -5697,3 +5738,49 @@ int main(const int argc,const char**argv) {
 	~/include
 
 <br>
+
+### [10.3使用带有路径的操作函数]()
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<chrono>
+
+int main() {
+	fs::path p = "E:cl.exe";
+	print("current_path: {}\n", fs::current_path());
+	print("absolute(p): {}\n", fs::absolute(p));
+	print("append: {}\n", fs::path{ "tetdir" } /= "foo.txt");
+	print("canoical: {}\n", fs::canonical(fs::path{ "." }/="1..txt"));
+	print("equivalent: {}\n", fs::equivalent("1..txt", "E:/自制视频教程/《C++20 STL Cookbook》2023/src/bin/Debug/1..txt"));
+
+	try {
+		fs::path p{ "1..txt" };
+		print("p: {}\n", p);
+		(void)fs::equivalent("1..txt", "debug/1.txt");
+	}
+	catch (const fs::filesystem_error& e) {
+		print("{}\n", e.what());
+		print("parth1: {}\n", e.path1());
+		print("parth2: {}\n", e.path2());
+	}
+
+	fs::path p2{ "1..txt" };
+	std::error_code e;
+	print("canonical: {}\n", fs::canonical(p2 / "foo", e));
+	print("error: {}\n", e.message());//打印错误
+}
+```
+
+运行结果:
+
+	current_path: E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug
+	absolute(p): E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\cl.exe
+	append: tetdir\foo.txt
+	canoical: E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug\1..txt
+	equivalent: true
+	p: 1..txt
+	equivalent: 系统找不到指定的路径。: "1..txt", "debug/1.txt"
+	parth1: 1..txt
+	parth2: debug/1.txt
+	canonical:
+	error: 系统找不到指定的路径。
