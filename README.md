@@ -5467,7 +5467,7 @@ int main() {
 
 <br>
 
-### [9.9`std::condition_variable`解决生产者-消费者问题]()
+### [9.9`std::condition_variable`解决生产者-消费者问题](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.9condition_variable%E8%A7%A3%E5%86%B3%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98.cpp)
 ```cpp
 #include"print.h"
 #include<mutex>
@@ -5557,7 +5557,7 @@ while (!pred()) {
 
 <br>
 
-### [9.10实现多个生产者和消费者]()
+### [9.10实现多个生产者和消费者](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/9.10%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%E7%94%9F%E4%BA%A7%E8%80%85%E5%92%8C%E6%B6%88%E8%B4%B9%E8%80%85.cpp)
 ```cpp
 #include"print.h"
 #include<memory>
@@ -5679,7 +5679,21 @@ int main() {
 
 <br>
 
-### [10.2为path类特化formatter]()
+### 第九章总结
+
+并发这一块其实没办法说什么，重在理解和多多使用，它本身的例子也不算很多，但是其实还行，很经典。
+
+很多标准库的设施它并没有介绍，有需要的可以自行使用查阅文档。
+
+<br>
+
+## 第十章
+
+虽然 **`C++17`** 提供了标准的[**文件系统库**](https://zh.cppreference.com/w/cpp/filesystem)，但是它依然十分依赖平台的行为，是无法阉割的，你去写后面的例子的时候会有感觉，比如`linux`和`Windows`的权限就不一样
+
+这节内容还是挺有趣的，值得你去看看写写，当然，你也会感觉一些很恶心的事情，比如`chrono`库的那转换，的确是麻烦又离谱。
+
+### [10.2为path类特化formatter](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/10.2%E4%B8%BApath%E7%B1%BB%E7%89%B9%E5%8C%96formatter.cpp)
 ```cpp
 #include"print.h"
 #include<filesystem>
@@ -5739,7 +5753,7 @@ int main(const int argc,const char**argv) {
 
 <br>
 
-### [10.3使用带有路径的操作函数]()
+### [10.3使用带有路径的操作函数](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/10.3%E4%BD%BF%E7%94%A8%E5%B8%A6%E6%9C%89%E8%B7%AF%E5%BE%84%E7%9A%84%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0.cpp)
 ```cpp
 #include<filesystem>
 #include"print.h"
@@ -5784,3 +5798,397 @@ int main() {
 	parth2: debug/1.txt
 	canonical:
 	error: 系统找不到指定的路径。
+
+<br>
+
+### [10.4列出目录中的文件]()
+demo1普通遍历目录文件
+```cpp
+#include<filesystem>
+#include"print.h"
+
+int main(const int argc,const char**argv) {
+	fs::path fp{ argc > 1 ? argv[1] : "." };
+	if (!fs::exists(fp)) {
+		const auto cmdname{ fs::path{argv[0]}.filename() };
+		print("{}: {} does not exist\n", cmdname, fp);
+		return 1;
+	}
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			print("{}\n", de.path().filename());
+		}
+	}else {
+		print("{} ", fp.filename());
+	}
+	std::cout << '\n';
+}
+```
+
+运行结果:
+
+	1..txt
+	10.2
+	EnglishTest.txt
+	Test1.exe
+	Test1.pdb
+	文件重定向到exe的输入.txt
+
+demo2遍历目录文件且排序
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<algorithm>
+using de = fs::directory_entry;
+int main() {
+	const fs::path fp{ "." };
+	std::vector<de>entries{};
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			entries.emplace_back(de);
+		}
+
+		std::sort(entries.begin(), entries.end());
+		for (const auto& e : entries) {
+			print("{}\n", e.path().filename());
+		}
+	}
+	else {
+		print("{}\n", fp.filename());
+	}
+}
+```
+
+运行结果:
+
+	1..txt
+	10.2
+	EnglishTest.txt
+	Test1.exe
+	Test1.pdb
+	文件重定向到exe的输入.txt
+
+demo3遍历目录文件且无视字母大小写排序
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<algorithm>
+using de = fs::directory_entry;
+
+std::string strlower(std::string s) {
+	auto char_lower = [](const char& c)->char {
+		if (c >= 'A' && c <= 'Z')return c + 32;
+		else return c;
+	};
+	std::transform(s.begin(), s.end(), s.begin(), char_lower);
+	return s;
+}
+bool dircmp_lc(const de& lhs, const de& rhs) {
+	const auto lhstr{ lhs.path().string() };
+	const auto rhstr{ rhs.path().string() };
+	return strlower(lhstr) < strlower(rhstr);
+}
+
+int main() {
+	const fs::path fp{ "." };
+	std::vector<de>entries{};
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			entries.emplace_back(de);
+		}
+
+		std::sort(entries.begin(), entries.end(),dircmp_lc);
+		for (const auto& e : entries) {
+			print("{}\n", e.path().filename());
+		}
+	}
+	else {
+		print("{}\n", fp.filename());
+	}
+}
+```
+
+运行结果:
+
+	1..txt
+	10.2
+	EnglishTest.txt
+	Test1.exe
+	Test1.pdb
+	文件重定向到exe的输入.tx
+
+demo4在前面的基础上增加一个函数 **`print_dir`** 对权限做一定标注
+**需要注意的是，`Windows`的权限系统和`linux`的权限系统并不一样，所以结果可能和书上什么的并不一样，属于正常现象**
+
+`linux`读写运行是三个
+`Windows` 读 写 修改 完全控制 删除
+
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<algorithm>
+using de = fs::directory_entry;
+
+std::string strlower(std::string s) {
+	auto char_lower = [](const char& c)->char {
+		if (c >= 'A' && c <= 'Z')return c + 32;
+		else return c;
+	};
+	std::transform(s.begin(), s.end(), s.begin(), char_lower);
+	return s;
+}
+bool dircmp_lc(const de& lhs, const de& rhs) {
+	const auto lhstr{ lhs.path().string() };
+	const auto rhstr{ rhs.path().string() };
+	return strlower(lhstr) < strlower(rhstr);
+}
+void print_dir(const de& dir) {
+	using fs::perms;
+	const auto fpath{ dir.path() };//获取路径
+	const auto fstat{ dir.symlink_status() };//获取文件状态
+	const auto fperm{ fstat.permissions() };//获取文件权限
+	const uintmax_t fsize{ fs::is_regular_file(fstat) ? fs::file_size(fpath) : 0 };
+	const auto fn{ fpath.filename() };
+
+	std::string suffix{};
+	if (fs::is_directory(fstat))suffix = "/";//如果是目录就加杠
+	else if ((fperm & perms::owner_exec) != perms::none) {
+		suffix = "*";//如果是可执行可查找文件就加*，权限参见owner_exec
+	}
+	print("{} {}\n", fn, suffix);
+}
+
+int main() {
+	const fs::path fp{ "." };
+	std::vector<de>entries{};
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			entries.emplace_back(de);
+		}
+
+		std::sort(entries.begin(), entries.end(),dircmp_lc);
+		for (const auto& e : entries) {
+			print_dir(e);
+		}
+	}
+	else {
+		print("{}\n", fp.filename());
+	}
+}
+```
+
+运行结果:
+
+	1..txt *
+	10.2 /
+	bin - 快捷方式.lnk *
+	EnglishTest.txt *
+	test.cpp *
+	Test1.exe *
+	Test1.pdb *
+	文件重定向到exe的输入.txt *
+
+demo5再次改进，对符号链接(即快捷方式)做处理
+
+这里需要注意**创建符号链接需要管理员权限，无法运行是正常，生成exe在终端用管理员运行就行了。**
+
+**不要妄想用window自带的选项创建快捷方式(.lnk)，快捷方式和符号链接不是一种东西**，一定要注意，所以我们
+
+使用了[**`create_directory_symlink()`**](https://zh.cppreference.com/w/cpp/filesystem/create_symlink) 来创建 **符号链接**
+
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<algorithm>
+using de = fs::directory_entry;
+
+std::string strlower(std::string s) {
+	auto char_lower = [](const char& c)->char {
+		if (c >= 'A' && c <= 'Z')return c + 32;
+		else return c;
+	};
+	std::transform(s.begin(), s.end(), s.begin(), char_lower);
+	return s;
+}
+bool dircmp_lc(const de& lhs, const de& rhs) {
+	const auto lhstr{ lhs.path().string() };
+	const auto rhstr{ rhs.path().string() };
+	return strlower(lhstr) < strlower(rhstr);
+}
+void print_dir(const de& dir) {
+	using fs::perms;
+	const auto fpath{ dir.path() };//获取路径
+	const auto fstat{ dir.symlink_status() };//获取文件状态
+	const auto fperm{ fstat.permissions() };//获取文件权限
+	const uintmax_t fsize{ fs::is_regular_file(fstat) ? fs::file_size(fpath) : 0 };
+	const auto fn{ fpath.filename() };
+
+	std::string suffix{};
+	if (fs::is_symlink(fstat)) {
+		suffix = "-> ";
+		suffix += fs::read_symlink(fpath).string();
+	}
+	else if (fs::is_directory(fstat))suffix = "/";//如果是目录就加杠
+	else if ((fperm & perms::owner_exec) != perms::none) {
+		suffix = "*";//如果是可执行可查找文件就加*，权限参见owner_exec
+	}
+	print("{} {}\n", fn, suffix);
+}
+
+int main() {
+	fs::create_directories("sandbox/subdir");
+	fs::create_directory_symlink("sandbox/subdir", "include");
+	const fs::path fp{ "." };
+	std::vector<de>entries{};
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			entries.emplace_back(de);
+		}
+
+		std::sort(entries.begin(), entries.end(),dircmp_lc);
+		for (const auto& e : entries) {
+			print_dir(e);
+		}
+	}
+	else {
+		print("{}\n", fp.filename());
+	}
+}
+```
+我们还特意整了个Windows的快捷方式来做对比，表示它不是符号链接 
+
+**管理员终端**运行结果:
+
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug> .\Test1.exe
+	1..txt *
+	10.2 /
+	bin - 快捷方式.lnk *
+	EnglishTest.txt *
+	include -> sandbox\subdir
+	sandbox /
+	test.cpp *
+	Test1.exe *
+	Test1.pdb *
+	文件重定向到exe的输入.txt *
+
+**最终成果，增加权限，大小，创建时间后**
+```cpp
+#include<filesystem>
+#include"print.h"
+#include<algorithm>
+using de = fs::directory_entry;
+
+std::string strlower(std::string s) {
+	auto char_lower = [](const char& c)->char {
+		if (c >= 'A' && c <= 'Z')return c + 32;
+		else return c;
+	};
+	std::transform(s.begin(), s.end(), s.begin(), char_lower);
+	return s;
+}
+bool dircmp_lc(const de& lhs, const de& rhs) {
+	const auto lhstr{ lhs.path().string() };
+	const auto rhstr{ rhs.path().string() };
+	return strlower(lhstr) < strlower(rhstr);
+}
+char type_char(const fs::file_status& fstat) {
+	if (fs::is_symlink(fstat))return 'l';
+	else if (fs::is_directory(fstat))return 'd';
+	else if (fs::is_character_file(fstat))return 'c';
+	else if (fs::is_block_file(fstat))return 'b';
+	else if (fs::is_fifo(fstat))return 'p';
+	else if (fs::is_socket(fstat))return 's';
+	else if (fs::is_other(fstat))return 'o';
+	else if (fs::is_regular_file(fstat))return '-';
+	return '?';
+}
+std::string rwx(const fs::perms& p) {
+	using fs::perms;
+	auto bit2char = [&](perms bit, char c) {
+		return (p & bit) == perms::none ? '-' : c;
+	};
+	return { bit2char(perms::owner_read,'r'),
+	bit2char(perms::owner_write,'w'),
+	bit2char(perms::owner_exec,'x'),
+	bit2char(perms::group_read,'r'),
+	bit2char(perms::group_write,'w'),
+	bit2char(perms::group_exec,'x'),
+	bit2char(perms::others_read,'r'),
+	bit2char(perms::others_write,'w'),
+	bit2char(perms::others_exec,'x'),
+	};
+}
+std::string size_string(const uintmax_t fsize) {
+	constexpr const uintmax_t kilo{ 1024 };
+	constexpr const uintmax_t mega{ kilo * 1024 };
+	constexpr const uintmax_t giga{ mega * kilo };
+	std::string s;
+	if (fsize >= giga)return std::format("{}{}", fsize / giga, 'G');
+	else if (fsize >= mega)return std::format("{}{}",  fsize  / mega, 'M');
+	else if (fsize >= kilo)return std::format("{}{}", fsize / kilo, 'K');
+	else return std::format("{}B", fsize);
+}
+std::string time_string(const fs::directory_entry& dir) {
+	auto file_time{ dir.last_write_time() };
+	auto t =std::chrono::current_zone()->to_local(std::chrono::clock_cast<std::chrono::system_clock>(file_time));
+	auto str =std::format("{}", t);
+	auto index = str.find('.');
+	str.replace(index, str.size(), "");
+	return str;
+}
+void print_dir(const de& dir) {
+	using fs::perms;
+	const auto fpath{ dir.path() };//获取路径
+	const auto fstat{ dir.symlink_status() };//获取文件状态
+	const auto fperm{ fstat.permissions() };//获取文件权限
+	const uintmax_t fsize{ fs::is_regular_file(fstat) ? fs::file_size(fpath) : 0 };
+	const auto fn{ fpath.filename() };
+	const auto permstr{ type_char(fstat) + rwx(fperm) };
+	const std::string timestr{ time_string(dir) };
+
+	std::string suffix{};
+	if (fs::is_symlink(fstat)) {
+		suffix = "-> ";
+		suffix += fs::read_symlink(fpath).string();
+	}
+	else if (fs::is_directory(fstat))suffix = "/";//如果是目录就加杠
+	else if ((fperm & perms::owner_exec) != perms::none) {
+		suffix = "*";//如果是可执行可查找文件就加*，权限参见owner_exec
+	}
+	std::cout<<std::format("{} {:>6} {} {}{}\n", permstr, size_string(fsize),timestr,fn, suffix);
+}
+
+int main() {
+	//fs::create_directories("sandbox/subdir");
+	//fs::create_directory_symlink("sandbox/subdir", "include");
+	const fs::path fp{ "." };
+	std::vector<de>entries{};
+	if (fs::is_directory(fp)) {
+		for (const auto& de : fs::directory_iterator{ fp }) {
+			entries.emplace_back(de);
+		}
+
+		std::sort(entries.begin(), entries.end(),dircmp_lc);
+		for (const auto& e : entries) {
+			print_dir(e);
+		}
+	}
+	else {
+		std::cout<<std::format("{}\n", fp.filename());
+	}
+}
+```
+
+运行结果:
+
+	wxrwx    86B 2023-01-31 20:26:40 1..txt*
+	drwxrwxrwx     0B 2023-03-21 12:57:52 10.2/
+	-rwxrwxrwx     1K 2023-03-23 10:01:47 bin - 快捷方式.lnk*
+	-rwxrwxrwx    70B 2023-01-31 20:24:30 EnglishTest.txt*
+	lrwxrwxrwx     0B 2023-03-23 14:10:56 include-> sandbox\subdir
+	drwxrwxrwx     0B 2023-03-23 14:10:56 sandbox/
+	-rwxrwxrwx     0B 2023-03-23 09:46:26 test.cpp*
+	-rwxrwxrwx   971K 2023-03-24 14:15:01 Test1.exe*
+	-rwxrwxrwx    75M 2023-03-24 14:15:01 Test1.pdb*
+	-rwxrwxrwx    73B 2023-01-31 20:24:00 文件重定向到exe的输入.txt*
+
