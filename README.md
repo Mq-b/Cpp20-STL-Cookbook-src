@@ -114,6 +114,8 @@
 		- [10.2为`path`类特化`formatter`](#102为path类特化formatter)
 		- [10.3使用带有路径的操作函数](#103使用带有路径的操作函数)
 		- [10.4列出目录中的文件](#104列出目录中的文件)
+		- [10.5使用`grep`实用程序搜索目录和文件](#105使用grep实用程序搜索目录和文件)
+		- [10.6使用`regex`和`directory_iterator`重命名文件](#106使用regex和directory_iterator重命名文件)
 
 
 ## 第一章 C++20的新特性
@@ -6197,7 +6199,7 @@ int main() {
 	-rwxrwxrwx    75M 2023-03-24 14:15:01 Test1.pdb*
 	-rwxrwxrwx    73B 2023-01-31 20:24:00 文件重定向到exe的输入.txt*
 
-### [10.5使用grep实用程序搜索目录和文件]()
+### [10.5使用`grep`实用程序搜索目录和文件](https://github.com/Mq-b/Cpp20-STL-Cookbook-src/blob/master/src/10.5%E4%BD%BF%E7%94%A8grep%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6.cpp)
 
 **一定要注意文件的编码，有可能无法检索到**
 
@@ -6347,3 +6349,75 @@ int main(const int argc,const char**argv) {
 	found 4 matches
 
 为了测试不同文件是否都能检测到，我们特意多新建了一个`2.txt`
+
+<br>
+
+### [10.6使用regex和directory_iterator重命名文件]()
+```cpp
+#include"print.h"
+#include<regex>
+using dit = fs::directory_iterator;
+using pat_v = std::vector<std::pair<std::regex, std::string>>;
+
+std::string replace_str(std::string s, const pat_v& replacements) {
+	for (const auto& [pattern, repl] : replacements){
+		s = std::regex_replace(s, pattern, repl);//第一个参数是传入字符串，第二个是正则对象用于匹配，第三个是替换匹配上的字符串
+	}
+	return s;
+}
+
+int main(const int argc,const char**argv) {
+	pat_v patterns{};
+	if (argc < 3 || argc % 2 != 1) {
+		fs::path cmdname{ fs::path(argv[0]).filename() };
+		std::cout << std::format("usage: {} [regex replacement] ...\n", cmdname);
+		return 1;
+	}//argc默认就有一个，我们的要求是一个字符串后面跟一个替换，那么算上那个1就是必须是奇数，所以如果不满足就退出
+	
+	for (int i{ 1 }; i < argc; i += 2) {
+		patterns.emplace_back(argv[i], argv[i + 1]);
+	}
+
+	for (const auto& entry : dit{ fs::current_path() }) {
+		fs::path fpath{ entry.path() };
+		std::string rname{replace_str(fpath.filename().string(),patterns)};
+		if (fpath.filename().string() != rname) {
+			fs::path rpath{ fpath };
+			rpath.replace_filename(rname);//更改rpath的路径文件名
+
+			fs::rename(fpath, rpath);//这个函数调用才是真正的更改文件名，它不修改传入的两个path对象，而是真正的修改文件名
+			std::cout << std::format("{} -> {}\n", fpath.filename(), rpath.filename());//fpath是原始，rpath是更改之后
+		}
+	}
+}
+```
+
+终端运行结果:
+
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug> ls
+
+
+	    Directory: E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug
+
+
+	Mode                 LastWriteTime         Length Name
+	----                 -------------         ------ ----
+	d-----         2023/3/21     12:57                10.2
+	d----l         2023/3/23     14:10                include
+	d-----         2023/3/23     14:10                sandbox
+	-a----         2023/3/25     22:18             65 1..txt
+	-a----         2023/3/26     12:03             13 2.txt
+	-a----         2023/3/23      9:46              0 B.CPP
+	-a----         2023/3/23     10:01           1194 bin - 快捷方式.lnk                                                    
+	-a----         2023/1/31     20:24             70 EnglishTest.txt
+	-a----         2023/3/27     10:28         921088 Test1.exe
+	-a----         2023/3/27     10:28        5640192 Test1.pdb
+	-a----         2023/1/31     20:24             73 文件重定向到exe的输入.txt                                             
+
+
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug> .\Test1.exe .CPP .cpp B A
+	B.CPP -> A.cpp
+	PS E:\自制视频教程\《C++20 STL Cookbook》2023\src\bin\Debug> .\Test1.exe '^English' ' '
+	EnglishTest.txt ->  Test.txt
+
+`exe`后面跟的第一个参数是正则，第二个参数是要替换为的字符串，可以使用单引号包起来。是两个参数为一组，可以有好几组，我们演示的是一组和两组的情况。

@@ -9,4 +9,4 @@ set(CMAKE_CXX_STANDARD 23)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (Test1 "src/10.5使用grep实用程序搜索目录和文件.cpp")
+add_executable (Test1 "src/10.6使用regex和directory_iterator重命名文件.cpp")
