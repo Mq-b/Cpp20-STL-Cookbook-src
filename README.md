@@ -124,6 +124,7 @@
 
  ```cpp
 #include<iostream>
+#include<algorithm>
 #include<string_view>
 #include<format>
 
@@ -145,7 +146,7 @@ struct std::formatter<Frac> {
 		return ctx.begin();
 	}
 	template<typename FormatContext>
-	auto format(const Frac& f, FormatContext& ctx) {
+	auto format(const Frac& f, FormatContext& ctx)const {
 		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.a, f.b);
 	}
 };
@@ -3235,6 +3236,7 @@ int main() {
 #include"print.h"
 #include<numbers>
 #include<vector>
+#include<algorithm>
 
 template<typename T>
 struct Frac {
@@ -3248,7 +3250,7 @@ struct std::formatter<Frac<T>> {
 		return ctx.begin();
 	}
 	template<typename FormatContext>
-	constexpr auto format(const Frac<T>& f, FormatContext& ctx) {
+	constexpr auto format(const Frac<T>& f, FormatContext& ctx)const {
 		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.n, f.d);
 	}
 };
@@ -3357,6 +3359,7 @@ int main() {
 #include <string_view>
 #include <array>
 #include <iostream>
+#include<algorithm>
 
 // 一个range里面一般都是在表达上相同的元素。
 // 因此，我们这里可以这样设计：
@@ -3445,6 +3448,7 @@ int main() {
 #include <vector>
 #include <array>
 #include <iostream>
+#include<algorithm>
 
 // 设计一个用于限制模板参数的概念
 template<typename T>
