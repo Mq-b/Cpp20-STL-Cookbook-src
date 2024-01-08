@@ -14,7 +14,7 @@ struct std::formatter<Frac<T>> {
 		return ctx.begin();
 	}
 	template<typename FormatContext>
-	constexpr auto format(const Frac<T>& f, FormatContext& ctx) {
+	constexpr auto format(const Frac<T>& f, FormatContext& ctx) const {
 		return std::format_to(ctx.out(), "{0:d}/{1:d}", f.n, f.d);
 	}
 };
@@ -39,7 +39,7 @@ struct std::formatter<Frac2<T>> {
 		m_fmt[m_buffer_len++] = '}';
 		return iter;
 	}
-	constexpr auto format(const Frac2<T>& f, auto& ctx) {
+	constexpr auto format(const Frac2<T>& f, auto& ctx) const {
 		std::string fmt{};
 		fmt += m_fmt, fmt += "/", fmt += m_fmt;
 		auto iter = std::vformat_to(ctx.out(), fmt, std::make_format_args(f.n,f.d));
