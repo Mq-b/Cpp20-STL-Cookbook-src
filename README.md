@@ -573,8 +573,8 @@ template <typename T>
 concept Cpt = requires
 {
 	typename T::value;    // 检查 T 是否存在成员 T::value
-	typename X<T>         // 检查是否存在模板类 S 的特化 S<T>
-	typename Ref<T>       // 检查是否存在合法别名模板 Ref<T>
+	typename X<T>;        // 检查是否存在模板类 S 的特化 S<T>
+	typename Ref<T>;      // 检查是否存在合法别名模板 Ref<T>
 }
 ```
 
