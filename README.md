@@ -9,6 +9,8 @@
 
 ###  [B站视频讲解](https://www.bilibili.com/video/BV1r8411N75b/?spm_id_from=333.999.0.0&vd_source=1992ca910d6cd0582931f6f985dc7fa0)
 
+早期制作，内容些许过时，视频全损音质，画质xx，需注意。
+
 <br>
 
 - [《C++20 STL Cookbook》2023](#c20-stl-cookbook2023)
